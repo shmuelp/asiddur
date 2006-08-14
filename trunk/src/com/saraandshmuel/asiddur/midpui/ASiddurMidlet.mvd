@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MVDData version="1.2">
+    <DesignDocument designVersion="MIDP-2" uidCounter="138">
+        <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
+        <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+        </DesignComponent>
+        <DesignComponent uid="2" id="MainForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction2"/>
+                <ContainerPropertyItem value="$CommandAction14"/>
+                <ContainerPropertyItem value="$CommandAction4"/>
+                <ContainerPropertyItem value="$CommandAction7"/>
+                <ContainerPropertyItem value="$CommandAction"/>
+                <ContainerPropertyItem value="$CommandAction27"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="topStringItem"/>
+                <ContainerPropertyItem value="spacer1"/>
+                <ContainerPropertyItem value="hebrewDateString"/>
+                <ContainerPropertyItem value="spacer2"/>
+                <ContainerPropertyItem value="tefillaChoiceGroup"/>
+                <ContainerPropertyItem value="spacer3"/>
+                <ContainerPropertyItem value="useDateField"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="3" id="$CommandAction" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="4" id="topStringItem" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:A Siddur v 0.1+" name="label"/>
+            <Property value="STRING:A soon-to-be intelligent siddur" name="text"/>
+            <ContainerProperty name="commands"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="5" id="exitCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Exit" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="EXIT" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="16" id="spacer1" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property value="1000" name="minWidth"/>
+            <Property value="1" name="minHeight"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="17" id="useDateField" typeid="MIDP:javax.microedition.lcdui.DateField">
+            <Property value="STRING:Set date/time:" name="label"/>
+            <Property value="DATE_TIME" name="inputMode"/>
+            <ContainerProperty name="commands"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="18" id="spacer2" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property value="1000" name="minWidth"/>
+            <Property value="1" name="minHeight"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="23" id="tefillaChoiceGroup" typeid="MIDP:javax.microedition.lcdui.ChoiceGroup">
+            <Property value="STRING:" name="label"/>
+            <Property value="POPUP" name="choiceType"/>
+            <ContainerProperty name="commands"/>
+            <ContainerProperty name="elements"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="30" id="daavenCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Daaven" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="31" id="$CommandAction2" typeid="MIDP:CommandAction">
+            <Property value="daavenCanvas" name="targetDisplayable"/>
+            <Property value="MainForm" name="targetForwardDisplayable"/>
+            <Property value="daavenCommand" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="32" id="menuCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Menu" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="43" id="daavenCanvas" typeid="MIDP:com.saraandshmuel.asiddur.midpui.HebrewTextCanvas">
+            <Property value="" name="%%1_1_label"/>
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction1"/>
+                <ContainerPropertyItem value="$CommandAction9"/>
+                <ContainerPropertyItem value="$CommandAction3"/>
+            </ContainerProperty>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="45" id="$CommandAction3" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="daavenCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="50" id="debugOutputCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Log" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="51" id="$CommandAction4" typeid="MIDP:CommandAction">
+            <Property value="debugOutputForm" name="targetDisplayable"/>
+            <Property value="MainForm" name="targetForwardDisplayable"/>
+            <Property value="debugOutputCommand" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="62" id="helpCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Help" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="63" id="$CommandAction7" typeid="MIDP:CommandAction">
+            <Property value="helpForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="helpCommand" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="64" id="helpForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction5"/>
+                <ContainerPropertyItem value="$CommandAction11"/>
+                <ContainerPropertyItem value="$CommandAction17"/>
+                <ContainerPropertyItem value="$CommandAction8"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="helpDescription"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="65" id="$CommandAction8" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="helpForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="67" id="aboutCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:About" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="68" id="$CommandAction11" typeid="MIDP:CommandAction">
+            <Property value="aboutForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="aboutCommand" name="actionSource"/>
+            <Property value="helpForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="71" id="helpDescription" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:Help\n" name="label"/>
+            <Property value="STRING:\nUse the commands of this screen to get help, view the readme file, see the license.\n\nASiddur attempts to be an intelligent siddur.  By knowing the current time and date, it is able to guess what tefilla to display and the correct text of the tefilla.  It should even be able to highlight those portions of the tefilla that are different, helping to keep you from forgetting key changes.\n\nNote: ASiddur is a work in progress." name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="72" id="settingsForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction6"/>
+                <ContainerPropertyItem value="$CommandAction15"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="settingsDescription"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="73" id="settingsDescription" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:Settings\n" name="label"/>
+            <Property value="STRING:\nDescription of settings goes here.  Actual settings go in the commands of this screen.\n\nNote: support for settings is currently planned for version 0.3.\n" name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="74" id="settingsCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Prefs" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="75" id="$CommandAction14" typeid="MIDP:CommandAction">
+            <Property value="settingsForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="settingsCommand" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="76" id="$CommandAction15" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="settingsForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="79" id="todoCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Todo" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="80" id="$CommandAction17" typeid="MIDP:CommandAction">
+            <Property value="todoForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="todoCommand" name="actionSource"/>
+            <Property value="helpForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="86" id="helpCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Help" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="HELP" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="88" id="todoForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction21"/>
+                <ContainerPropertyItem value="$CommandAction22"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="stringItem1"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="89" id="backToHelpCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:&lt; Help" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="BACK" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="90" id="$CommandAction21" typeid="MIDP:CommandAction">
+            <Property value="helpForm" name="targetDisplayable"/>
+            <Property value="todoForm" name="targetForwardDisplayable"/>
+            <Property value="backToHelpCommand" name="actionSource"/>
+            <Property value="todoForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="91" id="stringItem1" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:" name="label"/>
+            <Property value="STRING:The feature plan can be found using the issue tracker available at:\nhttp://code.google.com/" name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="92" id="$CommandAction22" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="todoForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="94" id="clearCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Clear" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="ITEM" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="96" id="aboutForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction13"/>
+                <ContainerPropertyItem value="$CommandAction19"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="aboutString"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="97" id="$CommandAction13" typeid="MIDP:CommandAction">
+            <Property value="helpForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="backToHelpCommand" name="actionSource"/>
+            <Property value="aboutForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="98" id="$CommandAction19" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="aboutForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="99" id="aboutString" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:ASiddur 0.1+\n" name="label"/>
+            <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nThanks to:\nSara P.\nAvi P.\nJoe B." name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="100" id="debugOutputForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction12"/>
+                <ContainerPropertyItem value="$CommandAction18"/>
+                <ContainerPropertyItem value="$CommandAction20"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="debugOutput"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="101" id="backToMainCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:&lt; Main menu" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="BACK" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="102" id="$CommandAction12" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property value="debugOutputForm" name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="debugOutputForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="103" id="$CommandAction18" typeid="MIDP:CommandAction">
+            <Property name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="clearCommand" name="actionSource"/>
+            <Property value="debugOutputForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="104" id="$CommandAction20" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="debugOutputForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="105" id="debugOutput" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:" name="label"/>
+            <Property value="STRING:" name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="106" id="$CommandAction5" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="helpForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="107" id="$CommandAction6" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="settingsForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="108" id="$CommandAction1" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="daavenCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="109" id="$CommandAction9" typeid="MIDP:CommandAction">
+            <Property value="debugOutputForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="debugOutputCommand" name="actionSource"/>
+            <Property value="daavenCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="112" id="spacer3" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property value="1000" name="minWidth"/>
+            <Property value="1" name="minHeight"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="113" id="hebrewDateString" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:" name="text"/>
+            <Property value="3" name="layout"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="122" id="testCanvas" typeid="MIDP:com.saraandshmuel.asiddur.midpui.TestCanvas">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction16"/>
+                <ContainerPropertyItem value="$CommandAction23"/>
+                <ContainerPropertyItem value="$CommandAction24"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="123" id="testCommand" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:Test" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="125" id="$CommandAction16" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property value="testCanvas" name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="testCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="126" id="$CommandAction23" typeid="MIDP:CommandAction">
+            <Property value="debugOutputForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="debugOutputCommand" name="actionSource"/>
+            <Property value="testCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="127" id="$CommandAction24" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="testCanvas" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="129" id="showChoicesForm" typeid="MIDP:javax.microedition.lcdui.Form">
+            <ContainerProperty name="commands">
+                <ContainerPropertyItem value="$CommandAction10"/>
+                <ContainerPropertyItem value="$CommandAction26"/>
+                <ContainerPropertyItem value="$CommandAction25"/>
+            </ContainerProperty>
+            <ContainerProperty name="items">
+                <ContainerPropertyItem value="choiceString"/>
+            </ContainerProperty>
+        </DesignComponent>
+        <DesignComponent uid="130" id="$CommandAction10" typeid="MIDP:CommandAction">
+            <Property value="MainForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="backToMainCommand" name="actionSource"/>
+            <Property value="showChoicesForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="131" id="$CommandAction25" typeid="MIDP:CommandAction">
+            <Property value="$MobileDevice" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="exitCommand" name="actionSource"/>
+            <Property value="showChoicesForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="132" id="$CommandAction26" typeid="MIDP:CommandAction">
+            <Property value="debugOutputForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="debugOutputCommand" name="actionSource"/>
+            <Property value="showChoicesForm" name="actionOrigin"/>
+        </DesignComponent>
+        <DesignComponent uid="133" id="choiceString" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:DEBUG: tefillah choice functions:\nTODO: Check correctness, fix tacahanun\nTODO (after prefs) - allow for e.g. Israel rules\n" name="label"/>
+            <Property value="STRING:" name="text"/>
+            <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="134" id="screenCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:TextFunctions" name="label"/>
+            <Property value="1" name="priority"/>
+            <Property value="SCREEN" name="type"/>
+        </DesignComponent>
+        <DesignComponent uid="135" id="$CommandAction27" typeid="MIDP:CommandAction">
+            <Property value="showChoicesForm" name="targetDisplayable"/>
+            <Property name="targetForwardDisplayable"/>
+            <Property value="screenCommand1" name="actionSource"/>
+            <Property value="MainForm" name="actionOrigin"/>
+        </DesignComponent>
+    </DesignDocument>
+    <FlowDocument version="1.1">
+        <Node id="$MobileDevice" location="160,848" order=",$StartPoint,,,,,,,,,$ExitPoint,,,,,"/>
+        <Node id="MainForm" location="392,848" order="$CommandAction,$CommandAction2,$CommandAction4,$CommandAction7,$CommandAction14,$CommandAction27,,,,,$Default,,,,,"/>
+        <Node id="daavenCanvas" location="640,1320" order="$CommandAction9,$CommandAction3,$CommandAction1,,,,,,,,$Default,,,,,"/>
+        <Node id="helpForm" location="640,1088" order="$CommandAction8,,$CommandAction11,$CommandAction17,$CommandAction5,,,,,,$Default,,,,,"/>
+        <Node id="settingsForm" location="640,368" order="$CommandAction15,$CommandAction6,,,,,,,,,$Default,,,,,"/>
+        <Node id="todoForm" location="880,768" order="$CommandAction21,$CommandAction22,,,,,,,,,$Default,,,,,"/>
+        <Node id="aboutForm" location="880,920" order="$CommandAction13,$CommandAction19,,,,,,,,,$Default,,,,,"/>
+        <Node id="debugOutputForm" location="640,848" order="$CommandAction12,$CommandAction18,$CommandAction20,,,,,,,,$Default,,,,,"/>
+        <Node id="testCanvas" location="144,128" order="$CommandAction16,$CommandAction23,$CommandAction24,,,,,,,,$Default,,,,,"/>
+        <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
+        <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
+        <Link id="$CommandAction$ActionLink" path="432,840,519,840,519,1061,47,1061,47,824,120,824"/>
+        <Link id="$CommandAction2$ActionLink" path="432,824,501,824,501,1296,600,1296"/>
+        <Link id="$CommandAction3$ActionLink" path="680,1296,772,1296,772,1216,47,1216,47,824,120,824"/>
+        <Link id="$CommandAction4$ActionLink" path="432,808,519,808,519,824,600,824"/>
+        <Link id="$CommandAction7$ActionLink" path="432,792,537,792,537,1064,600,1064"/>
+        <Link id="$CommandAction8$ActionLink" path="680,1080,756,1080,756,903,47,903,47,824,120,824"/>
+        <Link id="$CommandAction11$ActionLink" path="680,1048,740,1048,740,896,840,896"/>
+        <Link id="$CommandAction14$ActionLink" path="416,776,416,344,600,344"/>
+        <Link id="$CommandAction15$ActionLink" path="680,360,784,360,784,465,47,465,47,824,120,824"/>
+        <Link id="$CommandAction17$ActionLink" path="680,1032,789,1032,789,744,840,744"/>
+        <Link id="$CommandAction21$ActionLink" path="920,760,980,760,980,1181,551,1181,551,1064,600,1064"/>
+        <Link id="$CommandAction22$ActionLink" path="920,744,980,744,980,677,47,677,47,824,120,824"/>
+        <Link id="$CommandAction13$ActionLink" path="920,912,980,912,980,1163,551,1163,551,1064,600,1064"/>
+        <Link id="$CommandAction19$ActionLink" path="920,896,992,896,992,677,47,677,47,824,120,824"/>
+        <Link id="$CommandAction12$ActionLink" path="680,840,767,840,767,889,300,889,300,824,352,824"/>
+        <Link id="$CommandAction20$ActionLink" path="680,808,774,808,774,883,47,883,47,824,120,824"/>
+        <Link id="$CommandAction5$ActionLink" path="664,1016,664,893,300,893,300,824,352,824"/>
+        <Link id="$CommandAction6$ActionLink" path="680,344,772,344,772,662,300,662,300,824,352,824"/>
+        <Link id="$CommandAction1$ActionLink" path="680,1280,780,1280,780,919,300,919,300,824,352,824"/>
+        <Link id="$CommandAction9$ActionLink" path="680,1312,804,1312,804,927,546,927,546,824,600,824"/>
+        <Link id="$CommandAction16$ActionLink" path="184,120,300,120,300,824,352,824"/>
+        <Link id="$CommandAction23$ActionLink" path="184,104,519,104,519,824,600,824"/>
+        <Link id="$CommandAction24$ActionLink" path="184,88,282,88,282,465,47,465,47,824,120,824"/>
+        <Link id="$CommandAction10$ActionLink" path="680,600,770,600,770,654,300,654,300,824,352,824"/>
+        <Link id="$CommandAction25$ActionLink" path="680,584,792,584,792,642,47,642,47,824,120,824"/>
+        <Link id="$CommandAction26$ActionLink" path="680,568,780,568,780,756,519,756,519,824,600,824"/>
+        <Link id="$CommandAction27$ActionLink" path="400,776,400,584,600,584"/>
+    </FlowDocument>
+</MVDData>
