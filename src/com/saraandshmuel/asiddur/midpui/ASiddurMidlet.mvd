@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MVDData version="1.2">
-    <DesignDocument designVersion="MIDP-2" uidCounter="140">
+    <DesignDocument designVersion="MIDP-2" uidCounter="138">
         <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
         <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
             <Property value="MainForm" name="targetDisplayable"/>
@@ -14,7 +14,6 @@
                 <ContainerPropertyItem value="$CommandAction7"/>
                 <ContainerPropertyItem value="$CommandAction"/>
                 <ContainerPropertyItem value="$CommandAction27"/>
-                <ContainerPropertyItem value="$CommandAction28"/>
             </ContainerProperty>
             <ContainerProperty name="items">
                 <ContainerPropertyItem value="topStringItem"/>
@@ -396,33 +395,21 @@
             <Property value="STRING:" name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
-        <DesignComponent uid="134" id="summaryCommand" typeid="MIDP:javax.microedition.lcdui.Command">
-            <Property value="STRING:Summary" name="label"/>
-            <Property value="STRING:Summary of Tefilla Choices" name="longLabel"/>
+        <DesignComponent uid="134" id="screenCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
+            <Property value="STRING:TextFunctions" name="label"/>
             <Property value="1" name="priority"/>
             <Property value="SCREEN" name="type"/>
         </DesignComponent>
         <DesignComponent uid="135" id="$CommandAction27" typeid="MIDP:CommandAction">
             <Property value="showChoicesForm" name="targetDisplayable"/>
             <Property name="targetForwardDisplayable"/>
-            <Property value="summaryCommand" name="actionSource"/>
-            <Property value="MainForm" name="actionOrigin"/>
-        </DesignComponent>
-        <DesignComponent uid="138" id="testCommand1" typeid="MIDP:javax.microedition.lcdui.Command">
-            <Property value="STRING:Test" name="label"/>
-            <Property value="1" name="priority"/>
-            <Property value="SCREEN" name="type"/>
-        </DesignComponent>
-        <DesignComponent uid="139" id="$CommandAction28" typeid="MIDP:CommandAction">
-            <Property value="testCanvas" name="targetDisplayable"/>
-            <Property name="targetForwardDisplayable"/>
-            <Property value="testCommand1" name="actionSource"/>
+            <Property value="screenCommand1" name="actionSource"/>
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
     </DesignDocument>
     <FlowDocument version="1.1">
         <Node id="$MobileDevice" location="160,848" order=",$StartPoint,,,,,,,,,$ExitPoint,,,,,"/>
-        <Node id="MainForm" location="392,848" order="$CommandAction,$CommandAction2,$CommandAction4,$CommandAction7,$CommandAction14,$CommandAction27,$CommandAction28,,,,$Default,,,,,"/>
+        <Node id="MainForm" location="392,848" order="$CommandAction,$CommandAction2,$CommandAction4,$CommandAction7,$CommandAction14,$CommandAction27,,,,,$Default,,,,,"/>
         <Node id="daavenCanvas" location="640,1320" order="$CommandAction9,$CommandAction3,$CommandAction1,,,,,,,,$Default,,,,,"/>
         <Node id="helpForm" location="640,1088" order="$CommandAction8,,$CommandAction11,$CommandAction17,$CommandAction5,,,,,,$Default,,,,,"/>
         <Node id="settingsForm" location="640,368" order="$CommandAction15,$CommandAction6,,,,,,,,,$Default,,,,,"/>
@@ -431,11 +418,12 @@
         <Node id="debugOutputForm" location="640,848" order="$CommandAction12,$CommandAction18,$CommandAction20,,,,,,,,$Default,,,,,"/>
         <Node id="testCanvas" location="144,128" order="$CommandAction16,$CommandAction23,$CommandAction24,,,,,,,,$Default,,,,,"/>
         <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
-        <Link id="$CommandAction$ActionLink" path="432,840,523,840,523,880,47,880,47,824,120,824"/>
-        <Link id="$CommandAction2$ActionLink" path="432,824,492,824,492,1296,600,1296"/>
+        <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
+        <Link id="$CommandAction$ActionLink" path="432,840,519,840,519,1061,47,1061,47,824,120,824"/>
+        <Link id="$CommandAction2$ActionLink" path="432,824,501,824,501,1296,600,1296"/>
         <Link id="$CommandAction3$ActionLink" path="680,1296,772,1296,772,1216,47,1216,47,824,120,824"/>
-        <Link id="$CommandAction4$ActionLink" path="432,808,528,808,528,824,600,824"/>
-        <Link id="$CommandAction7$ActionLink" path="432,792,501,792,501,1064,600,1064"/>
+        <Link id="$CommandAction4$ActionLink" path="432,808,519,808,519,824,600,824"/>
+        <Link id="$CommandAction7$ActionLink" path="432,792,537,792,537,1064,600,1064"/>
         <Link id="$CommandAction8$ActionLink" path="680,1080,756,1080,756,903,47,903,47,824,120,824"/>
         <Link id="$CommandAction11$ActionLink" path="680,1048,740,1048,740,896,840,896"/>
         <Link id="$CommandAction14$ActionLink" path="416,776,416,344,600,344"/>
@@ -448,17 +436,15 @@
         <Link id="$CommandAction12$ActionLink" path="680,840,767,840,767,889,300,889,300,824,352,824"/>
         <Link id="$CommandAction20$ActionLink" path="680,808,774,808,774,883,47,883,47,824,120,824"/>
         <Link id="$CommandAction5$ActionLink" path="664,1016,664,893,300,893,300,824,352,824"/>
-        <Link id="$CommandAction6$ActionLink" path="680,344,770,344,770,659,300,659,300,824,352,824"/>
-        <Link id="$CommandAction1$ActionLink" path="680,1280,780,1280,780,915,300,915,300,824,352,824"/>
+        <Link id="$CommandAction6$ActionLink" path="680,344,772,344,772,662,300,662,300,824,352,824"/>
+        <Link id="$CommandAction1$ActionLink" path="680,1280,780,1280,780,919,300,919,300,824,352,824"/>
         <Link id="$CommandAction9$ActionLink" path="680,1312,804,1312,804,927,546,927,546,824,600,824"/>
-        <Link id="$CommandAction16$ActionLink" path="184,120,274,120,274,824,352,824"/>
+        <Link id="$CommandAction16$ActionLink" path="184,120,300,120,300,824,352,824"/>
         <Link id="$CommandAction23$ActionLink" path="184,104,519,104,519,824,600,824"/>
         <Link id="$CommandAction24$ActionLink" path="184,88,282,88,282,465,47,465,47,824,120,824"/>
-        <Link id="$CommandAction10$ActionLink" path="680,600,770,600,770,659,300,659,300,824,352,824"/>
+        <Link id="$CommandAction10$ActionLink" path="680,600,770,600,770,654,300,654,300,824,352,824"/>
         <Link id="$CommandAction25$ActionLink" path="680,584,792,584,792,642,47,642,47,824,120,824"/>
         <Link id="$CommandAction26$ActionLink" path="680,568,780,568,780,756,519,756,519,824,600,824"/>
-        <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
         <Link id="$CommandAction27$ActionLink" path="400,776,400,584,600,584"/>
-        <Link id="$CommandAction28$ActionLink" path="384,776,384,553,54,553,54,104,104,104"/>
     </FlowDocument>
 </MVDData>

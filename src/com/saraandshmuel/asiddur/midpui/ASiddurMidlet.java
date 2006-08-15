@@ -55,8 +55,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private Command testCommand;
     private Form showChoicesForm;
     private StringItem choiceString;
-    private Command summaryCommand;
-    private Command testCommand1;//GEN-END:MVDFields
+    private Command screenCommand1;//GEN-END:MVDFields
 //    private char[] testText;
     
     private MidpMediator mediator = new MidpMediator(this);
@@ -67,18 +66,18 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
      */
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
-       spacer1 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
-       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-       tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
+       tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);//GEN-BEGIN:MVDInitInit
        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-       spacer3 = new Spacer(1000, 1);
+       spacer2 = new Spacer(1000, 1);
+       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
+       spacer1 = new Spacer(1000, 1);
        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
        daavenCanvas.addCommand(get_backToMainCommand());
        daavenCanvas.addCommand(get_debugOutputCommand());
        daavenCanvas.addCommand(get_exitCommand());
        daavenCanvas.setCommandListener(this);
-       spacer2 = new Spacer(1000, 1);
-       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
+       spacer3 = new Spacer(1000, 1);
+       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
         daavenCanvas.setTefillaReader(mediator.getTefillaReader());
@@ -119,17 +118,13 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
                 // Insert pre-action code here
              getDisplay().setCurrent(get_settingsForm());//GEN-LINE:MVDCAAction75
                 // Insert post-action code here
-          } else if (command == summaryCommand) {//GEN-LINE:MVDCACase75
+          } else if (command == screenCommand1) {//GEN-LINE:MVDCACase75
                 // Insert pre-action code here
              getDisplay().setCurrent(get_showChoicesForm());//GEN-LINE:MVDCAAction135
                 // Insert post-action code here
-          } else if (command == testCommand1) {//GEN-LINE:MVDCACase135
-             // Insert pre-action code here
-             getDisplay().setCurrent(get_testCanvas());//GEN-LINE:MVDCAAction139
-             // Insert post-action code here
-          }//GEN-BEGIN:MVDCACase139
+          }//GEN-BEGIN:MVDCACase135
        } else if (displayable == daavenCanvas) {
-          if (command == exitCommand) {//GEN-END:MVDCACase139
+          if (command == exitCommand) {//GEN-END:MVDCACase135
                 // Insert pre-action code here
              exitMIDlet();//GEN-LINE:MVDCAAction45
                 // Insert post-action code here
@@ -291,8 +286,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
           MainForm.addCommand(get_debugOutputCommand());
           MainForm.addCommand(get_helpCommand());
           MainForm.addCommand(get_exitCommand());
-          MainForm.addCommand(get_summaryCommand());
-          MainForm.addCommand(get_testCommand1());
+          MainForm.addCommand(get_screenCommand1());
           MainForm.setCommandListener(this);//GEN-END:MVDGetInit2
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd2
@@ -638,29 +632,17 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        return choiceString;
     }//GEN-END:MVDGetEnd133
 
-    /** This method returns instance for summaryCommand component and should be called instead of accessing summaryCommand field directly.//GEN-BEGIN:MVDGetBegin134
-     * @return Instance for summaryCommand component
+    /** This method returns instance for screenCommand1 component and should be called instead of accessing screenCommand1 field directly.//GEN-BEGIN:MVDGetBegin134
+     * @return Instance for screenCommand1 component
      */
-    public Command get_summaryCommand() {
-       if (summaryCommand == null) {//GEN-END:MVDGetBegin134
+    public Command get_screenCommand1() {
+       if (screenCommand1 == null) {//GEN-END:MVDGetBegin134
             // Insert pre-init code here
-          summaryCommand = new Command("Summary", "Summary of Tefilla Choices", Command.SCREEN, 1);//GEN-LINE:MVDGetInit134
+          screenCommand1 = new Command("TextFunctions", Command.SCREEN, 1);//GEN-LINE:MVDGetInit134
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd134
-       return summaryCommand;
+       return screenCommand1;
     }//GEN-END:MVDGetEnd134
-
-    /** This method returns instance for testCommand1 component and should be called instead of accessing testCommand1 field directly.//GEN-BEGIN:MVDGetBegin138
-     * @return Instance for testCommand1 component
-     */
-    public Command get_testCommand1() {
-       if (testCommand1 == null) {//GEN-END:MVDGetBegin138
-          // Insert pre-init code here
-          testCommand1 = new Command("Test", Command.SCREEN, 1);//GEN-LINE:MVDGetInit138
-          // Insert post-init code here
-       }//GEN-BEGIN:MVDGetEnd138
-       return testCommand1;
-    }//GEN-END:MVDGetEnd138
   
  
     public void startApp() {
