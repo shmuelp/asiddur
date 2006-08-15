@@ -33,6 +33,10 @@ public class TestCanvas extends Canvas {
         //catch( IOException ioe ) {
         //    Logger.log("Exception while creating PCFFont: " + ioe.getMessage() + '\n');
         //}
+       
+       Logger.log("Default: " + fontSizeInfo(Font.getDefaultFont()));
+       Logger.log("Input: " + fontSizeInfo(Font.FONT_INPUT_TEXT));
+       Logger.log("Static: " + fontSizeInfo(Font.FONT_STATIC_TEXT));
     }
 
     /**
@@ -69,6 +73,25 @@ public class TestCanvas extends Canvas {
     */
     public void setString(String string) {
         this.string = string;
+    }
+    
+    private String fontSizeInfo( int font ) 
+    {
+       return fontSizeInfo(Font.getFont(font));
+    }
+    private String fontSizeInfo( javax.microedition.lcdui.Font font ) 
+    {
+       StringBuffer sb = new StringBuffer( "height=");
+       sb.append(font.getHeight());
+       sb.append(", w[M]=");
+       sb.append(font.charWidth('M'));
+       sb.append(", w[i]=");
+       sb.append(font.charWidth('i'));
+       sb.append(", w[ ]=");
+       sb.append(font.charWidth(' '));
+       sb.append('\n');
+       
+       return sb.toString();
     }
 
 }
