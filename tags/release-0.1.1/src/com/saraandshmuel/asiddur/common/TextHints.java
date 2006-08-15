@@ -101,7 +101,7 @@ public abstract class TextHints {
              break;
 
          case TefillaReader.MAARIV:
-             result = "Maariv";
+             result = "Ma'ariv";
              break;
 
          case TefillaReader.OTHER:
