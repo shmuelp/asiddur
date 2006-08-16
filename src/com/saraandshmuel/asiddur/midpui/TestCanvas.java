@@ -54,7 +54,45 @@ public class TestCanvas extends Canvas {
         //font.setFgColor(0x00000000);
         
         //font.drawString(graphics, string, 20, 20 );
-        graphics.drawString(string, 20, 20, Graphics.LEFT | Graphics.TOP);
+        graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
+        
+        java.io.InputStream is = getClass().getResourceAsStream("/res/aleph.png");
+        if ( is == null )
+        {
+           Logger.log("There is no aleph\n");
+        }
+
+        try 
+        {
+           Image aleph = Image.createImage("/res/aleph.png");
+           Image yud = Image.createImage("/res/yud.png");
+           Image resh = Image.createImage("/res/resh.png");
+           Image shin = Image.createImage("/res/shin.png");
+           
+           int position = graphics.getClipWidth() - 10;
+           final int SPACING = 2;
+
+           graphics.drawImage( aleph, position, 50, Graphics.TOP | Graphics.RIGHT );
+           position -= aleph.getWidth();
+           position -= SPACING;
+
+           graphics.drawImage( shin, position, 50, Graphics.TOP | Graphics.RIGHT );
+           position -= shin.getWidth();
+           position -= SPACING;
+
+           graphics.drawImage( resh, position, 50, Graphics.TOP | Graphics.RIGHT );
+           position -= resh.getWidth();
+           position -= SPACING;
+
+           graphics.drawImage( yud, position, 50, Graphics.TOP | Graphics.RIGHT );
+           position -= SPACING;
+           //position -= yud.getWidth();
+
+        }
+        catch( java.io.IOException ioe )
+        {
+           Logger.log("Exception while creating images from resources: " + ioe.toString());
+        }
     }
 
     /**
