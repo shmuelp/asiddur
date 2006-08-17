@@ -3,6 +3,6 @@ MIDlet-Jar-Size: 95822
 MIDlet-Jar-URL: ASiddur.jar
 MIDlet-Name: ASiddur
 MIDlet-Vendor: shmuelp
-MIDlet-Version: 00.01.03
+MIDlet-Version: 00.01.04
 MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-2.0
