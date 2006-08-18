@@ -11,7 +11,8 @@ import javax.microedition.lcdui.Font;
 class HebrewTextLayout {
 
    /** Creates a new instance of HebrewTextLayout */
-   public HebrewTextLayout() {
+   public HebrewTextLayout( ImageFont font) {
+      this.font = font;
    }
    
    /**
@@ -34,7 +35,7 @@ class HebrewTextLayout {
    /**
     * The font used to compute the last layout
     */
-   public Font font = Font.getDefaultFont();
+   public ImageFont font;
    
    /**
     * The positions of the ending character of each line in the computed layout
@@ -59,8 +60,29 @@ class HebrewTextLayout {
     * @param font the font that will be used to draw the text
     * @return true if the layout is still valid; false otherwise
     */
-   public boolean isValid(int width, Font font) {
-      return valid && this.width == width && this.font == font;
+   public boolean isValid(int width, ImageFont font) {
+      boolean result = valid && this.width == width && this.font == font;
+      
+//      if (!result)
+//      {
+//         String why = "";
+//         if ( !valid )
+//         {
+//            why += " !valid";
+//         }
+//         if ( this.width != width )
+//         {
+//            why += " !width";
+//         }
+//         if ( this.font != font )
+//         {
+//            why += " !font";
+//         }
+//         
+//         Logger.log("HebrewTextLayout: isValid()==false:" + why + '\n');
+//      }
+      
+      return result;
    }
    
    /**
@@ -71,10 +93,10 @@ class HebrewTextLayout {
     * @param width the width of the screen in pixels
     * @param normalFont the font to be used to draw the text
     */
-   public void updateLayout(TefillaReader reader, int width, Font normalFont) {
+   public void updateLayout(TefillaReader reader, int width, ImageFont normalFont) {
       //Logger.log("Layout.updateLayout() Beginning...\n");
       this.width = width;
-      this.font = font;
+      this.font = normalFont;
       maxCharLine = 1;
       lineLengths = computeLineLengths( reader, width );
       valid = true;

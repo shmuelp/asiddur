@@ -22,10 +22,6 @@ import com.saraandshmuel.asiddur.common.*;
 public class HebrewTextBox {
     
    /**
-    * The font used to paint the text
-    */
-    private Font font = Font.getDefaultFont();
-   /**
     * The red component of the text foreground color
     */
     private int red = 255;
@@ -49,14 +45,19 @@ public class HebrewTextBox {
     private TefillaReader tefillaReader;
     
     /**
+     * The font adapter used to draw Hebrew text
+     */
+    private ImageFont font = new ImageFont("miriam-22");
+    
+    /**
      * Utility class for computing and storing the line layout of the text
      */
-    private HebrewTextLayout layout = new HebrewTextLayout();
+    private HebrewTextLayout layout = new HebrewTextLayout( font );
     
     /**
      * Utility class for painting characters
      */
-    private HebrewTextPainter painter = new HebrewTextPainter();
+    private HebrewTextPainter painter = new HebrewTextPainter( font );
     
     /**
      * The first visible line to show
@@ -76,7 +77,7 @@ public class HebrewTextBox {
     * @param green The green component of the foreground color
     * @param blue The blue component of the foreground color
     */
-    public HebrewTextBox(Font font, int red, int green, int blue) {
+    public HebrewTextBox(ImageFont font, int red, int green, int blue) {
         this.font=font;
         this.red=red;
         this.green=green;
@@ -97,9 +98,16 @@ public class HebrewTextBox {
                            int x2,
                            int y2) {
         //Logger.log("Painter.paintText() Beginning...\n");
+        
+        // Add a 1-pixel border
+        ++x1;
+        ++y1;
+        --x2;
+        --y2;
+       
         lastHeight = y2-y1;
         graphics.setColor(red, green, blue);
-        graphics.setFont( font );
+        graphics.setFont( font.getPassthrough() );
 
         if( !layout.isValid( x2-x1, font ) ) {
             layout.updateLayout( tefillaReader, x2-x1, font);
@@ -115,9 +123,9 @@ public class HebrewTextBox {
         final int fontHeight = font.getHeight();
         
         //Logger.log("Painter.paintText() Drawing lines...\n");
-        System.out.println("About to draw, line=" + line + ", lastLine=" + lastLine);
+        //System.out.println("About to draw, line=" + line + ", lastLine=" + lastLine);
         for( int i=line+1; i < lastLine; ++i ) {
-            System.out.println("Printing chars " + lineOffsets.elementAt(i-1) + " to " + lineOffsets.elementAt(i) );
+            //System.out.println("Printing chars " + lineOffsets.elementAt(i-1) + " to " + lineOffsets.elementAt(i) );
             
             painter.drawChars( graphics,
                                tefillaReader, 

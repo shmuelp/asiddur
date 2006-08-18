@@ -23,8 +23,19 @@ public class HebrewTextPainter {
     */
    private final char VT = 11; //'\v'
    
+   /**
+    * Font adapter to draw the font
+    */
+   private final ImageFont font;
+   
+   /**
+    * Determines whether or not to reorder the lines
+    */
+   private boolean reorder = true;
+   
    /** Creates a new instance of HebrewTextPainter */
-   public HebrewTextPainter() {
+   public HebrewTextPainter( ImageFont font ) {
+      this.font = font;
    }
    
    /**
@@ -46,12 +57,13 @@ public class HebrewTextPainter {
       char[] buffer = new char[length];
       reader.getTextChars(offset, length, buffer);
       buffer = logicalToVisual(buffer);
-      graphics.drawChars( buffer,
-              0,
-              buffer.length,
-              x,
-              y,
-              Graphics.TOP | Graphics.RIGHT);
+      font.drawChars( graphics, buffer, 0, length, x, y, Graphics.TOP | Graphics.RIGHT );
+//      graphics.drawChars( buffer,
+//              0,
+//              buffer.length,
+//              x,
+//              y,
+//              Graphics.TOP | Graphics.RIGHT);
    }
    
    /**
@@ -62,12 +74,25 @@ public class HebrewTextPainter {
    public final char[] logicalToVisual( final char[] text ) {
       //Logger.log("Layout.layoutLines() Beginning...\n");
       char[] ret = new char[text.length];
-      
-      for( int i=0; i < ret.length; ++i ) {
-         if ( text[i] == '\n' || text[i] == '\r' || text[i] == VT) {
-            ret[i] = ' ';
-         } else {
-            ret[i] = text[i];
+
+      if ( reorder )
+      {
+         for( int i=0; i < ret.length; ++i ) {
+            if ( text[i] == '\n' || text[i] == '\r' || text[i] == VT) {
+               ret[ret.length-i-1] = ' ';
+            } else {
+               ret[ret.length-i-1] = text[i];
+            }
+         }
+      }
+      else
+      {
+         for( int i=0; i < ret.length; ++i ) {
+            if ( text[i] == '\n' || text[i] == '\r' || text[i] == VT) {
+               ret[i] = ' ';
+            } else {
+               ret[i] = text[i];
+            }
          }
       }
       

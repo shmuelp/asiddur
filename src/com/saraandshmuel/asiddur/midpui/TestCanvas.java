@@ -56,43 +56,25 @@ public class TestCanvas extends Canvas {
         //font.drawString(graphics, string, 20, 20 );
         graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
         
-        java.io.InputStream is = getClass().getResourceAsStream("/res/aleph.png");
-        if ( is == null )
-        {
-           Logger.log("There is no aleph\n");
-        }
+        ImageFont miriam =  new ImageFont( "miriam-22" );
 
-        try 
-        {
-           Image aleph = Image.createImage("/res/aleph.png");
-           Image yud = Image.createImage("/res/yud.png");
-           Image resh = Image.createImage("/res/resh.png");
-           Image shin = Image.createImage("/res/shin.png");
-           
-           int position = graphics.getClipWidth() - 10;
-           final int SPACING = 2;
+        int position = graphics.getClipWidth() - 10;
 
-           graphics.drawImage( aleph, position, 50, Graphics.TOP | Graphics.RIGHT );
-           position -= aleph.getWidth();
-           position -= SPACING;
+        miriam.drawChar( graphics, 'à', position, 50, Graphics.TOP | Graphics.RIGHT );
+        position -= miriam.charWidth('à');
 
-           graphics.drawImage( shin, position, 50, Graphics.TOP | Graphics.RIGHT );
-           position -= shin.getWidth();
-           position -= SPACING;
+        miriam.drawChar( graphics, 'ù', position, 50, Graphics.TOP | Graphics.RIGHT );
+        position -= miriam.charWidth('ù');
 
-           graphics.drawImage( resh, position, 50, Graphics.TOP | Graphics.RIGHT );
-           position -= resh.getWidth();
-           position -= SPACING;
+        miriam.drawChar( graphics, 'ø', position, 50, Graphics.TOP | Graphics.RIGHT );
+        position -= miriam.charWidth('ø');
 
-           graphics.drawImage( yud, position, 50, Graphics.TOP | Graphics.RIGHT );
-           position -= SPACING;
-           //position -= yud.getWidth();
-
-        }
-        catch( java.io.IOException ioe )
-        {
-           Logger.log("Exception while creating images from resources: " + ioe.toString());
-        }
+        miriam.drawChar( graphics, 'é', position, 50, Graphics.TOP | Graphics.RIGHT );
+        position -= miriam.charWidth('é');
+        
+        char []testChars = new char[4];
+        "éøùà".getChars(0,4,testChars,0);
+        miriam.drawChars( graphics, testChars, 0, 4, graphics.getClipWidth()-10, 70, Graphics.TOP | Graphics.RIGHT );
     }
 
     /**
