@@ -23,7 +23,7 @@ public class ImageFont {
    /**
     * The font to pass through to for unknown glyphs
     */
-   Font passthrough = Font.getDefaultFont();
+   private Font passthrough = Font.getDefaultFont();
    
    /**
     * Prefix to resources
@@ -41,23 +41,37 @@ public class ImageFont {
    Image[] glyphImages = new Image[256];
    
    /**
+    * Cached widths of the characters
+    */
+   int[] glyphWidths = new int[256];
+   
+   /**
     * Inter-character spacing
     */
    int spacing = 2;
    
+   /**
+    * The height of the font
+    */
+   int height = 0;
+   
    /** Creates a new instance of ImageFont */
    public ImageFont(String fontName) {
       this.fontName = fontName;
+      height = passthrough.getHeight();
       
       String fullPrefix = prefix + fontName + '/';
       for (int i = 0; i < glyphImages.length; i++) {
          try
          {
             glyphImages[i] = Image.createImage(fullPrefix + Integer.toString(i) + ".png");
+            glyphWidths[i] = glyphImages[i].getWidth() + spacing;
+            height = Math.max( height, glyphImages[i].getHeight() + spacing );
          }
          catch( java.io.IOException ioe)
          {
             glyphImages[i] = null;
+            glyphWidths[i] = passthrough.charWidth((char)i);
          }
       }
    }
@@ -67,18 +81,7 @@ public class ImageFont {
     */
    int charWidth( char ch )
    {
-      int result;
-      
-      if ( glyphImages[ch] != null )
-      {
-         result = glyphImages[ch].getWidth() + spacing;
-      }
-      else
-      {
-         result = passthrough.charWidth(ch);
-      }
-      
-      return result;
+      return glyphWidths[ch];
    }
    
    /** 
@@ -90,7 +93,7 @@ public class ImageFont {
        int result = 0;
        
        for (int i = 0; i < offset; i++) {
-          result += this.charWidth(ch[offset+i]);
+          result += glyphWidths[ch[i]];
        }
        
        return result;
@@ -101,10 +104,18 @@ public class ImageFont {
      */
     int	stringWidth(String str)
     {
-       char[] chars = new char[str.length()];
-       str.getChars(0, str.length()-1, chars, 0);
+//       char[] chars = new char[str.length()];
+//       str.getChars(0, str.length(), chars, 0);
+//       
+//       return charsWidth(chars, 0, chars.length);
        
-       return charsWidth(chars, 0, chars.length);
+       int result = 0;
+       
+       for (int i = 0; i < str.length(); i++) {
+          result += glyphWidths[str.charAt(i)];
+       }
+       
+       return result;
     }
     
     /**
@@ -112,7 +123,7 @@ public class ImageFont {
      */
     int	getHeight()
     {
-       return passthrough.getHeight();
+       return height;
     }
     
     /**
@@ -120,7 +131,14 @@ public class ImageFont {
      */
     void drawChar(Graphics graphics, char character, int x, int y, int anchor)
     {
-       graphics.drawChar( character, x, y, anchor );
+       if ( glyphImages[character] != null )
+       {
+          graphics.drawImage( glyphImages[character], x, y, anchor );
+       }
+       else
+       {
+          graphics.drawChar( character, x, y, anchor );
+       }
     }
 
     /**
@@ -128,6 +146,37 @@ public class ImageFont {
      */
     void drawChars(Graphics graphics, char[] data, int offset, int length, int x, int y, int anchor)
     {
-       // Have to start loop and change loop condition based on anchor
+       if ( ( anchor & Graphics.LEFT ) != 0 )
+       {
+          for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
+             drawChar( graphics, data[i], x, y, anchor );
+          }
+       }
+       else if ( ( anchor & Graphics.RIGHT) != 0 )
+       {
+          for (int i = offset+length-1; i >= offset; x-=glyphWidths[data[i]], --i) {
+             drawChar( graphics, data[i], x, y, anchor );
+          }
+       }
+       else // anchor must be Graphics.CENTER
+       {
+          int width = 0;
+          for (int i = offset; i < length; i++) {
+             width += glyphWidths[data[i]];
+          }
+
+          x = x-(width/2);
+          for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
+             drawChar( graphics, data[i], x, y, anchor );
+          }
+       }
     }
+
+   public Font getPassthrough() {
+      return passthrough;
+   }
+
+   public void setPassthrough(Font passthrough) {
+      this.passthrough = passthrough;
+   }
 }

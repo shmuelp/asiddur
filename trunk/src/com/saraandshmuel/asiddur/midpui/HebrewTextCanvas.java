@@ -20,10 +20,10 @@ import com.saraandshmuel.asiddur.common.*;
  */
 public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
     /** The font used for drawing "normal" text */
-    private Font mainFont = Font.getDefaultFont();
+    private ImageFont mainFont = new ImageFont("miriam-22");
     
     /** Class to actually draw the text */
-    private HebrewTextBox painter = new HebrewTextBox(Font.getDefaultFont(), 0, 0, 0);
+    private HebrewTextBox painter = new HebrewTextBox(mainFont, 0, 0, 0);
     //private String statusText = "No key was pressed yet";
     //private Font statusFont = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     
@@ -105,7 +105,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
     * Handle key released events
     * @param keyCode The keycode of the key that was released
     */
-    protected void keyReleased(int keyCode) {
+    protected void keyPressed(int keyCode) {
         // TODO: command pattern?  mediator pattern?
         switch( getGameAction( keyCode ) )  {
             case DOWN:
