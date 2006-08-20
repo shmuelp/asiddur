@@ -9,9 +9,11 @@
 
 package com.saraandshmuel.asiddur.midpui;
 
+import java.io.InputStream;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import com.saraandshmuel.asiddur.common.Logger;
 
 /**
  * Represents a font whose glyphs are made up of image files stored as resources
@@ -43,17 +45,42 @@ public class ImageFont {
    /**
     * Cached widths of the characters
     */
-   int[] glyphWidths = new int[256];
+   byte[] glyphWidths = new byte[256];
+   
+   /** 
+    * The baseline (offset from bottom in pixels) of the font
+    */
+   int baseline=-1;
+   
+   /** 
+    * The baseline of the font, compared to the passthrough baseline
+    */
+   int baselineOffset=-1;
    
    /**
-    * Inter-character spacing
+    * Offset from left
     */
-   int spacing = 2;
+   byte[] leftOffsets = new byte[256];
    
    /**
-    * The height of the font
+    * Offset from right
     */
-   int height = 0;
+   byte[] rightOffsets = new byte[256];
+   
+   /**
+    * Offset from top
+    */
+   byte[] topOffsets = new byte[256];
+   
+   /**
+    * Offset from left
+    */
+   byte[] bottomOffsets = new byte[256];
+   
+   /**
+    * The max height of the font
+    */
+   int height=-1;
    
    /** Creates a new instance of ImageFont */
    public ImageFont(String fontName) {
@@ -61,19 +88,62 @@ public class ImageFont {
       height = passthrough.getHeight();
       
       String fullPrefix = prefix + fontName + '/';
+      
+      InputStream metrics = getClass().getResourceAsStream(fullPrefix + "metrics.bin");
+      if ( metrics == null )
+      {
+         // Font does not exist
+         Logger.log("Warning, font \"fontName\" does not exist, passing through");
+         height = passthrough.getHeight();
+      }
+      else
+      {
+         try
+         {
+            height = metrics.read();
+            height = Math.max(height, passthrough.getHeight());
+            metrics.read();   //ignore
+            baseline = metrics.read();
+            
+            // loop until file is done; exception handler will handle that case
+            // Assume that file format is OK
+            boolean done = false;
+            while (!done)
+            {
+               // No loss of precision unless font is larger than 127 pixels
+               int glyph = metrics.read();
+               if ( glyph == -1 )
+               {
+                  done = true;
+               }
+               else
+               {
+                  leftOffsets[glyph] = (byte) metrics.read();
+                  rightOffsets[glyph] = (byte) metrics.read();
+                  topOffsets[glyph] = (byte) metrics.read();
+                  bottomOffsets[glyph] = (byte) metrics.read();
+               }
+            }
+         }
+         catch( java.io.IOException ioe )
+         {
+         }
+      }
+      
       for (int i = 0; i < glyphImages.length; i++) {
          try
          {
             glyphImages[i] = Image.createImage(fullPrefix + Integer.toString(i) + ".png");
-            glyphWidths[i] = glyphImages[i].getWidth() + spacing;
-            height = Math.max( height, glyphImages[i].getHeight() + spacing );
+            glyphWidths[i] = (byte) (glyphImages[i].getWidth() + leftOffsets[i] + rightOffsets[i]);
          }
          catch( java.io.IOException ioe)
          {
             glyphImages[i] = null;
-            glyphWidths[i] = passthrough.charWidth((char)i);
+            glyphWidths[i] = (byte) passthrough.charWidth((char)i);
          }
       }
+      
+      baselineOffset = (height-baseline) - passthrough.getBaselinePosition();
    }
    
    /**
@@ -133,10 +203,37 @@ public class ImageFont {
     {
        if ( glyphImages[character] != null )
        {
+          if ( (anchor & Graphics.TOP) != 0 )
+          {
+             y += topOffsets[character];
+          }
+          else if ( (anchor & Graphics.BASELINE) != 0 )
+          {
+             y = y - bottomOffsets[character] + baseline;
+             anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
+          }
+          else if ( (anchor & Graphics.BOTTOM) != 0 )
+          {
+             y -= bottomOffsets[character];
+          }
           graphics.drawImage( glyphImages[character], x, y, anchor );
        }
        else
        {
+          if ( (anchor & Graphics.TOP) != 0 )
+          {
+             y += passthrough.getBaselinePosition() + baselineOffset;
+             anchor ^= (Graphics.BASELINE|Graphics.TOP);
+          }
+          else if ( (anchor & Graphics.BASELINE) != 0 )
+          {
+             y += baselineOffset;
+          }
+          else if ( (anchor & Graphics.BOTTOM) != 0 )
+          {
+             y += baseline - baselineOffset;
+             anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
+          }
           graphics.drawChar( character, x, y, anchor );
        }
     }
@@ -158,7 +255,7 @@ public class ImageFont {
              drawChar( graphics, data[i], x, y, anchor );
           }
        }
-       else // anchor must be Graphics.CENTER
+       else if ( ( anchor & Graphics.RIGHT) != 0 ) // anchor must be Graphics.CENTER
        {
           int width = 0;
           for (int i = offset; i < length; i++) {
@@ -169,6 +266,10 @@ public class ImageFont {
           for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
              drawChar( graphics, data[i], x, y, anchor );
           }
+       }
+       else
+       {
+          Logger.log("Unknown anchor used in ImageFont.drawChars!");
        }
     }
 

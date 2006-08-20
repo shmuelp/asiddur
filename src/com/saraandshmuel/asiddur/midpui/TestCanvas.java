@@ -54,27 +54,21 @@ public class TestCanvas extends Canvas {
         //font.setFgColor(0x00000000);
         
         //font.drawString(graphics, string, 20, 20 );
-        graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
+        //graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
         
         ImageFont miriam =  new ImageFont( "miriam-22" );
 
-        int position = graphics.getClipWidth() - 10;
-
-        miriam.drawChar( graphics, 'à', position, 50, Graphics.TOP | Graphics.RIGHT );
-        position -= miriam.charWidth('à');
-
-        miriam.drawChar( graphics, 'ù', position, 50, Graphics.TOP | Graphics.RIGHT );
-        position -= miriam.charWidth('ù');
-
-        miriam.drawChar( graphics, 'ø', position, 50, Graphics.TOP | Graphics.RIGHT );
-        position -= miriam.charWidth('ø');
-
-        miriam.drawChar( graphics, 'é', position, 50, Graphics.TOP | Graphics.RIGHT );
-        position -= miriam.charWidth('é');
+        char []testChars = new char[14];
         
-        char []testChars = new char[4];
-        "éøùà".getChars(0,4,testChars,0);
-        miriam.drawChars( graphics, testChars, 0, 4, graphics.getClipWidth()-10, 70, Graphics.TOP | Graphics.RIGHT );
+        "éøùà, pot".getChars(0,9,testChars,0);
+        miriam.drawChars( graphics, testChars, 0, 9, graphics.getClipWidth()-10, 0, Graphics.TOP | Graphics.RIGHT );
+        
+        "éøùà, mottob".getChars(0,12,testChars,0);
+        miriam.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, 40, Graphics.BOTTOM | Graphics.RIGHT );
+        
+        "éøùà, enilesab".getChars(0,14,testChars,0);
+        miriam.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, 60, Graphics.BOTTOM | Graphics.RIGHT );
+        
     }
 
     /**
