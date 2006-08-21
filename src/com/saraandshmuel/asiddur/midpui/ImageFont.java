@@ -203,6 +203,7 @@ public class ImageFont {
     {
        if ( glyphImages[character] != null )
        {
+          // Adjust vertical padding to line up along baseline
           if ( (anchor & Graphics.TOP) != 0 )
           {
              y += topOffsets[character];
@@ -216,6 +217,21 @@ public class ImageFont {
           {
              y -= bottomOffsets[character];
           }
+          
+          // Add appropriate horizontal padding
+          if ( (anchor & Graphics.LEFT) != 0 )
+          {
+             x += leftOffsets[character];
+          }
+          else if ( (anchor & Graphics.HCENTER) != 0 )
+          {
+             x += ( leftOffsets[character] - rightOffsets[character])/2;
+          }
+          else if ( (anchor & Graphics.RIGHT) != 0 )
+          {
+             x -= rightOffsets[character];
+          }
+          
           graphics.drawImage( glyphImages[character], x, y, anchor );
        }
        else
