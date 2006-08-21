@@ -32,7 +32,7 @@ ScriptLang: 3
  1 latn 1 dflt 
 Encoding: Custom
 UnicodeInterp: none
-DisplaySize: 14
+DisplaySize: 20
 AntiAlias: 1
 FitToEm: 1
 WinInfo: 56 28 10
@@ -7574,7 +7574,7 @@ BDFChar: 148 306 12 1 10 0 10
 BDFChar: 149 307 11 1 9 0 10
 p])?8#64i+!rrE'!rrE'!rrE's*t(L
 BDFChar: 150 308 9 1 7 0 10
-E&\77"9\iK2J0r/
+E&\77$jHnW2J0r/
 BDFChar: 151 309 11 1 9 0 10
 s*t1O!rrE'!rrE'!rrE'!rrE'!rr<$
 BDFChar: 152 310 12 1 10 0 10
@@ -7598,7 +7598,7 @@ BDFChar: 160 318 11 1 9 0 13
 BDFChar: 161 319 12 1 10 0 10
 rW'uh_19>:^qdb$^qdb$^qdb$s1eU7
 BDFChar: 162 320 12 1 10 0 10
-rW$S]@=Vb$@)-0c@)-0c5eoY#cbKM\
+rW$S]@=Vb$@)-0c@)-0c@)-0cDnl>Q
 BDFChar: 163 321 4 1 2 -4 10
 ^qdb$^qdb$^qdb$^qd_c
 BDFChar: 164 322 7 1 5 0 10
@@ -7606,7 +7606,7 @@ i,CXm(`4),(`<#J
 BDFChar: 165 323 11 1 10 0 10
 rW'uh_19>:^qdb$^qdb$@=WEL*WQ0?
 BDFChar: 166 324 11 1 9 -1 10
-6%EBo@=Vd:+b1_d0n;!/0n:&?4ojL@
+6%EBo@=Vd:@=U(_0n;!/0n:>G4ojL@
 BDFChar: 167 325 11 1 9 -4 10
 rW't=_19@PnUNWM!It3$!It3$!It3$!It3$!It.M
 BDFChar: 168 326 11 1 9 0 10
