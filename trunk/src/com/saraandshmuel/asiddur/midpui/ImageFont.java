@@ -30,57 +30,57 @@ public class ImageFont {
    /**
     * Prefix to resources
     */
-   String prefix = "/res/";
+   private String prefix = "/res/";
    
    /**
     * The name of the font
     */
-   String fontName;
+   private String fontName;
    
    /**
     * Cached images of the glyphs; null if not present
     */
-   Image[] glyphImages = new Image[256];
+   private Image[] glyphImages = new Image[256];
    
    /**
     * Cached widths of the characters
     */
-   byte[] glyphWidths = new byte[256];
+   private byte[] glyphWidths = new byte[256];
    
    /** 
     * The baseline (offset from bottom in pixels) of the font
     */
-   int baseline=-1;
+   private int baseline=-1;
    
    /** 
     * The baseline of the font, compared to the passthrough baseline
     */
-   int baselineOffset=-1;
+   private int baselineOffset=-1;
    
    /**
     * Offset from left
     */
-   byte[] leftOffsets = new byte[256];
+   private byte[] leftOffsets = new byte[256];
    
    /**
     * Offset from right
     */
-   byte[] rightOffsets = new byte[256];
+   private byte[] rightOffsets = new byte[256];
    
    /**
     * Offset from top
     */
-   byte[] topOffsets = new byte[256];
+   private byte[] topOffsets = new byte[256];
    
    /**
     * Offset from left
     */
-   byte[] bottomOffsets = new byte[256];
+   private byte[] bottomOffsets = new byte[256];
    
    /**
     * The max height of the font
     */
-   int height=-1;
+   private int height=-1;
    
    /** Creates a new instance of ImageFont */
    public ImageFont(String fontName) {
@@ -279,5 +279,9 @@ public class ImageFont {
 
    public void setPassthrough(Font passthrough) {
       this.passthrough = passthrough;
+   }
+
+   public int getBaselinePosition() {
+      return baseline;
    }
 }

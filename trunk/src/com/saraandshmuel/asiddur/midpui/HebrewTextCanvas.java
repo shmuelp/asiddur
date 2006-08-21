@@ -20,7 +20,7 @@ import com.saraandshmuel.asiddur.common.*;
  */
 public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
     /** The font used for drawing "normal" text */
-    private ImageFont mainFont = new ImageFont("miriam-22");
+    private ImageFont mainFont = new ImageFont("nachlieli-20");
     
     /** Class to actually draw the text */
     private HebrewTextBox painter = new HebrewTextBox(mainFont, 0, 0, 0);

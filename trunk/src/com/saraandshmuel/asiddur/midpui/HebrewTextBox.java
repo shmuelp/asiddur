@@ -47,7 +47,7 @@ public class HebrewTextBox {
     /**
      * The font adapter used to draw Hebrew text
      */
-    private ImageFont font = new ImageFont("miriam-22");
+    private ImageFont font = new ImageFont("nachlieli-20");
     
     /**
      * Utility class for computing and storing the line layout of the text
@@ -120,7 +120,7 @@ public class HebrewTextBox {
         FastIntVector lineOffsets = layout.lineLengths;
         final int lastLine = Math.min( lineOffsets.size(), 
                                        line + 1 + getVisibleLineCount());
-        final int fontHeight = font.getHeight();
+        final int fontHeight = font.getHeight() - font.getBaselinePosition();
         
         //Logger.log("Painter.paintText() Drawing lines...\n");
         //System.out.println("About to draw, line=" + line + ", lastLine=" + lastLine);
@@ -217,7 +217,7 @@ public class HebrewTextBox {
     * @return the number of lines
     */
     private final int getVisibleLineCount() {
-        return lastHeight / font.getHeight();
+        return lastHeight / (font.getHeight() - font.getBaselinePosition());
     }
     
    /**
