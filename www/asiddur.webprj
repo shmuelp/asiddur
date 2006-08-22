@@ -1,0 +1,16 @@
+<!DOCTYPE webproject>
+<webproject>
+  <project type="Local" name="asiddur" encoding="utf8" >
+    <upload/>
+    <author>S. Popper</author>
+    <email>asiddur@gmail.com</email>
+    <defaultDTD>-//W3C//DTD XHTML 1.0 Strict//EN</defaultDTD>
+    <item url="" uploadstatus="1" />
+    <templates>templates/</templates>
+    <toolbars>toolbars/</toolbars>
+    <item modified_time="1156219128" url="asiddur.html" uploadstatus="1" />
+    <item modified_time="1156218501" url="ASiddur.jad" uploadstatus="1" />
+    <item modified_time="1156218501" url="ASiddur.jar" uploadstatus="1" />
+    <annotations/>
+  </project>
+</webproject>
