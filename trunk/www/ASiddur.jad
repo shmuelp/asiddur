@@ -1,0 +1,8 @@
+MIDlet-1: ASiddur,,com.saraandshmuel.asiddur.midpui.ASiddurMidlet
+MIDlet-Jar-Size: 94204
+MIDlet-Jar-URL: ASiddur.jar
+MIDlet-Name: ASiddur
+MIDlet-Vendor: shmuelp
+MIDlet-Version: 00.01.00
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-2.0
