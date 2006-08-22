@@ -2,14 +2,17 @@
 <webprojectsession>
   <session usePreviewPrefix="0" previewPrefix="" >
     <itemcursorpositions>
-      <item line="22" column="279" url="asiddur.html" />
+      <item line="26" column="0" url="asiddur.html" />
+      <item line="9" column="6" url="demo.html" />
     </itemcursorpositions>
     <uploadprofiles defaultProfile="@" >
       <profile remote_host="" remote_port="" remote_path="" remote_protocol="ftp" user="" name="@" />
       <profile remote_host="ftpmysite.verizon.net" remote_port="" remote_path="/" remote_protocol="ftp" user="asiddur" name="ASiddur - verizon" >
         <uploadeditem upload_time="1156218501" url="ASiddur.jad" />
         <uploadeditem upload_time="1156218501" url="ASiddur.jar" />
+        <uploadeditem upload_time="1156221722" url="ASiddur.zip" />
         <uploadeditem upload_time="1156219128" url="asiddur.html" />
+        <uploadeditem upload_time="1156223076" url="demo.html" />
       </profile>
     </uploadprofiles>
   </session>
