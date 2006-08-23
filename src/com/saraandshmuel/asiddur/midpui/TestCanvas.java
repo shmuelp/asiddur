@@ -56,18 +56,18 @@ public class TestCanvas extends Canvas {
         //font.drawString(graphics, string, 20, 20 );
         //graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
         
-        ImageFont miriam =  new ImageFont( "nachlieli-20" );
+        ImageFont font =  new ImageFont( "nachlieli-20" );
 
         char []testChars = new char[14];
         
         "éøùà, pot".getChars(0,9,testChars,0);
-        miriam.drawChars( graphics, testChars, 0, 9, graphics.getClipWidth()-10, 0, Graphics.TOP | Graphics.RIGHT );
+        font.drawChars( graphics, testChars, 0, 9, graphics.getClipWidth()-10, 0, Graphics.TOP | Graphics.RIGHT );
         
         "éøùà, mottob".getChars(0,12,testChars,0);
-        miriam.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, 40, Graphics.BOTTOM | Graphics.RIGHT );
+        font.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, 40, Graphics.BOTTOM | Graphics.RIGHT );
         
         "éøùà, enilesab".getChars(0,14,testChars,0);
-        miriam.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, 60, Graphics.BOTTOM | Graphics.RIGHT );
+        font.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, 60, Graphics.BOTTOM | Graphics.RIGHT );
         
     }
 
