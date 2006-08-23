@@ -19,17 +19,22 @@ import com.saraandshmuel.asiddur.common.*;
  * @author shmuelp
  */
 public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
-    /** The font used for drawing "normal" text */
-    private ImageFont mainFont = new ImageFont("nachlieli-20");
+
+   /**
+    * Reference to the mediator for the midlet
+    */
+   private MidpMediator mediator = null;
+    
+    //private TefillaReader reader = null;
     
     /** Class to actually draw the text */
-    private HebrewTextBox painter = new HebrewTextBox(mainFont, 0, 0, 0);
+    private HebrewTextBox textBox;
     //private String statusText = "No key was pressed yet";
     //private Font statusFont = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     
     /** 
      * Creates a new instance of HebrewTextCustomItem 
-     * @param dummy Dummy string
+     * @param dummy Dummy string required by NetBeans generated code
      */
     public HebrewTextCanvas(String dummy) {
         super();
@@ -60,33 +65,35 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
             //                    getWidth(), getHeight() - statusFont.getHeight() );
             
             
-            final int scrollBarWidth = mainFont.charWidth('r');
+            final int scrollBarWidth = mediator.getFont().charWidth('r');
 
             // Draw top text
             // Fudge left border to prevent drawing off the screen
-            painter.paintText(graphics, 10 + scrollBarWidth, 0, getWidth(), 
+            textBox.paintText(graphics, 10 + scrollBarWidth, 0, getWidth(), 
                               getHeight() );
 
             // Draw "scroll bar"
             graphics.setColor( 170, 170, 170 );
             graphics.fillRect( 0, 0, scrollBarWidth, getHeight() );
             graphics.setColor( 0, 0, 0 );
-            final int numLines = painter.getLastLine();
-            final int position = painter.getLine();
-            final int numVisible = painter.getLastVisibleLine() - position;
+            final int numLines = textBox.getLastLine();
+            final int position = textBox.getLine();
+            final int numVisible = textBox.getLastVisibleLine() - position;
             final int handleHeight = Math.max(numVisible * getHeight() / numLines, 5);
             graphics.fillRect( 0, position* getHeight() / numLines, 
                                scrollBarWidth, handleHeight );
             
+        } catch( NullPointerException npe ) {
+            Logger.log("HebrewTextCanvas.paint() - mediator was never set!\n");
         } catch( Throwable t ) {
-            Logger.log("Canvas.paint() - unexpected exception: \n" + t.getMessage() + '\n');
+            Logger.log("HebrewTextCanvas.paint() - unexpected exception: \n" + t.getMessage() + '\n');
             t.printStackTrace();
         }
         //Logger.log("Canvas.paint() Ending\n");
     }
 
 //     private void setStatusText( int keycode, boolean current ) {
-//         statusText = painter.getShownPercentage() + "%" 
+//         statusText = textBox.getShownPercentage() + "%" 
 //                     + "| "
 //                     + getKeyName(keycode)
 //                     + " key "
@@ -149,26 +156,30 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
 //         setStatusText(keyCode, false);
     }
     
-   /**
-    * Sets the source of the text
-    * @param tefillaReader The text source
-    */
-    public void setTefillaReader( TefillaReader tefillaReader ) {
-        painter.setTefillaReader(tefillaReader);
-    }
+//   /**
+//    * Sets the source of the text
+//    * @param tefillaReader The text source
+//    */
+//    public void setTefillaReader( TefillaReader tefillaReader ) {
+//       this.reader = tefillaReader;
+//       if ( textBox != null )
+//       {
+//          textBox.setTefillaReader(tefillaReader);
+//       }
+//    }
 
     /**
      * Resets the position and re-lays out the text
      */
     public void resetMainText() {
-        painter.resetText();
+        textBox.resetText();
     }
     
     /**
      * Scrolls up one screen
      */
     public void scrollUp() {
-        painter.scrollUp();
+        textBox.scrollUp();
         repaint();
     }
     
@@ -176,7 +187,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
      * Scrolls down one screen
      */
     public void scrollDown() {
-        painter.scrollDown();
+        textBox.scrollDown();
         repaint();
     }
     
@@ -184,7 +195,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
      * Goes up to the previous navigation mark
      */
     public void navUp() {
-        painter.prevNavigationMark();
+        textBox.prevNavigationMark();
         repaint();
     }
     
@@ -192,7 +203,12 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
      * Goes down to the next navigation mark
      */
     public void navDown() {
-        painter.nextNavigationMark();
+        textBox.nextNavigationMark();
         repaint();
     }
+
+   public void setMediator(MidpMediator mediator) {
+      this.mediator = mediator;
+      this.textBox = new HebrewTextBox(mediator, 0, 0, 0);
+   }
 }

@@ -11,8 +11,8 @@ import javax.microedition.lcdui.Font;
 class HebrewTextLayout {
 
    /** Creates a new instance of HebrewTextLayout */
-   public HebrewTextLayout( ImageFont font) {
-      this.font = font;
+   public HebrewTextLayout( MidpMediator mediator ) {
+      this.mediator= mediator;
    }
    
    /**
@@ -35,7 +35,12 @@ class HebrewTextLayout {
    /**
     * The font used to compute the last layout
     */
-   public ImageFont font;
+   public ImageFont font = null;
+   
+   /**
+    * Reference to the mediator (needed for the font)
+    */
+   private MidpMediator mediator;
    
    /**
     * The positions of the ending character of each line in the computed layout

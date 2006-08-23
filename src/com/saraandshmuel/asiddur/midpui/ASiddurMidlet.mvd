@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MVDData version="1.2">
-    <DesignDocument designVersion="MIDP-2" uidCounter="140">
+    <DesignDocument designVersion="MIDP-2" uidCounter="146">
         <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
         <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
             <Property value="MainForm" name="targetDisplayable"/>
@@ -23,6 +23,8 @@
                 <ContainerPropertyItem value="spacer2"/>
                 <ContainerPropertyItem value="tefillaChoiceGroup"/>
                 <ContainerPropertyItem value="spacer3"/>
+                <ContainerPropertyItem value="fontChoiceGroup"/>
+                <ContainerPropertyItem value="spacer4"/>
                 <ContainerPropertyItem value="useDateField"/>
             </ContainerProperty>
         </DesignComponent>
@@ -419,6 +421,43 @@
             <Property value="testCommand1" name="actionSource"/>
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
+        <DesignComponent uid="140" id="fontChoiceGroup" typeid="MIDP:javax.microedition.lcdui.ChoiceGroup">
+            <Property value="STRING:Choose font:" name="label"/>
+            <Property value="POPUP" name="choiceType"/>
+            <ContainerProperty name="commands"/>
+            <ContainerProperty name="elements">
+                <ContainerPropertyItem value="Midp2ChoiceElementDC3"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC4"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC1"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC2"/>
+            </ContainerProperty>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="141" id="Midp2ChoiceElementDC1" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Nachlieli-20" name="string"/>
+            <Property name="image"/>
+            <Property value="true" name="selected"/>
+        </DesignComponent>
+        <DesignComponent uid="142" id="Midp2ChoiceElementDC2" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Miriam-22" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
+        </DesignComponent>
+        <DesignComponent uid="143" id="Midp2ChoiceElementDC3" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Native" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
+        </DesignComponent>
+        <DesignComponent uid="144" id="Midp2ChoiceElementDC4" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Native (reversed)" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
+        </DesignComponent>
+        <DesignComponent uid="145" id="spacer4" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property value="1000" name="minWidth"/>
+            <Property value="1" name="minHeight"/>
+            <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
     </DesignDocument>
     <FlowDocument version="1.1">
         <Node id="$MobileDevice" location="160,848" order=",$StartPoint,,,,,,,,,$ExitPoint,,,,,"/>
@@ -429,8 +468,9 @@
         <Node id="todoForm" location="880,768" order="$CommandAction21,$CommandAction22,,,,,,,,,$Default,,,,,"/>
         <Node id="aboutForm" location="880,920" order="$CommandAction13,$CommandAction19,,,,,,,,,$Default,,,,,"/>
         <Node id="debugOutputForm" location="640,848" order="$CommandAction12,$CommandAction18,$CommandAction20,,,,,,,,$Default,,,,,"/>
-        <Node id="testCanvas" location="144,128" order="$CommandAction16,$CommandAction23,$CommandAction24,,,,,,,,$Default,,,,,"/>
         <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
+        <Node id="testCanvas" location="144,128" order="$CommandAction16,$CommandAction23,$CommandAction24,,,,,,,,$Default,,,,,"/>
+        <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
         <Link id="$CommandAction$ActionLink" path="432,840,523,840,523,880,47,880,47,824,120,824"/>
         <Link id="$CommandAction2$ActionLink" path="432,824,492,824,492,1296,600,1296"/>
         <Link id="$CommandAction3$ActionLink" path="680,1296,772,1296,772,1216,47,1216,47,824,120,824"/>
@@ -457,7 +497,6 @@
         <Link id="$CommandAction10$ActionLink" path="680,600,770,600,770,659,300,659,300,824,352,824"/>
         <Link id="$CommandAction25$ActionLink" path="680,584,792,584,792,642,47,642,47,824,120,824"/>
         <Link id="$CommandAction26$ActionLink" path="680,568,780,568,780,756,519,756,519,824,600,824"/>
-        <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
         <Link id="$CommandAction27$ActionLink" path="400,776,400,584,600,584"/>
         <Link id="$CommandAction28$ActionLink" path="384,776,384,553,54,553,54,104,104,104"/>
     </FlowDocument>
