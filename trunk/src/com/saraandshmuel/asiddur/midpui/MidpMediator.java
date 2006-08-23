@@ -29,6 +29,16 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     */
     private ASiddurMidlet midlet;
     
+    /** 
+     * Reference to the font to use for drawing
+     */
+    private ImageFont font;
+    
+    /**
+     * Controls whether or not the text is reordered or not
+     */
+    private boolean reorder = true;
+    
     /**
     * Creates a new instance of MidpMediator
     * @param midlet Reference to the midlet
@@ -36,6 +46,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     public MidpMediator(ASiddurMidlet midlet) {
         this.midlet = midlet;
         Logger.setLog(this);
+        font = new ImageFont("nachlieli-20");
     }
 
    /**
@@ -49,6 +60,31 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     public void itemStateChanged(Item item) {
         if( item == midlet.getUseDateField() ) {
             setDate(((javax.microedition.lcdui.DateField)item).getDate());
+        } else if ( item == midlet.getFontChoiceGroup() ) {
+           String fontName="";
+           ChoiceGroup fontChoice = (ChoiceGroup) item;
+           boolean reorder = true;
+           
+           switch( fontChoice.getSelectedIndex() ) {
+              case 0:   // Default
+                 reorder = false;
+                 // Intentional fall-through
+                 
+              case 1:   // Default (reversed)
+                 fontName = "Native";
+                 break;
+                 
+              case 2:
+                 fontName = "nachlieli-20";
+                 break;
+                 
+              case 3:
+                 fontName = "miriam-22";
+                 break;
+           }
+           
+           this.font = new ImageFont(fontName);
+           this.reorder = reorder;
         }
     }
     
@@ -120,5 +156,18 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
             si.setText(s);
         }
     }
+  
+  public ImageFont getFont()
+  {
+     return font;
+  }
+  
+  public void setFont( ImageFont font )
+  {
+     this.font = font;
+  }
 
+   public boolean isReordered() {
+      return reorder;
+   }
 }

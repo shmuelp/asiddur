@@ -56,7 +56,9 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private Form showChoicesForm;
     private StringItem choiceString;
     private Command summaryCommand;
-    private Command testCommand1;//GEN-END:MVDFields
+    private Command testCommand1;
+    private ChoiceGroup fontChoiceGroup;
+    private Spacer spacer4;//GEN-END:MVDFields
 //    private char[] testText;
     
     private MidpMediator mediator = new MidpMediator(this);
@@ -69,26 +71,44 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
         // Insert pre-init code here
        spacer1 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+       fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
+          "Native",
+          "Native (reversed)",
+          "Nachlieli-20",
+          "Miriam-22"
+       }, new Image[] {
+          null,
+          null,
+          null,
+          null
+       });
+       fontChoiceGroup.setSelectedFlags(new boolean[] {
+          false,
+          false,
+          true,
+          false
+       });
        tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-       spacer3 = new Spacer(1000, 1);
+       spacer4 = new Spacer(1000, 1);
+       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
        daavenCanvas.addCommand(get_backToMainCommand());
        daavenCanvas.addCommand(get_debugOutputCommand());
        daavenCanvas.addCommand(get_exitCommand());
        daavenCanvas.setCommandListener(this);
        spacer2 = new Spacer(1000, 1);
-       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
+       spacer3 = new Spacer(1000, 1);
        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
-        daavenCanvas.setTefillaReader(mediator.getTefillaReader());
+        daavenCanvas.setMediator(mediator);
         final String[] texts = mediator.getTextLabels();
         for (int i = 0; i < texts.length; i++) {
             tefillaChoiceGroup.append(texts[i], null);
         }
         get_MainForm().setItemStateListener(mediator);
         mediator.setDate(new java.util.Date());
-        mediator.chooseText(1);
+        //mediator.chooseText(1);
     }//GEN-LINE:MVDInitEnd
     
     /** Called by the system to indicate that a command has been invoked on a particular displayable.//GEN-BEGIN:MVDCABegin
@@ -284,6 +304,8 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
              spacer2,
              tefillaChoiceGroup,
              spacer3,
+             fontChoiceGroup,
+             spacer4,
              useDateField
           });
           MainForm.addCommand(get_daavenCommand());
@@ -594,6 +616,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
           testCanvas.addCommand(get_exitCommand());
           testCanvas.setCommandListener(this);//GEN-END:MVDGetInit122
             // Insert post-init code here
+          testCanvas.setMediator(mediator);
        }//GEN-BEGIN:MVDGetEnd122
        return testCanvas;
     }//GEN-END:MVDGetEnd122
@@ -661,7 +684,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        }//GEN-BEGIN:MVDGetEnd138
        return testCommand1;
     }//GEN-END:MVDGetEnd138
-  
+   
  
     public void startApp() {
         initialize();
@@ -685,4 +708,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
         return tefillaChoiceGroup;
     }
     
+   public ChoiceGroup getFontChoiceGroup() {
+      return fontChoiceGroup;
+   }
 }

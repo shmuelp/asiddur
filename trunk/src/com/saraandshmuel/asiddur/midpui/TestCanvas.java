@@ -24,6 +24,8 @@ public class TestCanvas extends Canvas {
    /** The string to draw */
     private String string = "Hello, world - éøùà";
     
+    private MidpMediator mediator;
+    
     /** Creates a new instance of TestCanvas */
     public TestCanvas() {
         //InputStream is = getClass().getResourceAsStream("/res/clR6x12-ISO8859-8.pcf");
@@ -56,7 +58,7 @@ public class TestCanvas extends Canvas {
         //font.drawString(graphics, string, 20, 20 );
         //graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
         
-        ImageFont font =  new ImageFont( "nachlieli-20" );
+        ImageFont font =  mediator.getFont();
 
         char []testChars = new char[14];
         
@@ -93,6 +95,7 @@ public class TestCanvas extends Canvas {
     {
        return fontSizeInfo(Font.getFont(font));
     }
+    
     private String fontSizeInfo( javax.microedition.lcdui.Font font ) 
     {
        StringBuffer sb = new StringBuffer( "height=");
@@ -107,5 +110,9 @@ public class TestCanvas extends Canvas {
        
        return sb.toString();
     }
+
+   public void setMediator(MidpMediator mediator) {
+      this.mediator = mediator;
+   }
 
 }

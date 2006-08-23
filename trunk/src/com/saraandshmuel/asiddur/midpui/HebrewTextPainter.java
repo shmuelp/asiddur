@@ -24,18 +24,13 @@ public class HebrewTextPainter {
    private final char VT = 11; //'\v'
    
    /**
-    * Font adapter to draw the font
+    * Reference to the mediator
     */
-   private final ImageFont font;
-   
-   /**
-    * Determines whether or not to reorder the lines
-    */
-   private boolean reorder = true;
+   private final MidpMediator mediator;
    
    /** Creates a new instance of HebrewTextPainter */
-   public HebrewTextPainter( ImageFont font ) {
-      this.font = font;
+   public HebrewTextPainter( MidpMediator mediator ) {
+      this.mediator = mediator;
    }
    
    /**
@@ -50,13 +45,15 @@ public class HebrewTextPainter {
     */
    public void drawChars( Graphics graphics,
            TefillaReader reader,
+           ImageFont font,
+           boolean reorder,
            int offset,
            int length,
            int x,
            int y) {
       char[] buffer = new char[length];
       reader.getTextChars(offset, length, buffer);
-      buffer = logicalToVisual(buffer);
+      buffer = logicalToVisual(buffer, reorder);
       font.drawChars( graphics, buffer, 0, length, x, y, Graphics.TOP | Graphics.RIGHT );
 //      graphics.drawChars( buffer,
 //              0,
@@ -71,7 +68,7 @@ public class HebrewTextPainter {
     * @param text The text to convert
     * @return The converted text
     */
-   public final char[] logicalToVisual( final char[] text ) {
+   public final char[] logicalToVisual( final char[] text, boolean reorder ) {
       //Logger.log("Layout.layoutLines() Beginning...\n");
       char[] ret = new char[text.length];
 

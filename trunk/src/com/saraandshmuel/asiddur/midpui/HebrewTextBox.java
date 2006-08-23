@@ -39,25 +39,25 @@ public class HebrewTextBox {
      */
     private char[] text = new char[0];
     
-    /**
-     * TefillaReader object from which to read the text
-     */
-    private TefillaReader tefillaReader;
+//    /**
+//     * TefillaReader object from which to read the text
+//     */
+//    private TefillaReader tefillaReader;
     
     /**
-     * The font adapter used to draw Hebrew text
+     * Reference to the mediator for the MIDP application
      */
-    private ImageFont font = new ImageFont("nachlieli-20");
+    private MidpMediator mediator;
     
     /**
      * Utility class for computing and storing the line layout of the text
      */
-    private HebrewTextLayout layout = new HebrewTextLayout( font );
+    private HebrewTextLayout layout;
     
     /**
      * Utility class for painting characters
      */
-    private HebrewTextPainter painter = new HebrewTextPainter( font );
+    private HebrewTextPainter painter;
     
     /**
      * The first visible line to show
@@ -77,11 +77,14 @@ public class HebrewTextBox {
     * @param green The green component of the foreground color
     * @param blue The blue component of the foreground color
     */
-    public HebrewTextBox(ImageFont font, int red, int green, int blue) {
-        this.font=font;
+    public HebrewTextBox(MidpMediator mediator, int red, int green, int blue) {
+        this.mediator = mediator;
         this.red=red;
         this.green=green;
         this.blue=blue;
+        
+        this.layout = new HebrewTextLayout( mediator );
+        this.painter = new HebrewTextPainter( mediator );
     }
     
    /**
@@ -105,9 +108,11 @@ public class HebrewTextBox {
         --x2;
         --y2;
        
+        ImageFont font = mediator.getFont();
         lastHeight = y2-y1;
         graphics.setColor(red, green, blue);
         graphics.setFont( font.getPassthrough() );
+        TefillaReader tefillaReader = mediator.getTefillaReader();
 
         if( !layout.isValid( x2-x1, font ) ) {
             layout.updateLayout( tefillaReader, x2-x1, font);
@@ -122,6 +127,8 @@ public class HebrewTextBox {
                                        line + 1 + getVisibleLineCount());
         final int fontHeight = font.getHeight() - font.getBaselinePosition();
         
+        boolean reorder = mediator.isReordered();
+        
         //Logger.log("Painter.paintText() Drawing lines...\n");
         //System.out.println("About to draw, line=" + line + ", lastLine=" + lastLine);
         for( int i=line+1; i < lastLine; ++i ) {
@@ -129,6 +136,8 @@ public class HebrewTextBox {
             
             painter.drawChars( graphics,
                                tefillaReader, 
+                               font,
+                               reorder,
                                lineOffsets.elementAt(i-1)+1, 
                                lineOffsets.elementAt(i)-lineOffsets.elementAt(i-1), 
                                x2, 
@@ -217,6 +226,7 @@ public class HebrewTextBox {
     * @return the number of lines
     */
     private final int getVisibleLineCount() {
+        ImageFont font = mediator.getFont();
         return lastHeight / (font.getHeight() - font.getBaselinePosition());
     }
     
@@ -269,11 +279,11 @@ public class HebrewTextBox {
         return line;
     }
 
-   /**
-    * Sets the TefillaReader from which to read the text
-    * @param tefillaReader the TefillaReader from which to read the text
-    */
-    public void setTefillaReader(TefillaReader tefillaReader) {
-        this.tefillaReader = tefillaReader;
-    }
+//   /**
+//    * Sets the TefillaReader from which to read the text
+//    * @param tefillaReader the TefillaReader from which to read the text
+//    */
+//    public void setTefillaReader(TefillaReader tefillaReader) {
+//        this.tefillaReader = tefillaReader;
+//    }
 }
