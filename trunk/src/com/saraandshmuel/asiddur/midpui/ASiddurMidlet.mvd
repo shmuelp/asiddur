@@ -468,8 +468,8 @@
         <Node id="todoForm" location="880,768" order="$CommandAction21,$CommandAction22,,,,,,,,,$Default,,,,,"/>
         <Node id="aboutForm" location="880,920" order="$CommandAction13,$CommandAction19,,,,,,,,,$Default,,,,,"/>
         <Node id="debugOutputForm" location="640,848" order="$CommandAction12,$CommandAction18,$CommandAction20,,,,,,,,$Default,,,,,"/>
-        <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
         <Node id="testCanvas" location="144,128" order="$CommandAction16,$CommandAction23,$CommandAction24,,,,,,,,$Default,,,,,"/>
+        <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
         <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
         <Link id="$CommandAction$ActionLink" path="432,840,523,840,523,880,47,880,47,824,120,824"/>
         <Link id="$CommandAction2$ActionLink" path="432,824,492,824,492,1296,600,1296"/>

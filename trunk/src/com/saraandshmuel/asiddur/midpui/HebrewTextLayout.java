@@ -202,5 +202,18 @@ class HebrewTextLayout {
       return rows;
    }
    
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.font = null;
+       this.lineLengths.releaseReferences();
+       this.lineLengths = null;
+       this.mediator = null;
+       this.navigationMarks.releaseReferences();
+       this.navigationMarks = null;
+    }
 }
 

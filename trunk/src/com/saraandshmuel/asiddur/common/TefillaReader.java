@@ -123,4 +123,17 @@ public class TefillaReader {
     public int getTextLength() {
        return strategy.getTextLength();
     }
+
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       if ( strategy instanceof TefillaBufferReaderStrategy ) {
+          TefillaBufferReaderStrategy tbrs = (TefillaBufferReaderStrategy) strategy;
+          tbrs.releaseReferences();
+       }
+       this.strategy = null;
+    }
 }

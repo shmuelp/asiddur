@@ -286,4 +286,18 @@ public class HebrewTextBox {
 //    public void setTefillaReader(TefillaReader tefillaReader) {
 //        this.tefillaReader = tefillaReader;
 //    }
+
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.layout.releaseReferences();
+       this.layout = null;
+       this.mediator = null;
+       this.painter.releaseReferences();
+       this.painter = null;
+       this.text = null;
+    }
 }

@@ -17,6 +17,8 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     
     /** Creates a new instance of HelloMidlet */
     public ASiddurMidlet() {
+        System.out.println("ASiddurMidlet is being constructed");
+        System.out.flush();
         mediator.chooseText(-1);
     }
 
@@ -687,13 +689,19 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
    
  
     public void startApp() {
+        System.out.println("ASiddurMidlet is being started");
+        System.out.flush();
         initialize();
+        System.out.println("ASiddurMidlet: start complete");
+        System.out.flush();
     }
     
     public void pauseApp() {
     }
     
     public void destroyApp(boolean unconditional) {
+       mediator.releaseReferences();
+       System.gc();
     }
     
     public DateField getUseDateField() {
@@ -711,4 +719,53 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
    public ChoiceGroup getFontChoiceGroup() {
       return fontChoiceGroup;
    }
+
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.MainForm = null;
+       this.aboutCommand = null;
+       this.aboutString = null;
+       this.backToHelpCommand = null;
+       this.backToMainCommand = null;
+       this.choiceString = null;
+       this.clearCommand = null;
+       if ( this.daavenCanvas != null) { this.daavenCanvas.releaseReferences();}
+       this.daavenCanvas = null;
+       this.daavenCommand = null;
+       this.debugOutput = null;
+       this.debugOutputCommand = null;
+       this.debugOutputForm = null;
+       this.exitCommand = null;
+       this.fontChoiceGroup = null;
+       this.hebrewDateString = null;
+       this.helpCommand = null;
+       this.helpCommand1 = null;
+       this.helpDescription = null;
+       this.helpForm = null;
+       this.mediator = null;
+       this.menuCommand = null;
+       this.settingsCommand = null;
+       this.settingsDescription = null;
+       this.settingsForm = null;
+       this.showChoicesForm = null;
+       this.spacer1 = null;
+       this.spacer2 = null;
+       this.spacer3 = null;
+       this.spacer4 = null;
+       this.stringItem1 = null;
+       this.summaryCommand = null;
+       this.tefillaChoiceGroup = null;
+       if ( this.testCanvas != null ) { this.testCanvas.releaseReferences(); }
+       this.testCanvas = null;
+       this.testCommand = null;
+       this.testCommand1 = null;
+       this.todoCommand = null;
+       this.todoForm = null;
+       this.topStringItem = null;
+       this.useDateField = null;
+    }
 }
