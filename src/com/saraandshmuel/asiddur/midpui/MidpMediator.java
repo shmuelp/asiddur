@@ -170,4 +170,16 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
    public boolean isReordered() {
       return reorder;
    }
+
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       super.releaseReferences();
+       this.font.releaseReferences();
+       this.font = null;
+       this.midlet.releaseReferences();
+    }
 }

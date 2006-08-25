@@ -136,5 +136,18 @@ public abstract class ASiddurMediator implements AppendLog {
         return tefillaReader;
     }
     
-    
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.englishCalendar = null;
+       this.englishDate = null;
+       this.hebrewDate = null;
+       tefillaReader.releaseReferences();
+       this.tefillaReader = null;
+       textFunctions.releaseReferences();
+       this.textFunctions = null;
+    }
 }

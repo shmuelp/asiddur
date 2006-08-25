@@ -26,7 +26,7 @@ public class HebrewTextPainter {
    /**
     * Reference to the mediator
     */
-   private final MidpMediator mediator;
+   private MidpMediator mediator;
    
    /** Creates a new instance of HebrewTextPainter */
    public HebrewTextPainter( MidpMediator mediator ) {
@@ -96,4 +96,12 @@ public class HebrewTextPainter {
       //Logger.log("Layout.layoutLines() Ending\n");
       return ret;
    }
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.mediator = null;
+    }
 }

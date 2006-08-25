@@ -174,4 +174,12 @@ public class FastCharVector {
         length = s.length();
         data = s.toCharArray();
     }
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.data = null;
+    }
 }

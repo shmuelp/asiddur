@@ -2,7 +2,7 @@
  * ImageFont.java
  *
  * Created on August 17, 2006, 12:05 AM
- *
+ * 
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
@@ -210,12 +210,12 @@ public class ImageFont {
           }
           else if ( (anchor & Graphics.BASELINE) != 0 )
           {
-             y = y - bottomOffsets[character] + baseline;
+             y = y - bottomOffsets[character] /*+ baseline*/;
              anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
           }
           else if ( (anchor & Graphics.BOTTOM) != 0 )
           {
-             y -= bottomOffsets[character];
+             y -= bottomOffsets[character] - baseline;
           }
           
           // Add appropriate horizontal padding
@@ -300,4 +300,21 @@ public class ImageFont {
    public int getBaselinePosition() {
       return baseline;
    }
+
+   /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.bottomOffsets = null;
+       this.fontName = null;
+       this.glyphImages = null;
+       this.glyphWidths = null;
+       this.leftOffsets = null;
+       this.passthrough = null;
+       this.prefix = null;
+       this.rightOffsets = null;
+       this.topOffsets = null;
+    }
 }

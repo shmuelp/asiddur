@@ -62,14 +62,14 @@ public class TestCanvas extends Canvas {
 
         char []testChars = new char[14];
         
-        "éøùà, pot".getChars(0,9,testChars,0);
+        "éøùà, top".getChars(0,9,testChars,0);
         font.drawChars( graphics, testChars, 0, 9, graphics.getClipWidth()-10, 0, Graphics.TOP | Graphics.RIGHT );
         
-        "éøùà, mottob".getChars(0,12,testChars,0);
-        font.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, 40, Graphics.BOTTOM | Graphics.RIGHT );
+        "éøùà, bottom".getChars(0,12,testChars,0);
+        font.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, font.getHeight()*2, Graphics.BOTTOM | Graphics.RIGHT );
         
-        "éøùà, enilesab".getChars(0,14,testChars,0);
-        font.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, 60, Graphics.BOTTOM | Graphics.RIGHT );
+        "éøùà, baseline".getChars(0,14,testChars,0);
+        font.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, font.getHeight()*4, Graphics.BOTTOM | Graphics.RIGHT );
         
     }
 
@@ -115,4 +115,13 @@ public class TestCanvas extends Canvas {
       this.mediator = mediator;
    }
 
+    /**
+     * Sets all references to null.  Needed to ensure that memory is released 
+     * back to system for PalmOS.  See post at: 
+     * http://news.palmos.com/read/messages?id=204129
+     */
+    public void releaseReferences() {
+       this.mediator = null;
+       this.string = null;
+    }
 }
