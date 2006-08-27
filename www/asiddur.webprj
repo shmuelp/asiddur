@@ -12,7 +12,12 @@
     <item modified_time="1156218501" url="ASiddur.jad" uploadstatus="1" />
     <item modified_time="1156218501" url="ASiddur.jar" uploadstatus="1" />
     <annotations/>
-    <item modified_time="1156223076" url="demo.html" />
-    <item modified_time="1156221722" url="ASiddur.zip" />
+    <item desc="" modified_time="1156653676" url="demo.html" uploadstatus="1" />
+    <item modified_time="1156221722" url="ASiddur.zip" uploadstatus="1" />
+    <item modified_time="1156222406" url="me4se_applet.zip" />
+    <item modified_time="1156222406" url="phone-east.png" />
+    <item modified_time="1156222406" url="phone-north.png" />
+    <item modified_time="1156222406" url="phone-south.png" />
+    <item modified_time="1156222406" url="phone-west.png" />
   </project>
 </webproject>
