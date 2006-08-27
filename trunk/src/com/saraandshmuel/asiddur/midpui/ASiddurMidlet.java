@@ -60,7 +60,9 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private Command summaryCommand;
     private Command testCommand1;
     private ChoiceGroup fontChoiceGroup;
-    private Spacer spacer4;//GEN-END:MVDFields
+    private Spacer spacer4;
+    private Spacer spacer5;
+    private StringItem stringItem2;//GEN-END:MVDFields
 //    private char[] testText;
     
     private MidpMediator mediator = new MidpMediator(this);
@@ -71,8 +73,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
      */
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
-       spacer1 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
-       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+       spacer4 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
           "Native",
           "Native (reversed)",
@@ -90,17 +91,18 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
           true,
           false
        });
-       tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
-       tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-       spacer4 = new Spacer(1000, 1);
-       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
+       spacer3 = new Spacer(1000, 1);
        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
        daavenCanvas.addCommand(get_backToMainCommand());
        daavenCanvas.addCommand(get_debugOutputCommand());
        daavenCanvas.addCommand(get_exitCommand());
        daavenCanvas.setCommandListener(this);
+       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
+       spacer1 = new Spacer(1000, 1);
        spacer2 = new Spacer(1000, 1);
-       spacer3 = new Spacer(1000, 1);
+       tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
+       tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
         daavenCanvas.setMediator(mediator);
@@ -308,7 +310,9 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
              spacer3,
              fontChoiceGroup,
              spacer4,
-             useDateField
+             useDateField,
+             get_spacer5(),
+             get_stringItem2()
           });
           MainForm.addCommand(get_daavenCommand());
           MainForm.addCommand(get_settingsCommand());
@@ -547,7 +551,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_aboutString() {
        if (aboutString == null) {//GEN-END:MVDGetBegin99
             // Insert pre-init code here
-          aboutString = new StringItem("ASiddur 0.1+\n", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nThanks to:\nSara P.\nAvi P.\nJoe B.");//GEN-LINE:MVDGetInit99
+          aboutString = new StringItem("ASiddur 0.1+\n", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Richard Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B.");//GEN-LINE:MVDGetInit99
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd99
        return aboutString;
@@ -686,6 +690,30 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        }//GEN-BEGIN:MVDGetEnd138
        return testCommand1;
     }//GEN-END:MVDGetEnd138
+
+    /** This method returns instance for spacer5 component and should be called instead of accessing spacer5 field directly.//GEN-BEGIN:MVDGetBegin146
+     * @return Instance for spacer5 component
+     */
+    public Spacer get_spacer5() {
+       if (spacer5 == null) {//GEN-END:MVDGetBegin146
+          // Insert pre-init code here
+          spacer5 = new Spacer(1000, 1);//GEN-LINE:MVDGetInit146
+          // Insert post-init code here
+       }//GEN-BEGIN:MVDGetEnd146
+       return spacer5;
+    }//GEN-END:MVDGetEnd146
+
+    /** This method returns instance for stringItem2 component and should be called instead of accessing stringItem2 field directly.//GEN-BEGIN:MVDGetBegin147
+     * @return Instance for stringItem2 component
+     */
+    public StringItem get_stringItem2() {
+       if (stringItem2 == null) {//GEN-END:MVDGetBegin147
+          // Insert pre-init code here
+          stringItem2 = new StringItem("", "Note: to jump between sections of tefillah, use the right and left buttons");//GEN-LINE:MVDGetInit147
+          // Insert post-init code here
+       }//GEN-BEGIN:MVDGetEnd147
+       return stringItem2;
+    }//GEN-END:MVDGetEnd147
    
  
     public void startApp() {
