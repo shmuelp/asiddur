@@ -3,7 +3,7 @@
   <session usePreviewPrefix="0" previewPrefix="" >
     <itemcursorpositions>
       <item line="26" column="0" url="asiddur.html" />
-      <item line="9" column="6" url="demo.html" />
+      <item line="16" column="99" url="demo.html" />
     </itemcursorpositions>
     <uploadprofiles defaultProfile="@" >
       <profile remote_host="" remote_port="" remote_path="" remote_protocol="ftp" user="" name="@" />
@@ -12,7 +12,12 @@
         <uploadeditem upload_time="1156218501" url="ASiddur.jar" />
         <uploadeditem upload_time="1156221722" url="ASiddur.zip" />
         <uploadeditem upload_time="1156219128" url="asiddur.html" />
-        <uploadeditem upload_time="1156223076" url="demo.html" />
+        <uploadeditem upload_time="1156653676" url="demo.html" />
+        <uploadeditem upload_time="1156222406" url="me4se_applet.zip" />
+        <uploadeditem upload_time="1156222406" url="phone-east.png" />
+        <uploadeditem upload_time="1156222406" url="phone-north.png" />
+        <uploadeditem upload_time="1156222406" url="phone-south.png" />
+        <uploadeditem upload_time="1156222406" url="phone-west.png" />
       </profile>
     </uploadprofiles>
   </session>
