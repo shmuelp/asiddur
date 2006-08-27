@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MVDData version="1.2">
-    <DesignDocument designVersion="MIDP-2" uidCounter="146">
+    <DesignDocument designVersion="MIDP-2" uidCounter="148">
         <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
         <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
             <Property value="MainForm" name="targetDisplayable"/>
@@ -26,6 +26,8 @@
                 <ContainerPropertyItem value="fontChoiceGroup"/>
                 <ContainerPropertyItem value="spacer4"/>
                 <ContainerPropertyItem value="useDateField"/>
+                <ContainerPropertyItem value="spacer5"/>
+                <ContainerPropertyItem value="stringItem2"/>
             </ContainerProperty>
         </DesignComponent>
         <DesignComponent uid="3" id="$CommandAction" typeid="MIDP:CommandAction">
@@ -260,7 +262,7 @@
         </DesignComponent>
         <DesignComponent uid="99" id="aboutString" typeid="MIDP:javax.microedition.lcdui.StringItem">
             <Property value="STRING:ASiddur 0.1+\n" name="label"/>
-            <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nThanks to:\nSara P.\nAvi P.\nJoe B." name="text"/>
+            <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Richard Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B." name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
         <DesignComponent uid="100" id="debugOutputForm" typeid="MIDP:javax.microedition.lcdui.Form">
@@ -457,6 +459,15 @@
             <Property value="1000" name="minWidth"/>
             <Property value="1" name="minHeight"/>
             <Property value="false" name="lazyInitialized"/>
+        </DesignComponent>
+        <DesignComponent uid="146" id="spacer5" typeid="MIDP-2:javax.microedition.lcdui.Spacer">
+            <Property value="1000" name="minWidth"/>
+            <Property value="1" name="minHeight"/>
+        </DesignComponent>
+        <DesignComponent uid="147" id="stringItem2" typeid="MIDP:javax.microedition.lcdui.StringItem">
+            <Property value="STRING:" name="label"/>
+            <Property value="STRING:Note: to jump between sections of tefillah, use the right and left buttons" name="text"/>
+            <ContainerProperty name="commands"/>
         </DesignComponent>
     </DesignDocument>
     <FlowDocument version="1.1">
