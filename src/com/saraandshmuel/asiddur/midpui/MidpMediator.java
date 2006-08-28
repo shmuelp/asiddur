@@ -75,10 +75,14 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  break;
                  
               case 2:
-                 fontName = "nachlieli-20";
+                 fontName = "nachlieli-14";
                  break;
                  
               case 3:
+                 fontName = "nachlieli-20";
+                 break;
+                 
+              case 4:
                  fontName = "miriam-22";
                  break;
            }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MVDData version="1.2">
-    <DesignDocument designVersion="MIDP-2" uidCounter="148">
+    <DesignDocument designVersion="MIDP-2" uidCounter="149">
         <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
         <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
             <Property value="MainForm" name="targetDisplayable"/>
@@ -37,7 +37,7 @@
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="4" id="topStringItem" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:A Siddur v 0.1+" name="label"/>
+            <Property value="STRING:A Siddur v 0.2-" name="label"/>
             <Property value="STRING:A soon-to-be intelligent siddur" name="text"/>
             <ContainerProperty name="commands"/>
             <Property value="false" name="lazyInitialized"/>
@@ -430,6 +430,7 @@
             <ContainerProperty name="elements">
                 <ContainerPropertyItem value="Midp2ChoiceElementDC3"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC4"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC5"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC1"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC2"/>
             </ContainerProperty>
@@ -466,8 +467,13 @@
         </DesignComponent>
         <DesignComponent uid="147" id="stringItem2" typeid="MIDP:javax.microedition.lcdui.StringItem">
             <Property value="STRING:" name="label"/>
-            <Property value="STRING:Note: to jump between sections of tefillah, use the right and left buttons" name="text"/>
+            <Property value="STRING:Tip: Use the left and right buttons to jump between sections of tefillah." name="text"/>
             <ContainerProperty name="commands"/>
+        </DesignComponent>
+        <DesignComponent uid="148" id="Midp2ChoiceElementDC5" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Nachlieli-14" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
         </DesignComponent>
     </DesignDocument>
     <FlowDocument version="1.1">
