@@ -317,4 +317,8 @@ public class ImageFont {
        this.rightOffsets = null;
        this.topOffsets = null;
     }
+
+   public String getFontName() {
+      return fontName;
+   }
 }

@@ -439,7 +439,7 @@
         <DesignComponent uid="141" id="Midp2ChoiceElementDC1" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
             <Property value="STRING:Nachlieli-20" name="string"/>
             <Property name="image"/>
-            <Property value="true" name="selected"/>
+            <Property value="false" name="selected"/>
         </DesignComponent>
         <DesignComponent uid="142" id="Midp2ChoiceElementDC2" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
             <Property value="STRING:Miriam-22" name="string"/>
