@@ -67,6 +67,8 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     
     private MidpMediator mediator = new MidpMediator(this);
     
+    private boolean initialized = false;
+    
 //GEN-LINE:MVDMethods
 
     /** This method initializes UI of the application.//GEN-BEGIN:MVDInitBegin
@@ -723,19 +725,23 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
    
  
     public void startApp() {
-        System.out.println("ASiddurMidlet is being started");
-        System.out.flush();
-        initialize();
-        System.out.println("ASiddurMidlet: start complete");
-        System.out.flush();
+       if ( !initialized )
+       {
+           System.out.println("ASiddurMidlet is being started");
+           System.out.flush();
+           initialize();
+           System.out.println("ASiddurMidlet: start complete");
+           System.out.flush();
+           initialized = true;
+       }
     }
     
     public void pauseApp() {
     }
     
     public void destroyApp(boolean unconditional) {
-       mediator.releaseReferences();
-       System.gc();
+       //mediator.releaseReferences();
+       //System.gc();
     }
     
     public DateField getUseDateField() {
