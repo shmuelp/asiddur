@@ -32,10 +32,10 @@ ScriptLang: 3
  1 latn 1 dflt 
 Encoding: Custom
 UnicodeInterp: none
-DisplaySize: 20
+DisplaySize: 14
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 56 28 10
+WinInfo: 112 28 10
 BeginPrivate: 6
 BlueValues 39 [-23 0 524 540 600 620 709 719 729 749]
 StdHW 4 [76]
@@ -6052,9 +6052,9 @@ J,fQL!!%NL
 BDFChar: 147 305 0 0 0 9 9
 z
 BDFChar: 148 306 8 1 6 0 7
-KLB>r=HJ>l
+KLA3R=HJ>l
 BDFChar: 149 307 8 1 6 0 7
-i"u_*#RC_6
+n-B:*#RC_6
 BDFChar: 150 308 6 1 5 0 7
 ^`X1"&26q:
 BDFChar: 151 309 8 1 6 0 7
@@ -6094,7 +6094,7 @@ pl'lZA-<#<"9\i-
 BDFChar: 168 326 7 1 6 0 7
 n;N$RA-<>1
 BDFChar: 169 327 7 1 5 -3 7
-LknT(0H_J\+<Vd,
+LknSm0H_J\+<Vd,
 BDFChar: 170 328 8 1 6 0 7
 `'e,q&/Y]N
 BDFChar: 171 329 8 1 6 -3 7
