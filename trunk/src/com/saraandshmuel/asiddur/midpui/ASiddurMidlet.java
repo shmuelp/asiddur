@@ -73,13 +73,15 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
      */
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
-       spacer4 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
+       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);//GEN-BEGIN:MVDInitInit
        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
           "Native",
           "Native (reversed)",
+          "Nachlieli-14",
           "Nachlieli-20",
           "Miriam-22"
        }, new Image[] {
+          null,
           null,
           null,
           null,
@@ -88,21 +90,22 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        fontChoiceGroup.setSelectedFlags(new boolean[] {
           false,
           false,
+          false,
           true,
           false
        });
-       spacer3 = new Spacer(1000, 1);
        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
        daavenCanvas.addCommand(get_backToMainCommand());
        daavenCanvas.addCommand(get_debugOutputCommand());
        daavenCanvas.addCommand(get_exitCommand());
        daavenCanvas.setCommandListener(this);
-       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-       topStringItem = new StringItem("A Siddur v 0.1+", "A soon-to-be intelligent siddur");
-       spacer1 = new Spacer(1000, 1);
+       spacer3 = new Spacer(1000, 1);
        spacer2 = new Spacer(1000, 1);
+       spacer1 = new Spacer(1000, 1);
        tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
+       spacer4 = new Spacer(1000, 1);
+       topStringItem = new StringItem("A Siddur v 0.2-", "A soon-to-be intelligent siddur");
        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
         daavenCanvas.setMediator(mediator);
@@ -709,7 +712,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_stringItem2() {
        if (stringItem2 == null) {//GEN-END:MVDGetBegin147
           // Insert pre-init code here
-          stringItem2 = new StringItem("", "Note: to jump between sections of tefillah, use the right and left buttons");//GEN-LINE:MVDGetInit147
+          stringItem2 = new StringItem("", "Tip: Use the left and right buttons to jump between sections of tefillah.");//GEN-LINE:MVDGetInit147
           // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd147
        return stringItem2;
