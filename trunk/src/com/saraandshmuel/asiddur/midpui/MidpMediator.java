@@ -32,7 +32,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     /** 
      * Reference to the font to use for drawing
      */
-    private ImageFont font;
+    private ImageFont font = null;
     
     /**
      * Controls whether or not the text is reordered or not
@@ -46,7 +46,6 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     public MidpMediator(ASiddurMidlet midlet) {
         this.midlet = midlet;
         Logger.setLog(this);
-        font = new ImageFont("nachlieli-20");
     }
 
    /**
@@ -86,8 +85,11 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  fontName = "miriam-22";
                  break;
            }
-           
-           this.font = new ImageFont(fontName);
+           if ( font == null || font.getFontName().compareTo(fontName)!=0 )
+           {
+              Logger.log("Loading font " + fontName + '\n');
+              this.font = new ImageFont(fontName);
+           }
            this.reorder = reorder;
         }
     }
@@ -173,6 +175,31 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
 
    public boolean isReordered() {
       return reorder;
+   }
+   
+   public int getDefaultFontIndex() {
+      int result;
+      
+      final String locale = System.getProperty("microedition.locale");
+      if ( locale != null && locale.startsWith("he") )
+      {
+         result = 1;
+      }
+      else
+      {
+         final int height = Font.getDefaultFont().getHeight();
+         
+         if ( height < 19) // halfway between 14 and 22
+         {
+            result = 2;
+         }
+         else
+         {
+            result = 3;
+         }
+      }
+      
+      return result;
    }
 
     /**
