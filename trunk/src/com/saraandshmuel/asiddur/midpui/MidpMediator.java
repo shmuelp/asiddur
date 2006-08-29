@@ -71,6 +71,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  
               case 1:   // Default (reversed)
                  font = new MidpFontAdapterStrategy();
+                 fontName = "Native";
                  break;
                  
               case 2:
