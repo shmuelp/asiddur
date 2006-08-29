@@ -8,7 +8,8 @@ package com.saraandshmuel.asiddur.midpui;
 
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
-
+import com.saraandshmuel.asiddur.common.Logger;
+import com.saraandshmuel.asiddur.midpui.LogAlertAdapter;
 /**
  *
  * @author shmuelp
@@ -17,8 +18,6 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     
     /** Creates a new instance of HelloMidlet */
     public ASiddurMidlet() {
-        System.out.println("ASiddurMidlet is being constructed");
-        System.out.flush();
         mediator.chooseText(-1);
     }
 
@@ -67,6 +66,8 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     
     private MidpMediator mediator = new MidpMediator(this);
     
+    private Alert splash;
+    
     private boolean initialized = false;
     
 //GEN-LINE:MVDMethods
@@ -75,6 +76,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
      */
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
+        Logger.log("Initializing Midlet components");       
        spacer2 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
        spacer3 = new Spacer(1000, 1);
        spacer1 = new Spacer(1000, 1);
@@ -110,17 +112,26 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
-        daavenCanvas.setMediator(mediator);
-        final String[] texts = mediator.getTextLabels();
-        for (int i = 0; i < texts.length; i++) {
-            tefillaChoiceGroup.append(texts[i], null);
-        }
-        get_MainForm().setItemStateListener(mediator);
-        fontChoiceGroup.setSelectedIndex(mediator.getDefaultFontIndex(), true);
-        // Workaround for event not being triggered
-        mediator.itemStateChanged(fontChoiceGroup);
-        mediator.setDate(new java.util.Date());
-        //mediator.chooseText(1);
+       getDisplay().setCurrent(splash);
+       Logger.log("Registering mediator");
+       daavenCanvas.setMediator(mediator);
+       
+       Logger.log("Setting up text choices");
+       final String[] texts = mediator.getTextLabels();
+       for (int i = 0; i < texts.length; i++) {
+           tefillaChoiceGroup.append(texts[i], null);
+       }
+       get_MainForm().setItemStateListener(mediator);
+       Logger.log("Choosing default font");
+       fontChoiceGroup.setSelectedIndex(mediator.getDefaultFontIndex(), true);
+       // Workaround for event not being triggered
+       mediator.itemStateChanged(fontChoiceGroup);
+       Logger.log("Setting the time and date");
+       mediator.setDate(new java.util.Date());
+       //mediator.chooseText(1);
+
+       Logger.log("Switching to main form");
+       getDisplay().setCurrent(get_MainForm());                     
     }//GEN-LINE:MVDInitEnd
     
     /** Called by the system to indicate that a command has been invoked on a particular displayable.//GEN-BEGIN:MVDCABegin
@@ -309,6 +320,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public Form get_MainForm() {
        if (MainForm == null) {//GEN-END:MVDGetBegin2
             // Insert pre-init code here
+           Logger.log("Creating main form");
           MainForm = new Form(null, new Item[] {//GEN-BEGIN:MVDGetInit2
              topStringItem,
              spacer1,
@@ -331,6 +343,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
           MainForm.addCommand(get_testCommand1());
           MainForm.setCommandListener(this);//GEN-END:MVDGetInit2
             // Insert post-init code here
+           Logger.log("Created main form");
        }//GEN-BEGIN:MVDGetEnd2
        return MainForm;
     }//GEN-END:MVDGetEnd2
@@ -571,12 +584,14 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public Form get_debugOutputForm() {
        if (debugOutputForm == null) {//GEN-END:MVDGetBegin100
             // Insert pre-init code here
+          Logger.log("Creating debug output form");
           debugOutputForm = new Form(null, new Item[] {get_debugOutput()});//GEN-BEGIN:MVDGetInit100
           debugOutputForm.addCommand(get_backToMainCommand());
           debugOutputForm.addCommand(get_clearCommand());
           debugOutputForm.addCommand(get_exitCommand());
           debugOutputForm.setCommandListener(this);//GEN-END:MVDGetInit100
             // Insert post-init code here
+           Logger.log("Created debug output form");
        }//GEN-BEGIN:MVDGetEnd100
        return debugOutputForm;
     }//GEN-END:MVDGetEnd100
@@ -727,19 +742,15 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public void startApp() {
        if ( !initialized )
        {
-           Alert splash = new Alert("ASiddur startup", 
-                                    "ASiddur is loading, please be patient", 
-                                    null,
-                                    AlertType.INFO);
+           splash = new Alert("ASiddur startup", 
+                              "ASiddur is loading, please be patient", 
+                              null,
+                              AlertType.INFO);
+           LogAlertAdapter logAdapter = new LogAlertAdapter(splash);
            getDisplay().setCurrent(splash);
-           System.out.println("ASiddurMidlet is being started");
-           System.out.flush();
+           Logger.log("Beginning initialization");
            initialize();
-           splash.setString("ASiddurMidlet is initialized.  You should never" +
-                   "see this message");
-           splash = null;
-           System.out.println("ASiddurMidlet: start complete");
-           System.out.flush();
+           Logger.log("Initialization complete");
            initialized = true;
        }
     }
@@ -804,6 +815,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        this.spacer2 = null;
        this.spacer3 = null;
        this.spacer4 = null;
+       this.splash = null;
        this.stringItem1 = null;
        this.summaryCommand = null;
        this.tefillaChoiceGroup = null;
