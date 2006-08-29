@@ -275,7 +275,7 @@ public class ImageFontStrategy implements FontStrategy {
              drawChar( graphics, data[i], x, y, anchor );
           }
        }
-       else if ( ( anchor & Graphics.RIGHT) != 0 ) // anchor must be Graphics.CENTER
+       else if ( ( anchor & Graphics.HCENTER) != 0 )
        {
           int width = 0;
           for (int i = offset; i < length; i++) {

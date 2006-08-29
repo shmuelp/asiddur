@@ -131,6 +131,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        //mediator.chooseText(1);
 
        Logger.log("Switching to main form");
+       Logger.setLog(mediator);
        getDisplay().setCurrent(get_MainForm());                     
     }//GEN-LINE:MVDInitEnd
     
