@@ -108,10 +108,10 @@ public class HebrewTextBox {
         --x2;
         --y2;
        
-        ImageFont font = mediator.getFont();
+        FontStrategy font = mediator.getFont();
         lastHeight = y2-y1;
         graphics.setColor(red, green, blue);
-        graphics.setFont( font.getPassthrough() );
+        graphics.setFont( font.getNativeFont() );
         TefillaReader tefillaReader = mediator.getTefillaReader();
 
         if( !layout.isValid( x2-x1, font ) ) {
@@ -125,7 +125,7 @@ public class HebrewTextBox {
         FastIntVector lineOffsets = layout.lineLengths;
         final int lastLine = Math.min( lineOffsets.size(), 
                                        line + 1 + getVisibleLineCount());
-        final int fontHeight = font.getHeight() - font.getBaselinePosition();
+        final int fontHeight = font.getBaselinePosition();
         
         boolean reorder = mediator.isReordered();
         
@@ -226,7 +226,7 @@ public class HebrewTextBox {
     * @return the number of lines
     */
     private final int getVisibleLineCount() {
-        ImageFont font = mediator.getFont();
+        FontStrategy font = mediator.getFont();
         return lastHeight / (font.getHeight() - font.getBaselinePosition());
     }
     

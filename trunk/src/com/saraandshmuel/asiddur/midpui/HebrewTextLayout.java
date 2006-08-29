@@ -35,7 +35,7 @@ class HebrewTextLayout {
    /**
     * The font used to compute the last layout
     */
-   public ImageFont font = null;
+   public FontStrategy font = null;
    
    /**
     * Reference to the mediator (needed for the font)
@@ -65,7 +65,7 @@ class HebrewTextLayout {
     * @param font the font that will be used to draw the text
     * @return true if the layout is still valid; false otherwise
     */
-   public boolean isValid(int width, ImageFont font) {
+   public boolean isValid(int width, FontStrategy font) {
       boolean result = valid && this.width == width && this.font == font;
       
 //      if (!result)
@@ -98,7 +98,7 @@ class HebrewTextLayout {
     * @param width the width of the screen in pixels
     * @param normalFont the font to be used to draw the text
     */
-   public void updateLayout(TefillaReader reader, int width, ImageFont normalFont) {
+   public void updateLayout(TefillaReader reader, int width, FontStrategy normalFont) {
       //Logger.log("Layout.updateLayout() Beginning...\n");
       this.width = width;
       this.font = normalFont;
