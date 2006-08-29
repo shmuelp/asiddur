@@ -32,7 +32,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     /** 
      * Reference to the font to use for drawing
      */
-    private ImageFont font = null;
+    private FontStrategy font = null;
     
     /**
      * Controls whether or not the text is reordered or not
@@ -70,7 +70,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  // Intentional fall-through
                  
               case 1:   // Default (reversed)
-                 fontName = "Native";
+                 font = new MidpFontAdapterStrategy();
                  break;
                  
               case 2:
@@ -85,10 +85,15 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  fontName = "miriam-22";
                  break;
            }
+           
            if ( font == null || font.getFontName().compareTo(fontName)!=0 )
            {
               Logger.log("Loading font " + fontName + '\n');
-              this.font = new ImageFont(fontName);
+              // Only use ImageFontStrategy for non-native fonts
+              if ( fontName.compareTo("Native") != 0 )
+              {
+                 this.font = new ImageFontStrategy(fontName);
+              }
            }
            this.reorder = reorder;
         }
@@ -163,12 +168,12 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
         }
     }
   
-  public ImageFont getFont()
+  public FontStrategy getFont()
   {
      return font;
   }
   
-  public void setFont( ImageFont font )
+  public void setFont( FontStrategy font )
   {
      this.font = font;
   }

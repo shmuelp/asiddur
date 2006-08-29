@@ -45,7 +45,7 @@ public class HebrewTextPainter {
     */
    public void drawChars( Graphics graphics,
            TefillaReader reader,
-           ImageFont font,
+           FontStrategy font,
            boolean reorder,
            int offset,
            int length,

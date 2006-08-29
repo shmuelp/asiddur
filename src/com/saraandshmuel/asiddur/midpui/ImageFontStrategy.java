@@ -1,5 +1,5 @@
 /*
- * ImageFont.java
+ * ImageFontStrategy.java
  *
  * Created on August 17, 2006, 12:05 AM
  * 
@@ -20,12 +20,12 @@ import com.saraandshmuel.asiddur.common.Logger;
  * in the jar.  Any glyphs that are missing are rendered by a configurable font.
  * @author shmuelp
  */
-public class ImageFont {
+public class ImageFontStrategy implements FontStrategy {
    
    /**
     * The font to pass through to for unknown glyphs
     */
-   private Font passthrough = Font.getDefaultFont();
+   private Font nativeFont = Font.getDefaultFont();
    
    /**
     * Prefix to resources
@@ -52,8 +52,9 @@ public class ImageFont {
     */
    private int baseline=-1;
    
-   /** 
-    * The baseline of the font, compared to the passthrough baseline
+   /**
+    * 
+    * The baseline of the font, compared to the nativeFont baseline
     */
    private int baselineOffset=-1;
    
@@ -82,10 +83,12 @@ public class ImageFont {
     */
    private int height=-1;
    
-   /** Creates a new instance of ImageFont */
-   public ImageFont(String fontName) {
+   /**
+    * Creates a new instance of ImageFontStrategy
+    */
+   public ImageFontStrategy(String fontName) {
       this.fontName = fontName;
-      height = passthrough.getHeight();
+      height = nativeFont.getHeight();
       
       String fullPrefix = prefix + fontName + '/';
       
@@ -94,16 +97,16 @@ public class ImageFont {
       {
          // Font does not exist
          Logger.log("Warning, font \"fontName\" does not exist, passing through");
-         height = passthrough.getHeight();
+         height = nativeFont.getHeight();
       }
       else
       {
          try
          {
             height = metrics.read();
-            height = Math.max(height, passthrough.getHeight());
+            height = Math.max(height, nativeFont.getHeight());
             metrics.read();   //ignore
-            baseline = metrics.read();
+            baseline = height - metrics.read();
             
             // loop until file is done; exception handler will handle that case
             // Assume that file format is OK
@@ -139,17 +142,17 @@ public class ImageFont {
          catch( java.io.IOException ioe)
          {
             glyphImages[i] = null;
-            glyphWidths[i] = (byte) passthrough.charWidth((char)i);
+            glyphWidths[i] = (byte) nativeFont.charWidth((char)i);
          }
       }
       
-      baselineOffset = (height-baseline) - passthrough.getBaselinePosition();
+      baselineOffset = baseline - nativeFont.getBaselinePosition();
    }
    
    /**
     * Gets the advance width of the specified character in this Font.
     */
-   int charWidth( char ch )
+   public int charWidth( char ch )
    {
       return glyphWidths[ch];
    }
@@ -158,7 +161,7 @@ public class ImageFont {
     * Returns the advance width of the characters in ch, starting at the 
     * specified offset and for the specified number of characters (length).
     */
-    int	charsWidth(char[] ch, int offset, int length)
+    public int charsWidth(char[] ch, int offset, int length)
     {
        int result = 0;
        
@@ -172,7 +175,7 @@ public class ImageFont {
     /**
      * Gets the total advance width for showing the specified String in this Font.
      */
-    int	stringWidth(String str)
+    public int stringWidth(String str)
     {
 //       char[] chars = new char[str.length()];
 //       str.getChars(0, str.length(), chars, 0);
@@ -191,7 +194,7 @@ public class ImageFont {
     /**
      * Gets the standard height of a line of text in this font.
      */
-    int	getHeight()
+    public int getHeight()
     {
        return height;
     }
@@ -199,23 +202,24 @@ public class ImageFont {
     /**
      * Draws the specified character.
      */
-    void drawChar(Graphics graphics, char character, int x, int y, int anchor)
+    public void drawChar(Graphics graphics, char character, int x, int y, int anchor)
     {
        if ( glyphImages[character] != null )
        {
           // Adjust vertical padding to line up along baseline
           if ( (anchor & Graphics.TOP) != 0 )
           {
-             y += topOffsets[character];
+             y += height - bottomOffsets[character];
+             anchor ^= (Graphics.TOP|Graphics.BOTTOM);
           }
           else if ( (anchor & Graphics.BASELINE) != 0 )
           {
-             y = y - bottomOffsets[character] /*+ baseline*/;
+             y -= bottomOffsets[character] + (height - baseline);
              anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
           }
           else if ( (anchor & Graphics.BOTTOM) != 0 )
           {
-             y -= bottomOffsets[character] - baseline;
+             y -= bottomOffsets[character];
           }
           
           // Add appropriate horizontal padding
@@ -238,7 +242,7 @@ public class ImageFont {
        {
           if ( (anchor & Graphics.TOP) != 0 )
           {
-             y += passthrough.getBaselinePosition() + baselineOffset;
+             y += nativeFont.getBaselinePosition() + baselineOffset;
              anchor ^= (Graphics.BASELINE|Graphics.TOP);
           }
           else if ( (anchor & Graphics.BASELINE) != 0 )
@@ -247,7 +251,7 @@ public class ImageFont {
           }
           else if ( (anchor & Graphics.BOTTOM) != 0 )
           {
-             y += baseline - baselineOffset;
+             y -= ( height - baseline ) + baselineOffset;
              anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
           }
           graphics.drawChar( character, x, y, anchor );
@@ -257,7 +261,7 @@ public class ImageFont {
     /**
      * Draws the specified characters.
      */
-    void drawChars(Graphics graphics, char[] data, int offset, int length, int x, int y, int anchor)
+    public void drawChars(Graphics graphics, char[] data, int offset, int length, int x, int y, int anchor)
     {
        if ( ( anchor & Graphics.LEFT ) != 0 )
        {
@@ -289,12 +293,12 @@ public class ImageFont {
        }
     }
 
-   public Font getPassthrough() {
-      return passthrough;
+   public Font getNativeFont() {
+      return nativeFont;
    }
 
-   public void setPassthrough(Font passthrough) {
-      this.passthrough = passthrough;
+   public void setNativeFont(Font nativeFont) {
+      this.nativeFont = nativeFont;
    }
 
    public int getBaselinePosition() {
@@ -312,7 +316,7 @@ public class ImageFont {
        this.glyphImages = null;
        this.glyphWidths = null;
        this.leftOffsets = null;
-       this.passthrough = null;
+       this.nativeFont = null;
        this.prefix = null;
        this.rightOffsets = null;
        this.topOffsets = null;
@@ -321,4 +325,5 @@ public class ImageFont {
    public String getFontName() {
       return fontName;
    }
+
 }
