@@ -37,7 +37,8 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
      * @param dummy Dummy string required by NetBeans generated code
      */
     public HebrewTextCanvas(String dummy) {
-        super();
+       super();
+       com.saraandshmuel.asiddur.common.Logger.log("Contructed HebrewTextCanvas");
     }
     
     /**

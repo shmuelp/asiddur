@@ -209,8 +209,8 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
      */
     public void releaseReferences() {
        super.releaseReferences();
-       if ( this != null ) { this.font.releaseReferences(); }
+       if ( font != null ) { font.releaseReferences(); }
        this.font = null;
-       if ( this != null ) { this.midlet.releaseReferences(); }
+       if ( midlet != null ) { midlet.releaseReferences(); }
     }
 }
