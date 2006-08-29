@@ -219,7 +219,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
      */
     public void releaseReferences() {
        this.mediator = null;
-       this.textBox.releaseReferences();
+       if ( this != null ) { this.textBox.releaseReferences(); }
        this.textBox = null;
     }
 }

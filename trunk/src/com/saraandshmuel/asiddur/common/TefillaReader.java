@@ -132,7 +132,7 @@ public class TefillaReader {
     public void releaseReferences() {
        if ( strategy instanceof TefillaBufferReaderStrategy ) {
           TefillaBufferReaderStrategy tbrs = (TefillaBufferReaderStrategy) strategy;
-          tbrs.releaseReferences();
+          if ( tbrs != null ) { tbrs.releaseReferences(); }
        }
        this.strategy = null;
     }

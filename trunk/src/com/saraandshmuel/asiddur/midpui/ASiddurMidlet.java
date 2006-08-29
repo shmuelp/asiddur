@@ -727,9 +727,17 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public void startApp() {
        if ( !initialized )
        {
+           Alert splash = new Alert("ASiddur startup", 
+                                    "ASiddur is loading, please be patient", 
+                                    null,
+                                    AlertType.INFO);
+           getDisplay().setCurrent(splash);
            System.out.println("ASiddurMidlet is being started");
            System.out.flush();
            initialize();
+           splash.setString("ASiddurMidlet is initialized.  You should never" +
+                   "see this message");
+           splash = null;
            System.out.println("ASiddurMidlet: start complete");
            System.out.flush();
            initialized = true;
@@ -740,8 +748,8 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     }
     
     public void destroyApp(boolean unconditional) {
-       //mediator.releaseReferences();
-       //System.gc();
+       if ( mediator != null ) { mediator.releaseReferences(); }
+       System.gc();
     }
     
     public DateField getUseDateField() {

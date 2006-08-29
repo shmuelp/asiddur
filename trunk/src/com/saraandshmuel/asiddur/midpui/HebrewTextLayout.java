@@ -209,10 +209,10 @@ class HebrewTextLayout {
      */
     public void releaseReferences() {
        this.font = null;
-       this.lineLengths.releaseReferences();
+       if ( this != null ) { this.lineLengths.releaseReferences(); }
        this.lineLengths = null;
        this.mediator = null;
-       this.navigationMarks.releaseReferences();
+       if ( this != null ) { this.navigationMarks.releaseReferences(); }
        this.navigationMarks = null;
     }
 }
