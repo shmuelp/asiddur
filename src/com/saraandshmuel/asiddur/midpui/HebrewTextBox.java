@@ -293,10 +293,10 @@ public class HebrewTextBox {
      * http://news.palmos.com/read/messages?id=204129
      */
     public void releaseReferences() {
-       this.layout.releaseReferences();
+       if ( this != null ) { this.layout.releaseReferences(); }
        this.layout = null;
        this.mediator = null;
-       this.painter.releaseReferences();
+       if ( this != null ) { this.painter.releaseReferences(); }
        this.painter = null;
        this.text = null;
     }

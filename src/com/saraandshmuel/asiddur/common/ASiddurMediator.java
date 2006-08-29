@@ -145,9 +145,9 @@ public abstract class ASiddurMediator implements AppendLog {
        this.englishCalendar = null;
        this.englishDate = null;
        this.hebrewDate = null;
-       tefillaReader.releaseReferences();
+       if ( tefillaReader != null ) { tefillaReader.releaseReferences(); }
        this.tefillaReader = null;
-       textFunctions.releaseReferences();
+       if ( textFunctions != null ) { textFunctions.releaseReferences(); }
        this.textFunctions = null;
     }
 }
