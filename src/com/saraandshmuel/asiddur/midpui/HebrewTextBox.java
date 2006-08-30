@@ -227,7 +227,7 @@ public class HebrewTextBox {
     */
     private final int getVisibleLineCount() {
         FontStrategy font = mediator.getFont();
-        return lastHeight / (font.getHeight() - font.getBaselinePosition());
+        return lastHeight / font.getBaselinePosition();
     }
     
    /**
