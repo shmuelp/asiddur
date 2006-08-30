@@ -8,16 +8,16 @@
     <item url="" uploadstatus="1" />
     <templates>templates/</templates>
     <toolbars>toolbars/</toolbars>
-    <item modified_time="1156219128" url="asiddur.html" uploadstatus="1" />
+    <item modified_time="1156894131" url="asiddur.html" uploadstatus="1" />
     <item modified_time="1156218501" url="ASiddur.jad" uploadstatus="1" />
     <item modified_time="1156218501" url="ASiddur.jar" uploadstatus="1" />
     <annotations/>
-    <item desc="" modified_time="1156653676" url="demo.html" uploadstatus="1" />
+    <item desc="" modified_time="1156742323" url="demo.html" uploadstatus="1" />
     <item modified_time="1156221722" url="ASiddur.zip" uploadstatus="1" />
-    <item modified_time="1156222406" url="me4se_applet.zip" />
-    <item modified_time="1156222406" url="phone-east.png" />
-    <item modified_time="1156222406" url="phone-north.png" />
-    <item modified_time="1156222406" url="phone-south.png" />
-    <item modified_time="1156222406" url="phone-west.png" />
+    <item modified_time="1156222406" url="me4se_applet.zip" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-east.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-north.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-south.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-west.png" uploadstatus="1" />
   </project>
 </webproject>
