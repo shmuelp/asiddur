@@ -36,9 +36,9 @@ public class TestCanvas extends Canvas {
         //    Logger.log("Exception while creating PCFFont: " + ioe.getMessage() + '\n');
         //}
        
-       Logger.log("Default: " + fontSizeInfo(Font.getDefaultFont()));
-       Logger.log("Input: " + fontSizeInfo(Font.FONT_INPUT_TEXT));
-       Logger.log("Static: " + fontSizeInfo(Font.FONT_STATIC_TEXT));
+       //Logger.log("Default: " + fontSizeInfo(Font.getDefaultFont()));
+       //Logger.log("Input: " + fontSizeInfo(Font.FONT_INPUT_TEXT));
+       //Logger.log("Static: " + fontSizeInfo(Font.FONT_STATIC_TEXT));
     }
 
     /**
@@ -59,17 +59,39 @@ public class TestCanvas extends Canvas {
         //graphics.drawString(string, 10, 10, Graphics.LEFT | Graphics.TOP);
         
         FontStrategy font =  mediator.getFont();
+        
+        graphics.drawString("offset=" + (font.getBaselinePosition() -font.getNativeFont().getBaselinePosition()),
+                0,0,
+                Graphics.TOP | Graphics.LEFT );
 
         char []testChars = new char[14];
         
+        int h = font.getHeight();
+        int w = graphics.getClipWidth();
+        graphics.drawLine( 0, h, w, h );
+        h = font.getHeight() * 2;
+        graphics.drawLine( 0, h, w, h );
+        h += font.getHeight();
+        graphics.drawLine( 0, h, w, h );
+
         "éøùà, top".getChars(0,9,testChars,0);
         font.drawChars( graphics, testChars, 0, 9, graphics.getClipWidth()-10, 0, Graphics.TOP | Graphics.RIGHT );
-        
+                
+        h = font.getHeight()*2;
         "éøùà, bottom".getChars(0,12,testChars,0);
-        font.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, font.getHeight()*2, Graphics.BOTTOM | Graphics.RIGHT );
+        font.drawChars( graphics, testChars, 0, 12, graphics.getClipWidth()-10, h, Graphics.BOTTOM | Graphics.RIGHT );
         
+        h = font.getHeight()*2 + font.getBaselinePosition();
         "éøùà, baseline".getChars(0,14,testChars,0);
-        font.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, font.getHeight()*4, Graphics.BOTTOM | Graphics.RIGHT );
+        font.drawChars( graphics, testChars, 0, 14, graphics.getClipWidth()-10, font.getHeight()*3, Graphics.BASELINE | Graphics.RIGHT );
+        
+        graphics.setColor(0x008F8F8F);
+        h = font.getBaselinePosition();
+        graphics.drawLine( 0, h, w, h );
+        h += font.getHeight();
+        graphics.drawLine( 0, h, w, h );
+        h += font.getHeight();
+        graphics.drawLine( 0, h, w, h );
         
     }
 

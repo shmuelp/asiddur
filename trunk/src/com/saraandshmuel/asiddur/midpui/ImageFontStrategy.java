@@ -204,6 +204,7 @@ public class ImageFontStrategy implements FontStrategy {
      */
     public void drawChar(Graphics graphics, char character, int x, int y, int anchor)
     {
+       // Draw a character from a stored Image
        if ( glyphImages[character] != null )
        {
           // Adjust vertical padding to line up along baseline
@@ -214,7 +215,7 @@ public class ImageFontStrategy implements FontStrategy {
           }
           else if ( (anchor & Graphics.BASELINE) != 0 )
           {
-             y -= bottomOffsets[character] + (height - baseline);
+             y -= bottomOffsets[character];
              anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
           }
           else if ( (anchor & Graphics.BOTTOM) != 0 )
@@ -238,20 +239,20 @@ public class ImageFontStrategy implements FontStrategy {
           
           graphics.drawImage( glyphImages[character], x, y, anchor );
        }
-       else
+       else    // Pass-through and draw using a native font
        {
           if ( (anchor & Graphics.TOP) != 0 )
           {
-             y += nativeFont.getBaselinePosition() + baselineOffset;
+             y += baseline;
              anchor ^= (Graphics.BASELINE|Graphics.TOP);
           }
           else if ( (anchor & Graphics.BASELINE) != 0 )
           {
-             y += baselineOffset;
+             y += baseline - height;
           }
           else if ( (anchor & Graphics.BOTTOM) != 0 )
           {
-             y -= ( height - baseline ) + baselineOffset;
+             y += baseline - height;
              anchor ^= (Graphics.BASELINE|Graphics.BOTTOM);
           }
           graphics.drawChar( character, x, y, anchor );

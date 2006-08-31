@@ -37,7 +37,7 @@
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="4" id="topStringItem" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:A Siddur v 0.2-" name="label"/>
+            <Property value="STRING:A Siddur v 0.2 beta" name="label"/>
             <Property value="STRING:A soon-to-be intelligent siddur" name="text"/>
             <ContainerProperty name="commands"/>
             <Property value="false" name="lazyInitialized"/>

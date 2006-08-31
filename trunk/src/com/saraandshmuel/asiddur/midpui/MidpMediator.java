@@ -111,6 +111,25 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
         if ( midlet.getDaavenCanvas() != null ) {
             midlet.getDaavenCanvas().resetMainText();
         }
+        if ( this.getTefillaReader().getTextLength() < 50 && textNum != -1 )
+        {
+           Display.getDisplay(midlet).callSerially( new Runnable() {
+              public void run() {
+                 //System.out.println("Running a new alert");
+                 Alert a = new Alert("Error loading text", 
+                         "There was an error loading the tefilla!", 
+                         null,
+                         AlertType.ERROR);
+                 a.setTimeout(2000);
+                 Display d = Display.getDisplay(midlet);
+                 Displayable form = midlet.get_MainForm();
+                 if ( d != null && form != null )
+                 {
+                    d.setCurrent(a, form);
+                 }
+              }
+           });
+        }
     }
 
    /**

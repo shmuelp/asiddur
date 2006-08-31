@@ -77,40 +77,40 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
         Logger.log("Initializing Midlet components");       
-       spacer2 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
-       spacer3 = new Spacer(1000, 1);
-       spacer1 = new Spacer(1000, 1);
-       spacer4 = new Spacer(1000, 1);
-       topStringItem = new StringItem("A Siddur v 0.2-", "A soon-to-be intelligent siddur");
-       tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
-       tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-       fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
-          "Native",
-          "Native (reversed)",
-          "Nachlieli-14",
-          "Nachlieli-20",
-          "Miriam-22"
-       }, new Image[] {
-          null,
-          null,
-          null,
-          null,
-          null
-       });
-       fontChoiceGroup.setSelectedFlags(new boolean[] {
-          false,
-          false,
-          false,
-          false,
-          false
-       });
-       daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
-       daavenCanvas.addCommand(get_backToMainCommand());
-       daavenCanvas.addCommand(get_debugOutputCommand());
-       daavenCanvas.addCommand(get_exitCommand());
-       daavenCanvas.setCommandListener(this);
-       useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-       getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
+        spacer4 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
+        spacer2 = new Spacer(1000, 1);
+        topStringItem = new StringItem("A Siddur v 0.2 beta", "A soon-to-be intelligent siddur");
+        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
+           "Native",
+           "Native (reversed)",
+           "Nachlieli-14",
+           "Nachlieli-20",
+           "Miriam-22"
+        }, new Image[] {
+           null,
+           null,
+           null,
+           null,
+           null
+        });
+        fontChoiceGroup.setSelectedFlags(new boolean[] {
+           false,
+           false,
+           false,
+           false,
+           false
+        });
+        tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
+        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
+        spacer1 = new Spacer(1000, 1);
+        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+        spacer3 = new Spacer(1000, 1);
+        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
+        daavenCanvas.addCommand(get_backToMainCommand());
+        daavenCanvas.addCommand(get_debugOutputCommand());
+        daavenCanvas.addCommand(get_exitCommand());
+        daavenCanvas.setCommandListener(this);
+        getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
        getDisplay().setCurrent(splash);
        Logger.log("Registering mediator");
@@ -322,27 +322,27 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        if (MainForm == null) {//GEN-END:MVDGetBegin2
             // Insert pre-init code here
            Logger.log("Creating main form");
-          MainForm = new Form(null, new Item[] {//GEN-BEGIN:MVDGetInit2
-             topStringItem,
-             spacer1,
-             get_hebrewDateString(),
-             spacer2,
-             tefillaChoiceGroup,
-             spacer3,
-             fontChoiceGroup,
-             spacer4,
-             useDateField,
-             get_spacer5(),
-             get_stringItem2()
-          });
-          MainForm.addCommand(get_daavenCommand());
-          MainForm.addCommand(get_settingsCommand());
-          MainForm.addCommand(get_debugOutputCommand());
-          MainForm.addCommand(get_helpCommand());
-          MainForm.addCommand(get_exitCommand());
-          MainForm.addCommand(get_summaryCommand());
-          MainForm.addCommand(get_testCommand1());
-          MainForm.setCommandListener(this);//GEN-END:MVDGetInit2
+           MainForm = new Form(null, new Item[] {//GEN-BEGIN:MVDGetInit2
+              topStringItem,
+              spacer1,
+              get_hebrewDateString(),
+              spacer2,
+              tefillaChoiceGroup,
+              spacer3,
+              fontChoiceGroup,
+              spacer4,
+              useDateField,
+              get_spacer5(),
+              get_stringItem2()
+           });
+           MainForm.addCommand(get_daavenCommand());
+           MainForm.addCommand(get_settingsCommand());
+           MainForm.addCommand(get_debugOutputCommand());
+           MainForm.addCommand(get_helpCommand());
+           MainForm.addCommand(get_exitCommand());
+           MainForm.addCommand(get_summaryCommand());
+           MainForm.addCommand(get_testCommand1());
+           MainForm.setCommandListener(this);//GEN-END:MVDGetInit2
             // Insert post-init code here
            Logger.log("Created main form");
        }//GEN-BEGIN:MVDGetEnd2
