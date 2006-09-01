@@ -4,8 +4,8 @@
     <itemcursorpositions/>
     <uploadprofiles defaultProfile="ASiddur - verizon" >
       <profile remote_host="ftpmysite.verizon.net" remote_port="" remote_path="/" remote_protocol="ftp" user="asiddur" name="ASiddur - verizon" >
-        <uploadeditem upload_time="1157073160" url="ASiddur.jad" />
-        <uploadeditem upload_time="1157073160" url="ASiddur.jar" />
+        <uploadeditem upload_time="1157073664" url="ASiddur.jad" />
+        <uploadeditem upload_time="1157073664" url="ASiddur.jar" />
         <uploadeditem upload_time="1157070314" url="ASiddur.zip" />
         <uploadeditem upload_time="1156894131" url="asiddur.html" />
         <uploadeditem upload_time="1157073333" url="demo.html" />

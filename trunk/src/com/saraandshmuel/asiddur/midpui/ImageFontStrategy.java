@@ -139,8 +139,10 @@ public class ImageFontStrategy implements FontStrategy {
             glyphImages[i] = Image.createImage(fullPrefix + Integer.toString(i) + ".png");
             glyphWidths[i] = (byte) (glyphImages[i].getWidth() + leftOffsets[i] + rightOffsets[i]);
          }
-         catch( java.io.IOException ioe)
+         // catching only IOException caused problems with ME4SE
+         catch(Exception e)
          {
+            // 
             glyphImages[i] = null;
             glyphWidths[i] = (byte) nativeFont.charWidth((char)i);
          }
