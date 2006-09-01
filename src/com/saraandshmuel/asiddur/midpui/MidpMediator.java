@@ -205,7 +205,23 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
    public int getDefaultFontIndex() {
       int result;
       
-      final String locale = System.getProperty("microedition.locale");
+      // Expected to be null; not null in me4se applets
+      String version = System.getProperty("java.version");
+      System.out.println("version=" + version);
+      String locale = "";
+
+      // version is not null on me4se applets, where the following call creates
+      // an AccessControlException and halts the applet
+      if ( version == null )
+      {
+         Logger.log("Retrieving locale\n");
+         locale = System.getProperty("microedition.locale");
+      }
+      else
+      {
+         Logger.log("Skipping locale retrieval\n");
+      }
+
       if ( locale != null && locale.startsWith("he") )
       {
          result = 1;
