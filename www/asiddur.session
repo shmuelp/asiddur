@@ -1,17 +1,14 @@
 <!DOCTYPE webprojectsession>
 <webprojectsession>
   <session usePreviewPrefix="0" previewPrefix="" >
-    <itemcursorpositions>
-      <item line="6" column="40" url="asiddur.html" />
-      <item line="16" column="99" url="demo.html" />
-    </itemcursorpositions>
+    <itemcursorpositions/>
     <uploadprofiles defaultProfile="ASiddur - verizon" >
       <profile remote_host="ftpmysite.verizon.net" remote_port="" remote_path="/" remote_protocol="ftp" user="asiddur" name="ASiddur - verizon" >
-        <uploadeditem upload_time="1156218501" url="ASiddur.jad" />
-        <uploadeditem upload_time="1156218501" url="ASiddur.jar" />
-        <uploadeditem upload_time="1156221722" url="ASiddur.zip" />
+        <uploadeditem upload_time="1157073160" url="ASiddur.jad" />
+        <uploadeditem upload_time="1157073160" url="ASiddur.jar" />
+        <uploadeditem upload_time="1157070314" url="ASiddur.zip" />
         <uploadeditem upload_time="1156894131" url="asiddur.html" />
-        <uploadeditem upload_time="1156984980" url="demo.html" />
+        <uploadeditem upload_time="1157073333" url="demo.html" />
         <uploadeditem upload_time="1156222406" url="me4se_applet.zip" />
         <uploadeditem upload_time="1156222406" url="phone-east.png" />
         <uploadeditem upload_time="1156222406" url="phone-north.png" />
