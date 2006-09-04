@@ -37,7 +37,7 @@
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="4" id="topStringItem" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:A Siddur v 0.2 beta" name="label"/>
+            <Property value="STRING:ASiddur 0.2 beta" name="label"/>
             <Property value="STRING:A soon-to-be intelligent siddur" name="text"/>
             <ContainerProperty name="commands"/>
             <Property value="false" name="lazyInitialized"/>
@@ -167,7 +167,7 @@
         </DesignComponent>
         <DesignComponent uid="73" id="settingsDescription" typeid="MIDP:javax.microedition.lcdui.StringItem">
             <Property value="STRING:Settings\n" name="label"/>
-            <Property value="STRING:\nDescription of settings goes here.  Actual settings go in the commands of this screen.\n\nNote: support for settings is currently planned for version 0.3.\n" name="text"/>
+            <Property value="STRING:\nDescription of settings goes here.  Actual settings go in the commands of this screen.\n\nNote: support for settings is currently planned for version 0.4.\n" name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
         <DesignComponent uid="74" id="settingsCommand" typeid="MIDP:javax.microedition.lcdui.Command">
@@ -225,7 +225,7 @@
         </DesignComponent>
         <DesignComponent uid="91" id="stringItem1" typeid="MIDP:javax.microedition.lcdui.StringItem">
             <Property value="STRING:" name="label"/>
-            <Property value="STRING:The feature plan can be found using the issue tracker available at:\nhttp://code.google.com/" name="text"/>
+            <Property value="STRING:The feature plan can be found using the issue tracker available at:\nhttp://code.google.com/p/asiddur/" name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
         <DesignComponent uid="92" id="$CommandAction22" typeid="MIDP:CommandAction">
@@ -261,8 +261,8 @@
             <Property value="aboutForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="99" id="aboutString" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:ASiddur 0.1+\n" name="label"/>
-            <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Richard Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B." name="text"/>
+            <Property value="STRING:ASiddur 0.2 beta\n" name="label"/>
+            <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Moishe Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B." name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
         <DesignComponent uid="100" id="debugOutputForm" typeid="MIDP:javax.microedition.lcdui.Form">
@@ -432,17 +432,11 @@
                 <ContainerPropertyItem value="Midp2ChoiceElementDC4"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC5"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC1"/>
-                <ContainerPropertyItem value="Midp2ChoiceElementDC2"/>
             </ContainerProperty>
             <Property value="false" name="lazyInitialized"/>
         </DesignComponent>
         <DesignComponent uid="141" id="Midp2ChoiceElementDC1" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
             <Property value="STRING:Nachlieli-20" name="string"/>
-            <Property name="image"/>
-            <Property value="false" name="selected"/>
-        </DesignComponent>
-        <DesignComponent uid="142" id="Midp2ChoiceElementDC2" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
-            <Property value="STRING:Miriam-22" name="string"/>
             <Property name="image"/>
             <Property value="false" name="selected"/>
         </DesignComponent>

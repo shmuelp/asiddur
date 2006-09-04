@@ -105,7 +105,7 @@ public abstract class TextHints {
              break;
 
          case TefillaReader.OTHER:
-             result = "Other";
+             result = "Berachot";
              break;
 
          default:

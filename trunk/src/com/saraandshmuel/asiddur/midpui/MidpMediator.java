@@ -81,10 +81,10 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
               case 3:
                  fontName = "nachlieli-20";
                  break;
-                 
-              case 4:
-                 fontName = "miriam-22";
-                 break;
+//                 
+//              case 4:
+//                 fontName = "miriam-22";
+//                 break;
            }
            
            if ( font == null || font.getFontName().compareTo(fontName)!=0 )
