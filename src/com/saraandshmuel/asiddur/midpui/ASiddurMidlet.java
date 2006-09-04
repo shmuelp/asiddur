@@ -77,17 +77,15 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
         Logger.log("Initializing Midlet components");       
-        spacer4 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
-        spacer2 = new Spacer(1000, 1);
-        topStringItem = new StringItem("A Siddur v 0.2 beta", "A soon-to-be intelligent siddur");
+        spacer3 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
+        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+        topStringItem = new StringItem("ASiddur 0.2 beta", "A soon-to-be intelligent siddur");
         fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
            "Native",
            "Native (reversed)",
            "Nachlieli-14",
-           "Nachlieli-20",
-           "Miriam-22"
+           "Nachlieli-20"
         }, new Image[] {
-           null,
            null,
            null,
            null,
@@ -97,19 +95,18 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
            false,
            false,
            false,
-           false,
            false
         });
-        tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
-        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-        spacer1 = new Spacer(1000, 1);
-        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-        spacer3 = new Spacer(1000, 1);
         daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
         daavenCanvas.addCommand(get_backToMainCommand());
         daavenCanvas.addCommand(get_debugOutputCommand());
         daavenCanvas.addCommand(get_exitCommand());
         daavenCanvas.setCommandListener(this);
+        spacer2 = new Spacer(1000, 1);
+        spacer1 = new Spacer(1000, 1);
+        spacer4 = new Spacer(1000, 1);
+        tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
+        tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
         getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
        getDisplay().setCurrent(splash);
@@ -459,7 +456,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_settingsDescription() {
        if (settingsDescription == null) {//GEN-END:MVDGetBegin73
             // Insert pre-init code here
-          settingsDescription = new StringItem("Settings\n", "\nDescription of settings goes here.  Actual settings go in the commands of this screen.\n\nNote: support for settings is currently planned for version 0.3.\n");//GEN-LINE:MVDGetInit73
+          settingsDescription = new StringItem("Settings\n", "\nDescription of settings goes here.  Actual settings go in the commands of this screen.\n\nNote: support for settings is currently planned for version 0.4.\n");//GEN-LINE:MVDGetInit73
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd73
        return settingsDescription;
@@ -534,7 +531,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_stringItem1() {
        if (stringItem1 == null) {//GEN-END:MVDGetBegin91
             // Insert pre-init code here
-          stringItem1 = new StringItem("", "The feature plan can be found using the issue tracker available at:\nhttp://code.google.com/");//GEN-LINE:MVDGetInit91
+          stringItem1 = new StringItem("", "The feature plan can be found using the issue tracker available at:\nhttp://code.google.com/p/asiddur/");//GEN-LINE:MVDGetInit91
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd91
        return stringItem1;
@@ -573,7 +570,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_aboutString() {
        if (aboutString == null) {//GEN-END:MVDGetBegin99
             // Insert pre-init code here
-          aboutString = new StringItem("ASiddur 0.1+\n", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Richard Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B.");//GEN-LINE:MVDGetInit99
+          aboutString = new StringItem("ASiddur 0.2 beta\n", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Moishe Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B.");//GEN-LINE:MVDGetInit99
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd99
        return aboutString;
