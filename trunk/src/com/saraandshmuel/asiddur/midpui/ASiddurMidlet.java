@@ -77,10 +77,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
         Logger.log("Initializing Midlet components");       
-        spacer3 = new Spacer(1000, 1);//GEN-BEGIN:MVDInitInit
-        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-        topStringItem = new StringItem("ASiddur 0.2 beta", "A soon-to-be intelligent siddur");
-        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
+        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {//GEN-BEGIN:MVDInitInit
            "Native",
            "Native (reversed)",
            "Nachlieli-14",
@@ -97,16 +94,19 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
            false,
            false
         });
+        spacer3 = new Spacer(1000, 1);
+        spacer1 = new Spacer(1000, 1);
+        useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
+        topStringItem = new StringItem("ASiddur 0.2", "A soon-to-be intelligent siddur");
         daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
         daavenCanvas.addCommand(get_backToMainCommand());
         daavenCanvas.addCommand(get_debugOutputCommand());
         daavenCanvas.addCommand(get_exitCommand());
         daavenCanvas.setCommandListener(this);
-        spacer2 = new Spacer(1000, 1);
-        spacer1 = new Spacer(1000, 1);
-        spacer4 = new Spacer(1000, 1);
         tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
         tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
+        spacer4 = new Spacer(1000, 1);
+        spacer2 = new Spacer(1000, 1);
         getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
        getDisplay().setCurrent(splash);
@@ -570,7 +570,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     public StringItem get_aboutString() {
        if (aboutString == null) {//GEN-END:MVDGetBegin99
             // Insert pre-init code here
-          aboutString = new StringItem("ASiddur 0.2 beta\n", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Moishe Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B.");//GEN-LINE:MVDGetInit99
+          aboutString = new StringItem("ASiddur 0.2", "\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Moishe Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B.");//GEN-LINE:MVDGetInit99
             // Insert post-init code here
        }//GEN-BEGIN:MVDGetEnd99
        return aboutString;

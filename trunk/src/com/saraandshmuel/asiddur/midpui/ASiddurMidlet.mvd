@@ -37,7 +37,7 @@
             <Property value="MainForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="4" id="topStringItem" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:ASiddur 0.2 beta" name="label"/>
+            <Property value="STRING:ASiddur 0.2" name="label"/>
             <Property value="STRING:A soon-to-be intelligent siddur" name="text"/>
             <ContainerProperty name="commands"/>
             <Property value="false" name="lazyInitialized"/>
@@ -261,7 +261,7 @@
             <Property value="aboutForm" name="actionOrigin"/>
         </DesignComponent>
         <DesignComponent uid="99" id="aboutString" typeid="MIDP:javax.microedition.lcdui.StringItem">
-            <Property value="STRING:ASiddur 0.2 beta\n" name="label"/>
+            <Property value="STRING:ASiddur 0.2" name="label"/>
             <Property value="STRING:\n(c) 2006 S. Popper\n\nPortions (c) Avrom Finkelstein\n\nText courtesy of Moishe Davidovici\n\nThanks to:\nSara P.\nAvi P.\nShaya P.\nCriag E.\nJoe B." name="text"/>
             <ContainerProperty name="commands"/>
         </DesignComponent>
