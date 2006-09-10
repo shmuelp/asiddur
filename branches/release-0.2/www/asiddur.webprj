@@ -1,0 +1,22 @@
+<!DOCTYPE webproject>
+<webproject>
+  <project type="Local" name="asiddur" encoding="utf8" >
+    <upload/>
+    <author>S. Popper</author>
+    <email>asiddur@gmail.com</email>
+    <defaultDTD>-//W3C//DTD XHTML 1.0 Strict//EN</defaultDTD>
+    <item url="" uploadstatus="1" />
+    <templates>templates/</templates>
+    <toolbars>toolbars/</toolbars>
+    <item modified_time="1156894131" url="asiddur.html" uploadstatus="1" />
+    <item modified_time="1157073664" url="ASiddur.jad" uploadstatus="1" />
+    <item modified_time="1157073664" url="ASiddur.jar" uploadstatus="1" />
+    <annotations/>
+    <item desc="" modified_time="1157073333" url="demo.html" uploadstatus="1" />
+    <item modified_time="1156222406" url="me4se_applet.zip" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-east.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-north.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-south.png" uploadstatus="1" />
+    <item modified_time="1156222406" url="phone-west.png" uploadstatus="1" />
+  </project>
+</webproject>
