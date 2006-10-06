@@ -39,6 +39,10 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
      */
     private boolean reorder = true;
     
+    private int screenView = 0;
+    private static final int SCREEN_VIEW_MAX = 6;
+    private String reminders = null;
+    
     /**
     * Creates a new instance of MidpMediator
     * @param midlet Reference to the midlet
@@ -155,12 +159,21 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
         TextFunctions functions = getTextFunctions();
             
         StringBuffer sb = new StringBuffer();
+        
+        int month = getHebrewDate().getHebrewMonth();
+        int day = getHebrewDate().getDayOfWeek();
 
         for (int i = 0; i < functions.getNumFunctions(); i++) {
             sb.append(functions.getFunctionLabel(i));
             sb.append("=");
-            sb.append(functions.evalFunction(i));
+            sb.append(functions.evalFunction(i, month, day));
             sb.append('\n');
+        }
+        
+        reminders = functions.getReminderString();
+        
+        if ( reminders.length() != 0 && ( screenView & 0x01 ) == 0 ) {
+           midlet.getDaavenCanvas().setTicker(new Ticker(reminders));
         }
 
         midlet.get_choiceString().setText(sb.toString());
@@ -253,5 +266,59 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
        if ( font != null ) { font.releaseReferences(); }
        this.font = null;
        if ( midlet != null ) { midlet.releaseReferences(); }
+    }
+    
+    public void toggleView() {
+      screenView = ( screenView + 1 ) % SCREEN_VIEW_MAX;
+      Displayable d = Display.getDisplay(midlet).getCurrent();
+      String reminder = getTextFunctions().getReminderString();
+      
+      if (reminder.length() == 0 && (screenView & 0x01) == 0 ) {
+         screenView = ( screenView + 1 ) % SCREEN_VIEW_MAX;
+      }
+      
+      try {
+         Canvas c = (Canvas) d;
+         
+         switch ( screenView )
+         {
+            case 0:
+            case 1:
+               c.setFullScreenMode(false);
+               c.setTitle(null);
+               break;
+
+            case 2:
+            case 3:
+               c.setTitle( getHebrewDate().getHebrewDateAsString() );
+               break;
+
+            case 4:
+               // special-case; no ticker is visible in full-screen
+               ++screenView;
+               // intentional pass-through
+            case 5:
+               c.setFullScreenMode(true);
+         }
+         
+         if ( (screenView & 0x01) == 0 ) {
+            c.setTicker(new Ticker(reminder));
+         } else {
+            c.setTicker(null);
+         }
+         
+         c.repaint();
+      } catch ( ClassCastException cce ) {
+         // This isn't the HebrewTextCanvas we're expecting, so ignore
+      }
+
+    }
+    
+    public String getReminderString() {
+       if ( reminders == null ) {
+          reminders = getTextFunctions().getReminderString();
+       }
+       
+       return reminders;
     }
 }
