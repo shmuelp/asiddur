@@ -11,6 +11,7 @@ package com.saraandshmuel.asiddur.midpui;
 
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Ticker;
 import com.saraandshmuel.asiddur.common.*;
 
 /**
@@ -128,6 +129,9 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
             case LEFT:
                 navUp();
                 break;
+            case FIRE:
+                mediator.toggleView();
+                break;
         }
 
 //         setStatusText(keyCode, false);
@@ -151,6 +155,9 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
                 break;
             case LEFT:
                 navUp();
+                break;
+            case FIRE:
+                mediator.toggleView();
                 break;
         }
 
@@ -207,7 +214,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
         textBox.nextNavigationMark();
         repaint();
     }
-
+    
    public void setMediator(MidpMediator mediator) {
       this.mediator = mediator;
       this.textBox = new HebrewTextBox(mediator, 0, 0, 0);

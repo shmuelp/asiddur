@@ -147,13 +147,15 @@ public class TextFunctions {
     /**
      * Evaluates a function.
      * @param functionId the ID of a the function to run
+     * @param month the Hebrew month
+     * @param day the Hebrew day
      * @return true if the function is true, false otherwise
      */
-    public boolean evalFunction( int functionId ) {
+    public boolean evalFunction( int functionId, int month, int day ) {
         boolean result;
-        RegularHebrewDate hebrewDate = mediator.getHebrewDate();
-        int month = hebrewDate.getHebrewMonth();
-        int day = hebrewDate.getHebrewDate();
+        //RegularHebrewDate hebrewDate = mediator.getHebrewDate();
+        //int month = hebrewDate.getHebrewMonth();
+        //int day = hebrewDate.getHebrewDate();
         
         switch ( functionId ) {
             case IS_ROSH_CHODESH:
@@ -176,7 +178,7 @@ public class TextFunctions {
                      ( month == 7 && day == 3 ) ||
                      ( month == 7 && day == 10 ) ||
                      ( month == 10 && day == 10 ) ||
-                     ( month == hebrewDate.getLastMonthOfHebrewYear() && day == 13 ) ) {
+                     ( month == mediator.getHebrewDate().getLastMonthOfHebrewYear() && day == 13 ) ) {
                          result = true;
                 } else {
                     result = false;
@@ -247,7 +249,7 @@ public class TextFunctions {
                     cutoff.set(Calendar.MONTH, 12);
                     cutoff.set(Calendar.DAY_OF_MONTH, engLeap ? 5 : 4 );
                     HebrewDate cutoffDate = new HebrewDate(cutoff);
-                    if ( hebrewDate.compareTo(cutoffDate) < 0 ) {
+                    if ( mediator.getHebrewDate().compareTo(cutoffDate) < 0 ) {
                         result = false;
                     } else {
                         result = true;
@@ -258,9 +260,9 @@ public class TextFunctions {
             case SAY_YAALEH_VYAVOH:
                 if ( day == 1 || 
                      day == 30 ||
-                     ( month == 1 && ( day >=15 || day <= 22 ) ) ||
+                     ( month == 1 && ( day >=15 && day <= 22 ) ) ||
                      ( month == 3 && ( day == 6 || day == 7 ) ) ||
-                     ( month == 7 && ( day >=15 || day <= 23 ) ) ) {
+                     ( month == 7 && ( day >=15 && day <= 23 ) ) ) {
                     result = true;
                 } else {
                     result = false;
@@ -289,7 +291,7 @@ public class TextFunctions {
                 } else if ( month == 10 ) {
                     if ( day <= 2 ) {
                         result = true;
-                    } else if ( day ==3 && hebrewDate.getLastDayOfHebrewMonth(9)==29 ) {
+                    } else if ( day ==3 && mediator.getHebrewDate().getLastDayOfHebrewMonth(9)==29 ) {
                         result = true;
                     } else {
                         result = false;
@@ -300,7 +302,7 @@ public class TextFunctions {
                 break;
                 
             case IS_PURIM:
-                if ( month == hebrewDate.getLastMonthOfHebrewYear() && day == 14 ) {
+                if ( month == mediator.getHebrewDate().getLastMonthOfHebrewYear() && day == 14 ) {
                     result = true;
                 } else {
                     result = false;
@@ -352,6 +354,56 @@ public class TextFunctions {
      */
     public int getNumFunctions() {
         return functionNames.length;
+    }
+    
+    public String getReminderString() {
+       StringBuffer result = new StringBuffer();
+       
+       RegularHebrewDate hebrewDate = mediator.getHebrewDate();
+       int month = hebrewDate.getHebrewMonth();
+       int day = hebrewDate.getHebrewDate();
+
+        Calendar engCal= mediator.getEnglishCalendar();
+        int engYear = engCal.get(Calendar.YEAR) + 1;
+        int engMonth = engCal.get(Calendar.MONTH);
+        int engDay = engCal.get(Calendar.DAY_OF_MONTH);
+        boolean engLeap = ( engYear % 4 == 0 && ( engYear % 100 != 0 || engYear % 1000 == 0 ) );
+        if ( engMonth == Calendar.DECEMBER && 
+             engDay <= 19 && 
+             engDay >= (engLeap ? 5 : 4) ) {
+           result.append("V'Sein B'racha");
+        }
+       
+       if ( month == 7 && day >= 15 ) {
+          result.append("Mashiv Haruach ");
+       }
+       
+       if ( evalFunction(IS_FAST_DAY, month, day) ) {
+          result.append("Aneinu");
+       }
+       
+       if ( evalFunction(IS_FAST_DAY, month, day) ) {
+          result.append("Aneinu");
+       }
+       
+       if ( evalFunction(IS_FAST_DAY, month, day) ) {
+          result.append("Aneinu ");
+       }
+       
+       if ( evalFunction(IN_ASERET_YIMAY_TESHUVA, month, day) ) {
+          result.append("Hemelech Hakadosh ");
+       }
+       
+       if ( evalFunction(IS_CHANNUKAH, month, day)  || 
+            evalFunction(IS_PURIM, month, day)) {
+          result.append("Al Hanisim ");
+       }
+       
+       if ( evalFunction(SAY_YAALEH_VYAVOH, month, day) ) {
+          result.append("Ya'aleh V'Yavo ");
+       }
+        
+       return result.toString();
     }
 
     /**
