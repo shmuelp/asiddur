@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+    TODO define vocabulary indentification
+    PUBLIC ID: -//vendor//vocabulary//EN
+    SYSTEM ID: http://server/path/asiddur-tefilla.dtd
+
+-->
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT asiddur (text|toc)*>
+<!ATTLIST asiddur
+    format CDATA #FIXED "0.1"
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT toc (tefilla)*>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT tefilla (name)*>
+<!ATTLIST tefilla
+    target IDREF #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT name (#PCDATA)>
+<!ATTLIST name
+    lang CDATA #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT text (#PCDATA|include|navmark|p|br|if)*>
+<!ATTLIST text
+    name ID #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT if (#PCDATA|get|set|include|p|function|br|navmark|if|else)*>
+<!ATTLIST if
+    variable CDATA #IMPLIED
+    day CDATA #IMPLIED
+    month CDATA #IMPLIED
+    or CDATA #IMPLIED
+    function CDATA #IMPLIED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT else EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT br EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT navmark EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT function EMPTY>
+<!ATTLIST function
+    name CDATA #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT p EMPTY>
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT include EMPTY>
+<!ATTLIST include
+    target IDREF #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT set (#PCDATA)>
+<!ATTLIST set
+    slot CDATA #REQUIRED
+  >
+
+<!--- Put your DTDDoc comment here. -->
+<!ELEMENT get EMPTY>
+<!ATTLIST get
+    slot CDATA #REQUIRED
+  >
