@@ -9,7 +9,7 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-    <xsl:output method="xml"/>
+    <xsl:output method="xml" doctype-system="../../tools/asiddur-tefilla-annotated.dtd"/>
     <!--xsl:output method="xml" encoding="windows-1255"/-->
     <!-- TODO customize transformation rules 
          syntax recommendation http://www.w3.org/TR/xslt 
@@ -22,12 +22,12 @@
               </tefillot>
               <texts>
         <xsl:for-each select="/asiddur/text">
-                 <text>
+                 <text-header>
                     <xsl:attribute name="name">
                        <xsl:value-of select="@name"/>
                     </xsl:attribute>
                     <xsl:call-template name="length-counter"/>
-                 </text>
+                 </text-header>
         </xsl:for-each>
               </texts>
            </toc>
