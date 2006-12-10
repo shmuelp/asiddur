@@ -374,12 +374,17 @@ public class TextFunctions {
            result.append("V'Sein Tal Umatar");
         }
        
+        if ( ( month == 1 && day > 22 ) ||
+                ( month == 2 && day <= 7 ) ) {
+              result.append("V'Sein B'racha ");
+           }
+
         
        if ( ( month == 7 && day >= 22 ) ||
             ( month == 8 && day <= 7 ) ) {
-          result.append("Mashiv Haruach / V'Sein B'racha ");
+          result.append("Mashiv Haruach ");
        }
-       
+
        if ( evalFunction(IS_FAST_DAY, month, day) ) {
           result.append("Aneinu");
        }
