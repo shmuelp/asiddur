@@ -371,12 +371,13 @@ public class TextFunctions {
         if ( engMonth == Calendar.DECEMBER && 
              engDay <= 19 && 
              engDay >= (engLeap ? 5 : 4) ) {
-           result.append("V'Sein B'racha");
+           result.append("V'Sein Tal Umatar");
         }
        
+        
        if ( ( month == 7 && day >= 22 ) ||
             ( month == 8 && day <= 7 ) ) {
-          result.append("Mashiv Haruach ");
+          result.append("Mashiv Haruach / V'Sein B'racha ");
        }
        
        if ( evalFunction(IS_FAST_DAY, month, day) ) {
