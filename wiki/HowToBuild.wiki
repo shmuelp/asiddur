@@ -1,4 +1,5 @@
 #summary Description of how to build from sources.
+#labels Featured
 
 = Introduction =
 
