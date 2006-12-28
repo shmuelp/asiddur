@@ -77,12 +77,24 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:MVDInitBegin
         // Insert pre-init code here
         Logger.log("Initializing Midlet components");       
-        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {//GEN-BEGIN:MVDInitInit
+        topStringItem = new StringItem("ASiddur 0.2", "A soon-to-be intelligent siddur");//GEN-BEGIN:MVDInitInit
+        spacer2 = new Spacer(1000, 1);
+        spacer4 = new Spacer(1000, 1);
+        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
+        daavenCanvas.addCommand(get_backToMainCommand());
+        daavenCanvas.addCommand(get_debugOutputCommand());
+        daavenCanvas.addCommand(get_exitCommand());
+        daavenCanvas.setCommandListener(this);
+        fontChoiceGroup = new ChoiceGroup("Choose font:", Choice.POPUP, new String[] {
            "Native",
            "Native (reversed)",
            "Nachlieli-14",
-           "Nachlieli-20"
+           "Nachlieli-20",
+           "Native UTF",
+           "Native UTF (reversed)"
         }, new Image[] {
+           null,
+           null,
            null,
            null,
            null,
@@ -92,21 +104,15 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
            false,
            false,
            false,
+           false,
+           false,
            false
         });
-        spacer3 = new Spacer(1000, 1);
         spacer1 = new Spacer(1000, 1);
         useDateField = new DateField("Set date/time:", DateField.DATE_TIME);
-        topStringItem = new StringItem("ASiddur 0.2", "A soon-to-be intelligent siddur");
-        daavenCanvas = new com.saraandshmuel.asiddur.midpui.HebrewTextCanvas("");
-        daavenCanvas.addCommand(get_backToMainCommand());
-        daavenCanvas.addCommand(get_debugOutputCommand());
-        daavenCanvas.addCommand(get_exitCommand());
-        daavenCanvas.setCommandListener(this);
         tefillaChoiceGroup = new ChoiceGroup("", Choice.POPUP, new String[0], new Image[0]);
         tefillaChoiceGroup.setSelectedFlags(new boolean[0]);
-        spacer4 = new Spacer(1000, 1);
-        spacer2 = new Spacer(1000, 1);
+        spacer3 = new Spacer(1000, 1);
         getDisplay().setCurrent(get_MainForm());//GEN-END:MVDInitInit
         // Insert post-init code here
        getDisplay().setCurrent(splash);

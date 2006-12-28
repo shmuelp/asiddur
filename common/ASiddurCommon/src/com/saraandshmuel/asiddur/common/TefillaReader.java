@@ -54,6 +54,11 @@ public class TefillaReader {
     protected boolean showNikud = false;
     
     /**
+     * When set true, text is converted from CP-1255/ISO-8859-8 to UTF-8
+     */
+    private boolean convertToUTF = false;
+    
+    /**
     * Creates a new instance of TefillaReader
     * @param mediator The application mediator
     */
@@ -83,6 +88,7 @@ public class TefillaReader {
     */
     public void setText( final int textNum ) {
        strategy = new TefillaBufferReaderStrategy( textNum );
+       strategy.setConvertToUTF(convertToUTF);
     }
 
    /**
@@ -122,6 +128,10 @@ public class TefillaReader {
     */
     public int getTextLength() {
        return strategy.getTextLength();
+    }
+
+    public void setConvertToUTF(boolean convertToUTF) {
+       this.convertToUTF = convertToUTF;
     }
 
     /**

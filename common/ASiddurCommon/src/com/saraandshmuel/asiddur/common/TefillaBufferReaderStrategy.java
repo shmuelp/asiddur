@@ -31,6 +31,11 @@ public class TefillaBufferReaderStrategy implements com.saraandshmuel.asiddur.co
     protected boolean showNikud = false;
     
     /**
+     * When set true, text is converted from CP-1255/ISO-8859-8 to UTF-8
+     */
+    private boolean convertToUTF = false;
+    
+    /**
     * Creates a new instance of TefillaReader
     * @param text One of the tefilla constants defined in TefillaReader
     */
@@ -57,6 +62,9 @@ public class TefillaBufferReaderStrategy implements com.saraandshmuel.asiddur.co
                 {
                     int c;
                     while ((c = is.read()) != -1) {
+                        if ( convertToUTF ) {
+                           c += 0x04F0;
+                        }
                         if ( showNikud || c < 0xc0 || c >= 0xd3 ) {
                             readData.append( (char) c );
                         }
@@ -160,4 +168,8 @@ public class TefillaBufferReaderStrategy implements com.saraandshmuel.asiddur.co
     public void releaseReferences() {
        this.myText = null;
     }
+
+   public void setConvertToUTF(boolean convertToUTF) {
+      this.convertToUTF = convertToUTF;
+   }
 }

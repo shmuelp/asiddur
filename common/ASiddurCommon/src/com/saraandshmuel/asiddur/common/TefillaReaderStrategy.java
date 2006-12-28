@@ -48,5 +48,7 @@ public interface TefillaReaderStrategy {
     * data beginning at position <CODE>begin</CODE>
     */
    String getTextString(int begin, int count);
+
+   void setConvertToUTF(boolean convertToUTF);
    
 }

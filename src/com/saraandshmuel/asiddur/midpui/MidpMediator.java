@@ -38,6 +38,12 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
      */
     private boolean reorder = true;
     
+    
+    /** 
+     * Controls whether or not the text is converted into UTF-8
+     */
+    private boolean convertToUTF = false;
+    
     private int screenView = 0;
     private static final int SCREEN_VIEW_MAX = 6;
     private String reminders = null;
@@ -48,6 +54,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     */
     public MidpMediator(ASiddurMidlet midlet) {
         this.midlet = midlet;
+        getTefillaReader().setConvertToUTF(convertToUTF);
         Logger.setLog(this);
     }
 
@@ -88,8 +95,20 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
 //              case 4:
 //                 fontName = "miriam-22";
 //                 break;
+                 
+              case 4:
+                  reorder = false;
+                  // Intentional fall-through
+                  
+              case 5:
+                 font = new MidpFontAdapterStrategy();
+                 convertToUTF = true;
+                 fontName = "Native UTF";
+                 break;
            }
            
+           getTefillaReader().setConvertToUTF(convertToUTF);
+        
            if ( font == null || font.getFontName().compareTo(fontName)!=0 )
            {
               Logger.log("Loading font " + fontName + '\n');

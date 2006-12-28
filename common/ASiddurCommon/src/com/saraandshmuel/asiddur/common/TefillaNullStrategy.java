@@ -64,4 +64,7 @@ public class TefillaNullStrategy implements TefillaReaderStrategy {
    public String getTextString(int begin, int count) {
       return "";
    }
+
+   public void setConvertToUTF(boolean convertToUTF) {
+   }
 }

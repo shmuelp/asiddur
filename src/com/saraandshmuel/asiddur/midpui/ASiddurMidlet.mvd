@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MVDData version="1.2">
-    <DesignDocument designVersion="MIDP-2" uidCounter="149">
+    <DesignDocument designVersion="MIDP-2" uidCounter="151">
         <DesignComponent uid="0" id="$MobileDevice" typeid="MIDP:$MobileDevice"/>
         <DesignComponent uid="1" id="$StartPoint" typeid="MIDP:$StartPoint">
             <Property value="MainForm" name="targetDisplayable"/>
@@ -432,6 +432,8 @@
                 <ContainerPropertyItem value="Midp2ChoiceElementDC4"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC5"/>
                 <ContainerPropertyItem value="Midp2ChoiceElementDC1"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC2"/>
+                <ContainerPropertyItem value="Midp2ChoiceElementDC6"/>
             </ContainerProperty>
             <Property value="false" name="lazyInitialized"/>
         </DesignComponent>
@@ -469,6 +471,16 @@
             <Property name="image"/>
             <Property value="false" name="selected"/>
         </DesignComponent>
+        <DesignComponent uid="149" id="Midp2ChoiceElementDC2" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Native UTF" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
+        </DesignComponent>
+        <DesignComponent uid="150" id="Midp2ChoiceElementDC6" typeid="MIDP:GROUP-org.netbeans.modules.mvd.model.midp2.Midp2ChoiceElementDC">
+            <Property value="STRING:Native UTF (reversed)" name="string"/>
+            <Property name="image"/>
+            <Property value="false" name="selected"/>
+        </DesignComponent>
     </DesignDocument>
     <FlowDocument version="1.1">
         <Node id="$MobileDevice" location="160,848" order=",$StartPoint,,,,,,,,,$ExitPoint,,,,,"/>
@@ -483,6 +495,7 @@
         <Node id="showChoicesForm" location="640,608" order="$CommandAction10,$CommandAction25,$CommandAction26,,,,,,,,$Default,,,,,"/>
         <Link id="$StartPoint$ActionLink" path="200,824,352,824"/>
         <Link id="$CommandAction$ActionLink" path="432,840,523,840,523,880,47,880,47,824,120,824"/>
+        <Link id="$CommandAction2$ActionLink" path="432,824,492,824,492,1296,600,1296"/>
         <Link id="$CommandAction3$ActionLink" path="680,1296,772,1296,772,1216,47,1216,47,824,120,824"/>
         <Link id="$CommandAction4$ActionLink" path="432,808,528,808,528,824,600,824"/>
         <Link id="$CommandAction7$ActionLink" path="432,792,501,792,501,1064,600,1064"/>
@@ -509,6 +522,5 @@
         <Link id="$CommandAction26$ActionLink" path="680,568,780,568,780,756,519,756,519,824,600,824"/>
         <Link id="$CommandAction27$ActionLink" path="400,776,400,584,600,584"/>
         <Link id="$CommandAction28$ActionLink" path="384,776,384,553,54,553,54,104,104,104"/>
-        <Link id="$CommandAction2$ActionLink" path="432,824,492,824,492,1296,600,1296"/>
     </FlowDocument>
 </MVDData>
