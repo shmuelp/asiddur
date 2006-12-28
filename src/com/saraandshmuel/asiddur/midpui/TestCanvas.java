@@ -11,7 +11,7 @@ package com.saraandshmuel.asiddur.midpui;
 
 import java.io.*;
 import javax.microedition.lcdui.*;
-import com.saraandshmuel.asiddur.common.*;
+
 //import pcffont.*;
 
 /**

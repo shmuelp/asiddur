@@ -38,6 +38,7 @@
 <!ATTLIST text-header
     length CDATA #REQUIRED
     name ID #REQUIRED
+    id CDATA #REQUIRED
   >
 
 <!--- Put your DTDDoc comment here. -->

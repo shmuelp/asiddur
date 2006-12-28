@@ -32,7 +32,7 @@ public class Main {
    public Main( URL input, OutputStream output ) {
       InputSource is = new InputSource();
       AsiddurTefillaAnnotatedHandler handler = 
-              new AsiddurTefillaAnnotatedHandlerImpl();
+              new AsiddurTefillaAnnotatedHandlerImpl( output );
       AsiddurTefillaAnnotatedParser parser = 
               new AsiddurTefillaAnnotatedParser( handler, null );
       

@@ -26,84 +26,88 @@ public class TextFunctions {
    /**
     * Is the current day Rosh Chodesh?
     */
-    private static final int IS_ROSH_CHODESH = 0;
+    public static final byte IS_ROSH_CHODESH = 0;
    /**
     * Is it Sunday?
     */
-    private static final int IS_SUNDAY = 1;
+    public static final byte IS_SUNDAY = 1;
    /**
     * Is it Monday?
     */
-    private static final int IS_MONDAY = 2;
+    public static final byte IS_MONDAY = 2;
    /**
     * Is it Tuesday?
     */
-    private static final int IS_TUESDAY = 3;
+    public static final byte IS_TUESDAY = 3;
    /**
     * Is it Wednesday?
     */
-    private static final int IS_WEDNESDAY = 4;
+    public static final byte IS_WEDNESDAY = 4;
    /**
     * Is it Thursday?
     */
-    private static final int IS_THURSDAY = 5;
+    public static final byte IS_THURSDAY = 5;
    /**
     * Is it Friday?
     */
-    private static final int IS_FRIDAY = 6;
+    public static final byte IS_FRIDAY = 6;
    /**
     * Is it Shabbos?
     */
-    private static final int IS_SHABBOS = 7;
+    public static final byte IS_SHABBOS = 7;
    /**
     * Is it a fast day?
     */
-    private static final int IS_FAST_DAY = 8;
+    public static final byte IS_FAST_DAY = 8;
    /**
     * Is the current day in the Aseret Yimay Teshuva?
     */
-    private static final int IN_ASERET_YIMAY_TESHUVA = 9;
+    public static final byte IN_ASERET_YIMAY_TESHUVA = 9;
    /**
     * Is it between Sukkot and Pesach?  (E.g. say "Mashiv HaRuach")
     */
-    private static final int SUKKOT_TO_PESACH = 10;
+    public static final byte SUKKOT_TO_PESACH = 10;
    /**
     * Is it between Pesach and Sukkot? (e.g. don't say "Mashiv HaRuach" or 
     * say "Morid HaTal").
     */
-    private static final int PESACH_TO_SUKKOT = 11;
+    public static final byte PESACH_TO_SUKKOT = 11;
    /**
     * Is it between Dec. 4th (or 5th in a leap year) and Pesach?  (e.g. mention tal)
     */
-    private static final int SAY_TAL_UMATAR = 12;
+    public static final byte SAY_TAL_UMATAR = 12;
    /**
     * Say Yaaleh v'yavo?  (E.g. Rosh Chodesh, Chol HaMoed)
     */
-    private static final int SAY_YAALEH_VYAVOH = 13;
+    public static final byte SAY_YAALEH_VYAVOH = 13;
    /**
     * Is it currently Sukkot?
     */
-    private static final int IS_SUKKOT = 14;
+    public static final byte IS_SUKKOT = 14;
    /**
     * Is it currently Pesach?
     */
-    private static final int IS_PESACH = 15;
+    public static final byte IS_PESACH = 15;
    /**
     * Is it Channuka?
     */
-    private static final int IS_CHANNUKAH = 16;
+    public static final byte IS_CHANNUKAH = 16;
    /**
     * Is it Purim?
     */
-    private static final int IS_PURIM = 17;
+    public static final byte IS_PURIM = 17;
    /**
     * Should Tachanun be said?
     */
-    private static final int SAY_TACHANUN = 18;
+    public static final byte SAY_TACHANUN = 18;
    /**
     * Is is between rosh chodesh Elul and Hoshana rabbah?
     */
-    private static final int SAY_LDAVID = 19;
+    public static final byte SAY_LDAVID = 19;
+    /**
+     * Is it during the omer?
+     */
+    public static final byte IN_OMER = 20;
 
    /**
     * The names of the functions
@@ -128,7 +132,8 @@ public class TextFunctions {
         "isChannukah",
         "isPurim",
         "sayTachanun",
-        "sayL'david"
+        "sayL'david",
+        "inOmer"
     };
     
    /**
@@ -323,6 +328,26 @@ public class TextFunctions {
                 }
                 break;
                 
+           case IN_OMER:
+                if ( month == 2 ) { // Iyar
+                    result = true;
+                } else if ( month > 3 ) { // After Sivan
+                    result = false;
+                } else if ( month == 1 ) { // Nisan
+                    if ( day < 16 ) {
+                        result = false;
+                    } else {
+                        result = true;
+                    }
+                } else { // Sivan
+                    if ( day < 6 ) {
+                        result = true;
+                    } else {
+                        result = false;
+                    }
+                }
+                break;
+                
             default:
                 result = false;
         }
@@ -371,11 +396,11 @@ public class TextFunctions {
         if ( engMonth == Calendar.DECEMBER && 
              engDay <= 19 && 
              engDay >= (engLeap ? 5 : 4) ) {
-           result.append("V'Sein Tal Umatar");
+           result.append("V'Sein Tal Umatar ");
         }
        
         if ( ( month == 1 && day > 22 ) ||
-                ( month == 2 && day <= 7 ) ) {
+             ( month == 2 && day <= 7 ) ) {
               result.append("V'Sein B'racha ");
            }
 
@@ -386,7 +411,7 @@ public class TextFunctions {
        }
 
        if ( evalFunction(IS_FAST_DAY, month, day) ) {
-          result.append("Aneinu");
+          result.append("Aneinu ");
        }
        
        if ( evalFunction(IN_ASERET_YIMAY_TESHUVA, month, day) ) {

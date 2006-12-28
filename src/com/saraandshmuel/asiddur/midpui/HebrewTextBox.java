@@ -9,9 +9,11 @@
 
 package com.saraandshmuel.asiddur.midpui;
 
+import com.saraandshmuel.asiddur.common.FastIntVector;
+import com.saraandshmuel.asiddur.common.Logger;
+import com.saraandshmuel.asiddur.common.TefillaReader;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Font;
-import com.saraandshmuel.asiddur.common.*;
 
 /**
  * Class responsible for scrolling text and laying it out on the screen.  

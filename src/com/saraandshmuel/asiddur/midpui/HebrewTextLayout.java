@@ -1,6 +1,7 @@
 package com.saraandshmuel.asiddur.midpui;
 
-import com.saraandshmuel.asiddur.common.*;
+import com.saraandshmuel.asiddur.common.FastIntVector;
+import com.saraandshmuel.asiddur.common.TefillaReader;
 import javax.microedition.lcdui.Font;
 
 

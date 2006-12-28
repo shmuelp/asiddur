@@ -9,11 +9,10 @@
 
 package com.saraandshmuel.asiddur.midpui;
 
+import com.saraandshmuel.asiddur.common.Logger;
+import com.saraandshmuel.asiddur.common.TextFunctions;
 import java.util.*;
 import javax.microedition.lcdui.*;
-import java.io.DataInputStream;
-
-import com.saraandshmuel.asiddur.common.*;
 
 /**
  * Concrete implementation of 
