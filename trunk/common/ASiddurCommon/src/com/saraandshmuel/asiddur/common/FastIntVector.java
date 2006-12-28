@@ -9,8 +9,6 @@
 
 package com.saraandshmuel.asiddur.common;
 
-import com.saraandshmuel.asiddur.common.*;
-
 /**
  * An time-efficient class containing an array of integers.  It is designed so 
  * that appending n elements, one at a time, will take O(log n) rather than O(n)

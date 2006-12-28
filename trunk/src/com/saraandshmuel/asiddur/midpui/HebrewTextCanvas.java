@@ -9,10 +9,10 @@
 
 package com.saraandshmuel.asiddur.midpui;
 
+import com.saraandshmuel.asiddur.common.Logger;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Ticker;
-import com.saraandshmuel.asiddur.common.*;
 
 /**
  * Draws and handles input on the the Tefilla screen.  Uses a 

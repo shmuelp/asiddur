@@ -152,11 +152,7 @@
         <antcall inheritrefs="true" inheritall="true" target="post-init"/>
     </target>
     <target name="post-init"/>
-    <target name="deps-jar" depends="init" unless="no.deps">
-        <ant antfile="${project.ASiddurCommon}/build.xml" inheritall="false" target="jar">
-            <property value="" name="config.active"/>
-        </ant>
-    </target>
+    <target name="deps-jar" depends="init" unless="no.deps"/>
     <target description="Clean project in case its meta information has changed." unless="no.clean.before.build" depends="init" name="conditional-clean">
         <antcall target="do-clean" inheritall="true" inheritrefs="true"/>
     </target>
@@ -382,18 +378,6 @@
     <target name="for-all-configs">
         <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
             <param value="" name="config.active"/>
-        </antcall>
-        <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
-            <param name="config.active" value="DefaultGrayPhone"/>
-        </antcall>
-        <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
-            <param name="config.active" value="MediaControlSkin"/>
-        </antcall>
-        <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
-            <param name="config.active" value="QwertyDevice"/>
-        </antcall>
-        <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
-            <param name="config.active" value="DefaultColorPhone"/>
         </antcall>
     </target>
     <target name="jar-all">
