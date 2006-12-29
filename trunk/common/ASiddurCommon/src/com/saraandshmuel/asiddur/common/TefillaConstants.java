@@ -18,6 +18,14 @@ package com.saraandshmuel.asiddur.common;
  */
 public class TefillaConstants {
    
+   public static final byte[] HEADER = new byte[] {
+      (byte) 0,
+      (byte) 0xa5,
+      (byte) 0x1d,
+      (byte) 0xd8,
+      (byte) 0x7b 
+   };
+   
    // Format: 01 <target text block ID (short)> <language code (UTF String)> <name (UTF String)
    public static final byte TEFILLA_NAME = 1;
    

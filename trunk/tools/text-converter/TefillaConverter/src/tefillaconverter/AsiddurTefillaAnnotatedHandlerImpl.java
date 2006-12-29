@@ -82,12 +82,7 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       
       try
       {
-         // TODO: Remove "magic" headerType
-         stream.writeByte(0);
-         stream.writeByte(0xa5);
-         stream.writeByte(0x1d);
-         stream.writeByte(0xd8);
-         stream.writeByte(0x7b);
+         stream.write(TefillaConstants.HEADER);
          String version = meta.getValue("format");
          byte versionByte = (byte) (Float.parseFloat(version) * 10);
          stream.writeByte(versionByte);
