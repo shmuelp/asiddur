@@ -44,7 +44,7 @@ public class TefillaReader {
    /**
     * Other tefillot / brachot
     */
-    public static final int OTHER = 3;
+    public static final int BRACHOT = 3;
     
     //private char[] myText = new char[0];
         
@@ -71,12 +71,12 @@ public class TefillaReader {
     * @return An array containing the tefilla names
     */
     public String[] getTextNames() {
-        String[] result = new String[4];
+        String[] result = new String[5];
         
         result[SHACHARIT] = TextHints.getTextName(SHACHARIT);
         result[MINCHA] = TextHints.getTextName(MINCHA);
         result[MAARIV] = TextHints.getTextName(MAARIV);
-        result[OTHER] = TextHints.getTextName(OTHER);
+        result[BRACHOT] = TextHints.getTextName(BRACHOT);
         
         return result;
     }
@@ -87,8 +87,13 @@ public class TefillaReader {
     * constants defined in the class.
     */
     public void setText( final int textNum ) {
-       strategy = new TefillaBufferReaderStrategy( textNum );
-       strategy.setConvertToUTF(convertToUTF);
+       if ( textNum == SHACHARIT || 
+            textNum == MINCHA || 
+            textNum == MAARIV || 
+            textNum == BRACHOT ) {
+          strategy = new TefillaBufferReaderStrategy( textNum );
+          strategy.setConvertToUTF(convertToUTF);
+       }
     }
 
    /**

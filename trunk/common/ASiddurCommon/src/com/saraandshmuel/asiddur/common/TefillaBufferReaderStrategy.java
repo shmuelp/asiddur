@@ -62,8 +62,10 @@ public class TefillaBufferReaderStrategy implements com.saraandshmuel.asiddur.co
                 {
                     int c;
                     while ((c = is.read()) != -1) {
-                        if ( convertToUTF ) {
-                           c += 0x04F0;
+                        if ( convertToUTF && c >= 0xc0 && c <= 0xfa ) {
+                           if ( showNikud || c>= 0xd3 ) {
+                              c += 0x04F0;
+                           }
                         }
                         if ( showNikud || c < 0xc0 || c >= 0xd3 ) {
                             readData.append( (char) c );

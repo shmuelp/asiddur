@@ -37,7 +37,7 @@ public abstract class TextHints {
              result = "maariv-ashkenaz.txt";
              break;
 
-         case TefillaReader.OTHER:
+         case TefillaReader.BRACHOT:
              result = "other-ashkenaz.txt";
              break;
 
@@ -71,7 +71,7 @@ public abstract class TextHints {
              result = 30646;
              break;
 
-         case TefillaReader.OTHER:
+         case TefillaReader.BRACHOT:
              result = 24719;
              break;
 
@@ -104,7 +104,7 @@ public abstract class TextHints {
              result = "Maariv";
              break;
 
-         case TefillaReader.OTHER:
+         case TefillaReader.BRACHOT:
              result = "Berachot";
              break;
 
