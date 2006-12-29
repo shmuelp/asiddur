@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE SAX-bindings PUBLIC "-//XML Module//DTD SAX Bindings 1.0//EN" "">
+<SAX-bindings version='1'>
+	<bind element='asiddur-annotated' method='asiddur_annotated' type='CONTAINER' ></bind>
+	<bind element='text-header' method='text_header' type='EMPTY' ></bind>
+	<bind element='get' method='get' type='EMPTY' ></bind>
+	<bind element='toc' method='toc' type='CONTAINER' ></bind>
+	<bind element='include' method='include' type='EMPTY' ></bind>
+	<bind element='p' method='p' type='EMPTY' ></bind>
+	<bind element='function' method='function' type='EMPTY' ></bind>
+	<bind element='tefillot' method='tefillot' type='CONTAINER' ></bind>
+	<bind element='text' method='text' type='MIXED' ></bind>
+	<bind element='set' method='set' type='DATA' ></bind>
+	<bind element='else' method='else' type='EMPTY' ></bind>
+	<bind element='br' method='br' type='EMPTY' ></bind>
+	<bind element='if' method='if' type='MIXED' ></bind>
+	<bind element='navmark' method='navmark' type='EMPTY' ></bind>
+	<bind element='texts' method='texts' type='CONTAINER' ></bind>
+	<bind element='name' method='name' type='DATA' ></bind>
+	<bind element='tefilla' method='tefilla' type='CONTAINER' ></bind>
+</SAX-bindings>
