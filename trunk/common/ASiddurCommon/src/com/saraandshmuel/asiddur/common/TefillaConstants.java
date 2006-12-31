@@ -29,7 +29,8 @@ public class TefillaConstants {
    // Format: 01 <target text block ID (short)> <language code (UTF String)> <name (UTF String)
    public static final byte TEFILLA_NAME = 1;
    
-   // Format: 02 <number of blocks (short)> <position of text block 1 (long)> <position of text block 2 (long)> ... <position of text block n (long)>
+   // Format: 02 <number of blocks (short)> <position of text block 1 (int)> <position of text block 2 (int)> ... <position of text block n (int)>
+   // int in Java means 4 bytes (= long in C++)
    public static final byte TEXT_POSITION = 2;
    
    // Format: 03 <text block ID (short)> <text block data (cp-1255 string)> <0 (byte)>

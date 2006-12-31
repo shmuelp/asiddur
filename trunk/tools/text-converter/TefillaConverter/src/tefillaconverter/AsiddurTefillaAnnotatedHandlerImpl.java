@@ -34,7 +34,7 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
    
    private Vector textLengths = new Vector();
    
-   private long[] textPositions = null;
+   private int[] textPositions = null;
    
    private Charset outputCharset = null;
    
@@ -151,8 +151,8 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
          }
          
          // Compute and write out text posisions
-         textPositions = new long[textLengths.size()];
-         long lastPosition = 0;
+         textPositions = new int[textLengths.size()];
+         int lastPosition = 0;
          stream.writeByte(TefillaConstants.TEXT_POSITION);
          stream.writeShort(textPositions.length-1);
          for (short i = 1; i < textPositions.length; i++) {
@@ -166,7 +166,7 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
                // TODO: Remove "magic number" from code
                lastPosition += length.shortValue() + 4;
             }
-            stream.writeLong(textPositions[i]);
+            stream.writeInt(textPositions[i]);
          }
       } catch (IOException ioe) {
          System.err.println("Error writing header information to file: ");

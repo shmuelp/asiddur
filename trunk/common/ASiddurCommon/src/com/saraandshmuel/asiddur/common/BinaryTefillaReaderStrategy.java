@@ -38,7 +38,12 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
     /**
      * The positions of all text blocks, by ID
      */
-    private long[] blockPositions = null;
+    private int[] blockPositions = null;
+    
+    /**
+     * The size of the header
+     */
+    private int headerSize = 0;
     
     /**
      * The read tefillot block IDs
@@ -68,7 +73,7 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
         FastCharVector readData = new FastCharVector();
         Vector names = new Vector();
         Vector ids = new Vector();
-        long position = 0;
+        int position = 0;
         
         try {
             is = getClass().getResourceAsStream(filename);
@@ -91,9 +96,14 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                    }
                    position += TefillaConstants.HEADER.length;
                    
+                   byte version = inputStream.readByte();
+                   System.out.println("Version of format is " + version);
+                   ++position;
+                   
                    boolean done = false;
                    byte b;
                    String locale = System.getProperty("microedition.locale");
+                   System.out.println("Current locale is " + locale);
                    while ( !done )
                    {
                       // Save location; read next block ID code
@@ -106,9 +116,12 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                          short id = inputStream.readShort();
                          String language = inputStream.readUTF();
                          String name = inputStream.readUTF();
-                         position += 7 + language.length() + name.length();
+                         position += 7;
+                         position += language.getBytes("UTF8").length;
+                         position += name.getBytes("UTF8").length;
+                         headerSize = position;
                          
-                         if ( language.equals(locale)) {
+                         if ( locale.startsWith(language)) {
                             ids.addElement(new Short(id));
                             names.addElement(name);
                             System.out.println("Adding tefilla " + name);
@@ -121,30 +134,126 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                       // Process text block position information
                       if ( b == TefillaConstants.TEXT_POSITION ) {
                          short numBlocks = inputStream.readShort();
-                         blockPositions = new long[numBlocks];
-                         for (int i = 0; i < blockPositions.length; i++) {
-                            blockPositions[i] = inputStream.readLong();
+                         blockPositions = new int[numBlocks+1];
+                         System.out.println("Found text position block:");
+                         for (int i = 1; i < blockPositions.length; i++) {
+                            blockPositions[i] = inputStream.readInt();
+                            System.out.println("block " + i + " at position " + blockPositions[i]);
                          }
-                         position += 3 + 4 * numBlocks;
+                         position += 3 + (4 * numBlocks);
+                         headerSize = position;
                       }
                       
-                      // Hit the first text block; finish header processing
+//                      // Hit the first text block; finish header processing
+//                      if ( b == TefillaConstants.TEXT_BLOCK ) {
+//                         done = true;
+//                      }
+                      
                       if ( b == TefillaConstants.TEXT_BLOCK ) {
-                         done = true;
-                         inputStream.reset();
-                         
-                         // Store located tefillot names and IDs
-                         for (int i = 0; i < ids.size(); i++) {
-                            tefillotId[i] = ((Byte) ids.elementAt(i)).byteValue();
-                            tefillotNames[i] = (String) names.elementAt(i);
+                         short blockID = inputStream.readShort();
+                         position += 3;
+                         if ( position != ( headerSize + 3 + blockPositions[blockID] ) ) {
+                            System.err.println("Found block " + blockID + 
+                                               " at location " + position + 
+                                               " INSTEAD of expected " +
+                                               (headerSize + 3 + blockPositions[blockID]) );
+                         } else {
+                            System.out.println("Found block " + blockID + 
+                                               " at expected location " +
+                                               (headerSize + 3 + blockPositions[blockID]) );
                          }
                          
-                         System.out.println("Correctly parsed data, header was "
-                                            + position + "bytes long");
-                         // If mark/reset doesn't work, will need to correct 
-                         // position information to add header size
+                         boolean innerDone = false;
+                         byte temp;
+                         while (!innerDone) {
+                            temp = inputStream.readByte();
+                            ++position;
+                            
+                            switch( temp ) {
+                               case TefillaConstants.TEXT_BLOCK_END:
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found end of block");
+                                  innerDone= true;
+                                  break;
+                               
+                               case TefillaConstants.TEXT_GET:
+                                  byte var = inputStream.readByte();
+                                  ++position;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found get with variable " + 
+                                                     var);
+                                  break;
+                                  
+                               case TefillaConstants.TEXT_JUMP:
+                                  short offset = inputStream.readShort();
+                                  position += 2;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found jump with offset " + 
+                                                     offset);
+                                  break;
+                                  
+                               case TefillaConstants.TEXT_INCLUDE:
+                                  short block = inputStream.readShort();
+                                  position += 2;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found include with block " + 
+                                                     block);
+                                  break;
+                                  
+                               case TefillaConstants.TEXT_IF_DAY:
+                               case TefillaConstants.TEXT_IF_FUNCTION:
+                               case TefillaConstants.TEXT_IF_MONTH:
+                               case TefillaConstants.TEXT_IF_VARIABLE:
+                                  short jump = inputStream.readShort();
+                                  byte data = inputStream.readByte();
+                                  position += 3;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found if (" + temp + 
+                                                     ") with jump " + jump + 
+                                                     " and extra data " + data);
+                                  break;                                  
+
+                               case TefillaConstants.TEXT_SET:
+                                  byte var2 = inputStream.readByte();
+                                  short size = inputStream.readShort();
+                                  position += 3;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found include with variable " + 
+                                                     var2 + " and size " + size);
+                                  break;
+                                  
+                               case TefillaConstants.TEXT_IF_OR:
+                                  short jump2 = inputStream.readShort();
+                                  byte funcs = inputStream.readByte();
+                                  position += 3;
+                                  System.out.print("Position " + position + ": ");
+                                  System.out.println("Found if (OR) with jump " 
+                                                     + jump2 + " and " + funcs +
+                                                     " functions:");
+                                  for (int i = 0; i < funcs; ++i) {
+                                     System.out.println("Function #" + i + 
+                                                        inputStream.readByte());
+                                     ++position;
+                                  }
+                                  break;
+                            } // end inner parsing switch-case
+                         }// end text block read loop
                       }
                    } // End header processing loop
+                   
+                   // Finished looping
+                   inputStream.reset();
+
+                   // Store located tefillot names and IDs
+                   for (int i = 0; i < ids.size(); i++) {
+                      tefillotId[i] = ((Byte) ids.elementAt(i)).byteValue();
+                      tefillotNames[i] = (String) names.elementAt(i);
+                   }
+
+                   System.out.println("Correctly parsed data, header was "
+                                      + position + "bytes long");
+                   // If mark/reset doesn't work, will need to correct 
+                   // position information to add header size
                 } // End data input stream initial processing loop
             } else {
              readData.setChars( "Unable to locate resource!!" );
@@ -156,20 +265,20 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
    }
    
    public void setText( short id ) {
-      long initialBlockSize = blockPositions[id+1] - blockPositions[id];
+      int initialBlockSize = blockPositions[id+1] - blockPositions[id];
       FastCharVector readData = new FastCharVector((int)initialBlockSize);
       int c;
-      long l;
+      int pos;
 
       // TODO: Implement this properly
          
       try {
          // Position at beginning of block, relying on mark/reset
          inputStream.reset();
-         l = inputStream.skipBytes((int)blockPositions[id]);
-         while ( l < blockPositions[id]) {
+         pos = inputStream.skipBytes((int)blockPositions[id]);
+         while ( pos < blockPositions[id]) {
             inputStream.read();
-            ++l;
+            ++pos;
          }
          
          // Text reading code from TefillaBufferReaderStrategy
