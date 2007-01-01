@@ -241,6 +241,7 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
 
       try {
          writer.write(data);
+         writer.flush();
       } catch (IOException ioe) {
          System.err.println("Error writing text block: ");
          ioe.printStackTrace(System.err);
@@ -267,6 +268,8 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
          stream.writeByte(TefillaConstants.TEXT_SET);
          stream.writeByte(slot);
          stream.writeShort(length);
+         writer.write(data);
+         writer.flush();
       } catch (IOException ex) {
          ex.printStackTrace();
       }
@@ -317,6 +320,9 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
          throw new SAXException("Invalid if tag encountered");
       }
       
+      System.out.println("Added if with headerValue=" + ifData.headerValue + 
+                         " and type = " + ifData.headerType);
+      
       ifStack.push(ifData);
    }
 
@@ -344,12 +350,15 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       try {
          stream.writeByte(ifData.headerType);
          stream.writeShort((short)ifData.ifText.length());
+         stream.writeByte(ifData.headerValue);
          writer.write(ifData.ifText);
+         writer.flush();
          if (ifData.afterElse)
          {
             stream.writeByte(TefillaConstants.TEXT_JUMP);
             stream.writeShort((short)ifData.elseText.length());
             writer.write(ifData.elseText);
+            writer.flush();
          }
       } catch (IOException ex) {
          ex.printStackTrace();
