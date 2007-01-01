@@ -36,7 +36,6 @@
 
 <!ELEMENT text-header EMPTY>
 <!ATTLIST text-header
-    length CDATA #REQUIRED
     name ID #REQUIRED
     id CDATA #REQUIRED
   >
@@ -44,7 +43,6 @@
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT text (#PCDATA|include|navmark|p|br|if)*>
 <!ATTLIST text
-    length CDATA #REQUIRED
     name IDREF #REQUIRED
   >
 
@@ -55,7 +53,6 @@
     day CDATA #IMPLIED
     month CDATA #IMPLIED
     or CDATA #IMPLIED
-    length CDATA #REQUIRED
     function CDATA #IMPLIED
   >
 
@@ -86,7 +83,6 @@
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT set (#PCDATA)>
 <!ATTLIST set
-    length CDATA #REQUIRED
     slot CDATA #REQUIRED
   >
 
