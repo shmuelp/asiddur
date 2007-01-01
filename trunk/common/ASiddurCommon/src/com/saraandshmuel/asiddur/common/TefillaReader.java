@@ -28,6 +28,11 @@ public class TefillaReader {
     * The TefillaReaderStrategy currently in use
     */
     private TefillaReaderStrategy strategy = new TefillaNullStrategy();
+    
+    /**
+     * The tefilla object needed to get the tefilla names and tefilla text
+     */
+    private BinaryTefillaReaderStrategy binaryTefilla = new BinaryTefillaReaderStrategy();
 
    /**
     * The tefilla of Schacharit
@@ -71,7 +76,7 @@ public class TefillaReader {
     * @return An array containing the tefilla names
     */
     public String[] getTextNames() {
-        String[] result = new String[5];
+        String[] result = new String[4];
         
         result[SHACHARIT] = TextHints.getTextName(SHACHARIT);
         result[MINCHA] = TextHints.getTextName(MINCHA);

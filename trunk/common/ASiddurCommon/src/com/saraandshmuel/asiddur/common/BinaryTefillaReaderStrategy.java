@@ -162,6 +162,10 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                                                " at expected location " +
                                                (headerSize + 3 + blockPositions[blockID]) );
                          }
+                                                  
+                         if ( blockID == blockPositions.length - 1 ) {
+                            done = true;
+                         }
                          
                          boolean innerDone = false;
                          byte temp;
@@ -245,8 +249,10 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                    inputStream.reset();
 
                    // Store located tefillot names and IDs
+                   tefillotId = new short[ids.size()];
+                   tefillotNames = new String[names.size()];
                    for (int i = 0; i < ids.size(); i++) {
-                      tefillotId[i] = ((Byte) ids.elementAt(i)).byteValue();
+                      tefillotId[i] = ((Short) ids.elementAt(i)).shortValue();
                       tefillotNames[i] = (String) names.elementAt(i);
                    }
 
@@ -259,6 +265,8 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
              readData.setChars( "Unable to locate resource!!" );
              //sb.append( "Unable to locate resource!!" );
             }
+        } catch (java.io.EOFException ex) {
+            ex.printStackTrace();
         } catch (java.io.IOException ex) {
             ex.printStackTrace();
         }
