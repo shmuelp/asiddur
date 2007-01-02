@@ -384,6 +384,9 @@
             <param value="" name="config.active"/>
         </antcall>
         <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
+            <param name="config.active" value="DefaultColorPhoneDebug"/>
+        </antcall>
+        <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
             <param name="config.active" value="DefaultGrayPhone"/>
         </antcall>
         <antcall inheritrefs="false" inheritall="false" target="${target.to.call}">
