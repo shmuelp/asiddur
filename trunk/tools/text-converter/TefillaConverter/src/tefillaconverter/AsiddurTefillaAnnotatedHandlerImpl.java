@@ -36,17 +36,9 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
    
    private int[] textPositions = null;
    
-   private Charset outputCharset = null;
+//   private Charset outputCharset = null;
    
-   class IfData {
-      String ifText = new String();
-      String elseText = new String();
-      boolean afterElse = false;
-      byte headerType = 0;
-      byte headerValue = 0;
-   }
-   
-   private Stack ifStack = new Stack();
+   private Stack dataStack = new Stack();
    
    class LanguageIdName {
       public String language;
@@ -64,21 +56,19 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
    
    public AsiddurTefillaAnnotatedHandlerImpl( OutputStream os ) {
       SortedMap charsets = Charset.availableCharsets();
-      // TODO: Remove "magic" constant
-      this.outputCharset = (Charset) charsets.get("windows-1255");
       
       stream = new DataOutputStream( os );
-      writer = new OutputStreamWriter( stream, outputCharset );
+      writer = new OutputStreamWriter( stream, TefillaData.encodingCharset);
    }
 
    public void start_asiddur_annotated(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("start_asiddur_annotated: " + meta);
       
-      if ( outputCharset == null ) {
-         String message = "Error: The necessary charset \"windows-1255\" is " +
-                            "not available; giving up";
-         throw new SAXException(message);
-      }
+//      if ( outputCharset == null ) {
+//         String message = "Error: The necessary charset \"windows-1255\" is " +
+//                            "not available; giving up";
+//         throw new SAXException(message);
+//      }
       
       try
       {
@@ -96,6 +86,32 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
 
    public void end_asiddur_annotated() throws SAXException {
       if (DEBUG) System.err.println("end_asiddur_annotated()");
+      
+      TefillaData tefillaData = (TefillaData) dataStack.pop();
+      if ( !dataStack.empty() ) {
+         throw new SAXException("Data stack not empty at end");
+      }
+      
+      try {
+         // Compute and write out text posisions
+         textPositions = new int[textLengths.size()];
+         int lastPosition = 0;
+         stream.writeByte(TefillaConstants.TEXT_POSITION);
+         stream.writeShort(textPositions.length-1);
+         for (short i = 1; i < textPositions.length; i++) {
+            Integer length = (Integer) textLengths.get(i);
+            if ( length == null ) {
+               textPositions[i] = -1;
+            } else {
+               textPositions[i] = lastPosition;
+               lastPosition += length.shortValue();
+            }
+            stream.writeInt(textPositions[i]);
+         }
+         stream.write(tefillaData.getBytes());
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
    }
 
    public void handle_text_header(final Attributes meta) throws SAXException {
@@ -103,31 +119,18 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       
       String name = meta.getValue("name");
       short id = Short.parseShort( meta.getValue("id") );
-      short length = Short.parseShort( meta.getValue("length") );
       
       textIds.put( name, new Short(id) );
-      if ( textLengths.size() < id+1 )
-      {
-         textLengths.setSize(id+1);
-      }
-      textLengths.setElementAt( new Short(length), id );
 
-//      System.out.println("name=" + name + ", id=" + id + ", length=" + length );
+//      System.out.println("name=" + name + ", id=" + id );
    }
 
    public void handle_get(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_get: " + meta);
       
       byte slot = Byte.parseByte(meta.getValue("slot"));
-      
-      try {
-         stream.writeByte(TefillaConstants.TEXT_GET);
-         stream.writeByte(slot);
-      } catch (NumberFormatException ex) {
-         ex.printStackTrace();
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      writeByte(TefillaConstants.TEXT_GET);
+      writeByte(slot);
    }
 
    public void start_toc(final Attributes meta) throws SAXException {
@@ -149,25 +152,6 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
             stream.writeUTF(elem.language);
             stream.writeUTF(elem.name);
          }
-         
-         // Compute and write out text posisions
-         textPositions = new int[textLengths.size()];
-         int lastPosition = 0;
-         stream.writeByte(TefillaConstants.TEXT_POSITION);
-         stream.writeShort(textPositions.length-1);
-         for (short i = 1; i < textPositions.length; i++) {
-            Short length = (Short) textLengths.get(i);
-            if ( length == null ) {
-               textPositions[i] = -1;
-            } else {
-               textPositions[i] = lastPosition;
-               // Add previous value + 1 byte for block headerType + 2 bytes for 
-               // text id + 1 byte for block terminator
-               // TODO: Remove "magic number" from code
-               lastPosition += length.shortValue() + 4;
-            }
-            stream.writeInt(textPositions[i]);
-         }
       } catch (IOException ioe) {
          System.err.println("Error writing header information to file: ");
          ioe.printStackTrace(System.err);
@@ -178,22 +162,14 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       if (DEBUG) System.err.println("handle_include: " + meta);
 
       short target = lookupBlockId(meta.getValue("target"));
-      
-      try {
-         stream.writeByte(TefillaConstants.TEXT_INCLUDE);
-         stream.writeShort(target);
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      writeByte(TefillaConstants.TEXT_INCLUDE);
+      writeShort(target);
    }
 
    public void handle_p(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_p: " + meta);
-      try {
-         stream.writeByte(TefillaConstants.TEXT_P);
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+
+      writeByte(TefillaConstants.TEXT_P);
    }
 
    public void handle_function(final Attributes meta) throws SAXException {
@@ -202,16 +178,10 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       byte function = lookupFunction(meta.getValue("name"));
       
       // Increment the function count
-      IfData ifData = (IfData) ifStack.peek();
-      if ( ifData != null ) {
-         ++ifData.headerValue;
-      }
+      IfData ifData = (IfData) dataStack.peek();
+      ifData.incrementHeaderValue();
 
-      try {         
-         stream.writeByte(function);
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      writeByte(function);
    }
 
    public void start_tefillot(final Attributes meta) throws SAXException {
@@ -224,72 +194,80 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
 
    public void start_text(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("start_text: " + meta);
+
+      if ( dataStack.empty() ) {
+         // Push on basic data objcet for all text blocks
+         dataStack.push(new BasicData());
+      }
+      dataStack.push(new BasicData());
       
       short id = lookupBlockId(meta.getValue("name"));
+      lastId = id;
       
-      try {
-         stream.writeByte(TefillaConstants.TEXT_BLOCK);
-         stream.writeShort(id);
-      } catch (IOException ioe) {
-         System.err.println("Error writing text block: ");
-         ioe.printStackTrace(System.err);
-      }
+      writeByte(TefillaConstants.TEXT_BLOCK);
+      writeShort(id);
 }
 
    public void handle_text(final java.lang.String data, final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_text: " + data);
 
-      try {
-         writer.write(data);
-         writer.flush();
-      } catch (IOException ioe) {
-         System.err.println("Error writing text block: ");
-         ioe.printStackTrace(System.err);
-      }
+      writeString(data);
 }
 
    public void end_text() throws SAXException {
       if (DEBUG) System.err.println("end_text()");
 
-      try {
-         stream.writeByte(TefillaConstants.TEXT_BLOCK_END);
-      } catch (IOException ioe) {
-         System.err.println("Error writing text block: ");
-         ioe.printStackTrace(System.err);
+      writeByte(TefillaConstants.TEXT_BLOCK_END);
+      TefillaData tefillaData = (TefillaData) dataStack.pop();
+      
+      byte[] textData = tefillaData.getBytes();
+      textLengths.add(new Integer(textData.length));
+
+      if ( textLengths.size() < lastId+1 )
+      {
+         textLengths.setSize(lastId+1);
       }
+      textLengths.setElementAt( new Integer(textData.length), lastId );
+      
+      writeBytes(textData);
+   }
+
+   public void start_set(final Attributes meta) throws SAXException {
+      if (DEBUG) System.err.println("start_set: " + meta);
+      
+      SetData setData = new SetData();
+      byte slot = Byte.parseByte(meta.getValue("slot"));
+      setData.setVariableNum(slot);
+      dataStack.push(setData);
    }
 
    public void handle_set(final java.lang.String data, final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_set: " + data);
       
-      byte slot = Byte.parseByte(meta.getValue("slot"));
-      short length = (short) data.length();
-      try {
-         stream.writeByte(TefillaConstants.TEXT_SET);
-         stream.writeByte(slot);
-         stream.writeShort(length);
-         writer.write(data);
-         writer.flush();
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      TefillaData tefillaData = (TefillaData) dataStack.peek();
+      tefillaData.writeString(data);
    }
+
+   public void end_set() throws SAXException {
+      if (DEBUG) System.err.println("end_set()");
+
+      TefillaData tefillaData = (TefillaData) dataStack.pop();
+      writeBytes(tefillaData.getBytes());
+}
 
    public void handle_else(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_else: " + meta);
 
-      IfData ifData = (IfData) ifStack.peek();
-      ifData.afterElse = true;
+      // Potential exception if the else tag is embedded in another tag, but 
+      // that shouldn't happen in correct XML
+      IfData ifData = (IfData) dataStack.peek();
+      ifData.setAfterElse(true);
 }
 
    public void handle_br(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_br: " + meta);
 
-      try {
-         stream.writeByte(TefillaConstants.TEXT_BR);
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      writeByte(TefillaConstants.TEXT_BR);
    }
 
    public void start_if(final Attributes meta) throws SAXException {
@@ -298,32 +276,29 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       IfData ifData = new IfData();
       
       if ( meta.getIndex("function") != -1 ) {
-         ifData.headerType = TefillaConstants.TEXT_IF_FUNCTION;
+         ifData.setHeaderType(TefillaConstants.TEXT_IF_FUNCTION);
          byte function = lookupFunction(meta.getValue("function"));
-         ifData.headerValue = function;
+         ifData.setHeaderValue(function);
       } else if ( meta.getIndex("day") != -1 ) {
-         ifData.headerType = TefillaConstants.TEXT_IF_DAY;
+         ifData.setHeaderType(TefillaConstants.TEXT_IF_DAY);
          byte day = Byte.parseByte(meta.getValue("day"));
-         ifData.headerValue = day;
+         ifData.setHeaderValue(day);
       } else if ( meta.getIndex("month") != -1 ) {
-         ifData.headerType = TefillaConstants.TEXT_IF_MONTH;
+         ifData.setHeaderType(TefillaConstants.TEXT_IF_MONTH);
          byte month= Byte.parseByte(meta.getValue("month"));
-         ifData.headerValue = month;
+         ifData.setHeaderValue(month);
       } else if ( meta.getIndex("variable") != -1 ) {
-         ifData.headerType = TefillaConstants.TEXT_IF_VARIABLE;
+         ifData.setHeaderType(TefillaConstants.TEXT_IF_VARIABLE);
          byte variable= lookupVariable(meta.getValue("variable"));
-         ifData.headerValue = variable;
+         ifData.setHeaderValue(variable);
       } else if ( meta.getIndex("or") != -1 ) {
-         ifData.headerType = TefillaConstants.TEXT_IF_OR;
+         ifData.setHeaderType(TefillaConstants.TEXT_IF_OR);
          // Fill in value later, as the <function/> tags are encoutered
       } else {
          throw new SAXException("Invalid if tag encountered");
       }
       
-      System.out.println("Added if with headerValue=" + ifData.headerValue + 
-                         " and type = " + ifData.headerType);
-      
-      ifStack.push(ifData);
+      dataStack.push(ifData);
    }
 
    public void handle_if(final java.lang.String data, final Attributes meta) throws SAXException {
@@ -331,48 +306,22 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
       
       if ( data != null )
       {
-         IfData ifData = (IfData) ifStack.peek();
-         if ( ifData.afterElse )
-         {
-            ifData.ifText = ifData.ifText.concat(data);
-         }
-         else
-         {
-            ifData.elseText = ifData.elseText.concat(data);
-         }
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeString(data);
       }
    }
 
    public void end_if() throws SAXException {
       if (DEBUG) System.err.println("end_if()");
       
-      IfData ifData = (IfData) ifStack.pop();
-      try {
-         stream.writeByte(ifData.headerType);
-         stream.writeShort((short)ifData.ifText.length());
-         stream.writeByte(ifData.headerValue);
-         writer.write(ifData.ifText);
-         writer.flush();
-         if (ifData.afterElse)
-         {
-            stream.writeByte(TefillaConstants.TEXT_JUMP);
-            stream.writeShort((short)ifData.elseText.length());
-            writer.write(ifData.elseText);
-            writer.flush();
-         }
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      TefillaData tefillaData = (TefillaData) dataStack.pop();
+      writeBytes(tefillaData.getBytes());
    }
 
    public void handle_navmark(final Attributes meta) throws SAXException {
       if (DEBUG) System.err.println("handle_navmark: " + meta);
 
-      try {
-         stream.writeByte(TefillaConstants.TEXT_NAVMARK);
-      } catch (IOException ex) {
-         ex.printStackTrace();
-      }
+      writeByte(TefillaConstants.TEXT_NAVMARK);
    }
 
    public void start_texts(final Attributes meta) throws SAXException {
@@ -461,5 +410,86 @@ public class AsiddurTefillaAnnotatedHandlerImpl implements AsiddurTefillaAnnotat
    private short lookupBlockId( String name ) {
       Short blockId = (Short) textIds.get(name);
       return blockId.shortValue();
+   }
+   
+   /**
+    * Writes a byte to the output
+    */
+   private void writeByte( byte b ) {
+      if ( dataStack.empty() ) {
+         try {
+            stream.writeByte(b);
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      } else {
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeByte(b);
+      }
+   }
+   
+   /**
+    * Writes an array of byte to the output
+    */
+   private void writeBytes( byte[] b ) {
+      if ( dataStack.empty() ) {
+         try {
+            stream.write(b);
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      } else {
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeBytes(b);
+      }
+   }
+   
+   /**
+    * Writes a short to the output
+    */
+   private void writeShort( short s ) {
+      if ( dataStack.empty() ) {
+         try {
+            stream.writeShort(s);
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      } else {
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeShort(s);
+      }
+   }
+
+   /**
+    * Writes an int to the output
+    */
+   private void writeInt( int i ) {
+      if ( dataStack.empty() ) {
+         try {
+            stream.writeInt(i);
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      } else {
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeInt(i);
+      }
+   }
+
+   /**
+    * Writes a string to the output.  It handles properly encoding writeString.
+    */
+   private void writeString( String s ) {
+      if ( dataStack.empty() ) {
+         try {
+            writer.write(s);
+            writer.flush();
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      } else {
+         TefillaData tefillaData = (TefillaData) dataStack.peek();
+         tefillaData.writeString(s);
+      }
    }
 }

@@ -88,6 +88,8 @@ public class AsiddurTefillaAnnotatedParser implements ContentHandler {
          handler.start_tefillot(attrs);
       } else if ("text".equals(qname)) {
          handler.start_text(attrs);
+      } else if ("set".equals(qname)) {
+         handler.start_set(attrs);
       } else if ("else".equals(qname)) {
          handler.handle_else(attrs);
       } else if ("br".equals(qname)) {
@@ -118,6 +120,8 @@ public class AsiddurTefillaAnnotatedParser implements ContentHandler {
          handler.end_tefillot();
       } else if ("text".equals(qname)) {
          handler.end_text();
+      } else if ("set".equals(qname)) {
+         handler.end_set();
       } else if ("if".equals(qname)) {
          handler.end_if();
       } else if ("texts".equals(qname)) {

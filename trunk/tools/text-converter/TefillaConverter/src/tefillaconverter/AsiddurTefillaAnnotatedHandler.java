@@ -106,11 +106,24 @@ public interface AsiddurTefillaAnnotatedHandler {
 
    /**
     * 
+    * A container element start event handling method.
+    * @param meta attributes
+    */
+   public void start_set(final Attributes meta) throws SAXException;
+
+   /**
+    * 
     * A data element event handling method.
     * @param data value or null 
     * @param meta attributes
     */
    public void handle_set(final java.lang.String data, final Attributes meta) throws SAXException;
+
+   /**
+    * 
+    * A container element end event handling method.
+    */
+   public void end_set() throws SAXException;
 
    /**
     * 
