@@ -50,6 +50,10 @@ public class TefillaReader {
     * Other tefillot / brachot
     */
     public static final int BRACHOT = 3;
+    /**
+     * Dynamic Tefilla
+     */
+    private static final int DYNAMIC = 4;
     
     //private char[] myText = new char[0];
         
@@ -76,12 +80,13 @@ public class TefillaReader {
     * @return An array containing the tefilla names
     */
     public String[] getTextNames() {
-        String[] result = new String[4];
+        String[] result = new String[5];
         
         result[SHACHARIT] = TextHints.getTextName(SHACHARIT);
         result[MINCHA] = TextHints.getTextName(MINCHA);
         result[MAARIV] = TextHints.getTextName(MAARIV);
         result[BRACHOT] = TextHints.getTextName(BRACHOT);
+        result[DYNAMIC] = binaryTefilla.getTefillaNames()[0];
         
         return result;
     }
@@ -97,6 +102,9 @@ public class TefillaReader {
             textNum == MAARIV || 
             textNum == BRACHOT ) {
           strategy = new TefillaBufferReaderStrategy( textNum );
+          strategy.setConvertToUTF(convertToUTF);
+       } else if ( textNum == DYNAMIC ) {
+          strategy = binaryTefilla;
           strategy.setConvertToUTF(convertToUTF);
        }
     }

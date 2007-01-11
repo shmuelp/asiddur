@@ -171,6 +171,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
             hour >= 6 && hour < 12,
             hour >= 12 && hour < 19,
             hour >= 19 || hour < 6,
+            false,
             false
         });
         
