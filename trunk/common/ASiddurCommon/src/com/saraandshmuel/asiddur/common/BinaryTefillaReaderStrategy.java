@@ -42,6 +42,36 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
     private int[] blockPositions = null;
     
     /**
+     * The size of all text blocks, by ID
+     */
+    private short[] blockSizes = null;
+    
+    /** 
+     * The text of the blocks
+     */
+    private byte[][] blockText = null;
+    
+    /**
+     * The beginning logical positions of each region of the current tefillah
+     */
+    private int[] regionLogicalPositions = null;
+    
+    /**
+     * The text block associated with each region
+     */
+    private short[] regionBlocks = null;
+    
+    /**
+     * The start physical position within the text block of the region
+     */
+    private int[] regionPhysicalStart = null;
+    
+    /**
+     * The end physical position within the text block of the region
+     */
+    private int[] regionPhysicalEnd = null;
+    
+    /**
      * The size of the header
      */
     private int headerSize = 0;
@@ -147,9 +177,11 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                    if ( b == TefillaConstants.TEXT_POSITION ) {
                       short numBlocks = inputStream.readShort();
                       blockPositions = new int[numBlocks+1];
+                      blockSizes = new short[numBlocks+1];
                       System.out.println("Found text position block:");
                       for (int i = 1; i < blockPositions.length; i++) {
                          blockPositions[i] = inputStream.readInt();
+                         blockSizes[i] = -1;
                          System.out.println("block " + i + " at position " + blockPositions[i]);
                       }
                       position += 3 + (4 * numBlocks);
@@ -288,6 +320,10 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
       int pos;
 
       // TODO: Implement this properly
+      // TOOD: Check if id is really the right ID or not
+      if ( blockText[id] == null ) {
+         readBlock(id);
+      }
          
       try {
          // Position at beginning of block, relying on mark/reset
@@ -341,6 +377,45 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
    
    public String[] getTefillaNames( ) {
       return tefillotNames;
+   }
+   
+   /**
+    * Ensures that a text block is read into its position in the blockText
+    * array.  May cause other text blocks to be discarded.
+    *
+    * @todo a better algorithm should be used to decide what to discard
+    */
+   private void readBlock( short blockId) {
+      try {
+         // Position to beginning of block and ensure that size is valid
+         if ( blockSizes[blockId] == -1 ) {
+            seekableInputStream.seek( blockPositions[blockId]+1 );
+            short size = inputStream.readShort();
+            blockSizes[blockId] = size;
+         } else {
+            seekableInputStream.seek( blockPositions[blockId]+3 );
+         }    
+         
+         try {
+            blockText[blockId] = new byte[blockSizes[blockId]];
+         } catch ( OutOfMemoryError oome ) {
+            // Discard all buffered data - we really need a smarter algorithm
+            Logger.log("Out of memory; freeing buffered data");
+            System.out.println("Out of memory; freeing buffered data");
+            for (int i = 0; i < blockText.length; ++i) {
+               if ( i != blockId ) {
+                  blockText[i] = null;
+               }
+            }
+            Logger.log("Reading in block " + blockId);
+            System.out.println("Reading in block " + blockId);
+            blockText[blockId] = new byte[blockSizes[blockId]];
+         }
+         
+         seekableInputStream.read(blockText[blockId]);
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
    }
 
 }
