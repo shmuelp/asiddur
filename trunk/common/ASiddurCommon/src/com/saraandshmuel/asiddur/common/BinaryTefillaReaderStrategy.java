@@ -301,7 +301,7 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                 }
 
                 System.out.println("Correctly parsed data, header was "
-                                   + position + "bytes long");
+                                   + position + " bytes long");
                 // If mark/reset doesn't work, will need to correct 
                 // position information to add header size
              }

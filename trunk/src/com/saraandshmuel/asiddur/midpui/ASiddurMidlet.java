@@ -9,7 +9,7 @@ package com.saraandshmuel.asiddur.midpui;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import com.saraandshmuel.asiddur.common.Logger;
-import com.saraandshmuel.asiddur.midpui.LogAlertAdapter;
+
 /**
  *
  * @author shmuelp
@@ -132,10 +132,10 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
        Logger.log("Setting the time and date");
        mediator.setDate(new java.util.Date());
        //mediator.chooseText(1);
-
+ 
        Logger.log("Switching to main form");
        Logger.setLog(mediator);
-       getDisplay().setCurrent(get_MainForm());                     
+       getDisplay().setCurrent(get_MainForm());        
     }//GEN-LINE:MVDInitEnd
     
     /** Called by the system to indicate that a command has been invoked on a particular displayable.//GEN-BEGIN:MVDCABegin
@@ -750,6 +750,7 @@ public class ASiddurMidlet extends MIDlet implements CommandListener {
                               "ASiddur is loading, please be patient", 
                               null,
                               AlertType.INFO);
+           splash.setTimeout(Alert.FOREVER);
            LogAlertAdapter logAdapter = new LogAlertAdapter(splash);
            getDisplay().setCurrent(splash);
            Logger.log("Beginning initialization");
