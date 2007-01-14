@@ -149,6 +149,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  {
                     d.setCurrent(a, form);
                  }
+
               }
            });
         }
@@ -239,7 +240,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
       
       // Expected to be null; not null in me4se applets
       String version = System.getProperty("java.version");
-      System.out.println("version=" + version);
+      // System.out.println("version=" + version);
       String locale = "";
 
       // version is not null on me4se applets, where the following call creates
