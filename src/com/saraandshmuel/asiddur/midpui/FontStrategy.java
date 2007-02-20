@@ -39,10 +39,10 @@ public interface FontStrategy {
     */
     public int charsWidth(char[] ch, int offset, int length);
    
-    /**
-     * Gets the total advance width for showing the specified String in this Font.
-     */
-    public int stringWidth(String str);
+//    /**
+//     * Gets the total advance width for showing the specified String in this Font.
+//     */
+//    public int stringWidth(String str);
     
     /**
      * Gets the standard height of a line of text in this font.

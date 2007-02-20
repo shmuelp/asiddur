@@ -84,10 +84,16 @@ public class ImageFontStrategy implements FontStrategy {
    private int height=-1;
    
    /**
+    * If set to true, nikud will be stripped
+    */
+   private boolean showNikud;
+   
+   /**
     * Creates a new instance of ImageFontStrategy
     */
-   public ImageFontStrategy(String fontName) {
+   public ImageFontStrategy(String fontName, boolean showNikud) {
       this.fontName = fontName;
+      this.showNikud = showNikud;
       height = nativeFont.getHeight();
       
       String fullPrefix = prefix + fontName + '/';
@@ -146,6 +152,14 @@ public class ImageFontStrategy implements FontStrategy {
             glyphImages[i] = null;
             glyphWidths[i] = (byte) nativeFont.charWidth((char)i);
          }
+         if ( !showNikud ) {
+            if ( ( i >= 0xc0 && i < 0xce ) || i == 0xcf || i == 0xd1 || i == 0xd2 || i == 0xff ) {
+               glyphWidths[i] = 0;
+               leftOffsets[i] = 0;
+               rightOffsets[i] = 0;
+            }
+         }
+
       }
       
       baselineOffset = baseline - nativeFont.getBaselinePosition();
@@ -156,6 +170,10 @@ public class ImageFontStrategy implements FontStrategy {
     */
    public int charWidth( char ch )
    {
+      if ( ch == 255 ) 
+      {
+         return 0;
+      }
       return glyphWidths[ch];
    }
    
@@ -168,30 +186,33 @@ public class ImageFontStrategy implements FontStrategy {
        int result = 0;
        
        for (int i = 0; i < offset; i++) {
-          result += glyphWidths[ch[i]];
+          if ( ch[i] != 255 )
+          {
+            result += glyphWidths[ch[i]];
+          }
        }
        
        return result;
     }
     
-    /**
-     * Gets the total advance width for showing the specified String in this Font.
-     */
-    public int stringWidth(String str)
-    {
-//       char[] chars = new char[str.length()];
-//       str.getChars(0, str.length(), chars, 0);
-//       
-//       return charsWidth(chars, 0, chars.length);
-       
-       int result = 0;
-       
-       for (int i = 0; i < str.length(); i++) {
-          result += glyphWidths[str.charAt(i)];
-       }
-       
-       return result;
-    }
+//       /**
+//        * Gets the total advance width for showing the specified String in this Font.
+//        */
+//       public int stringWidth(String str)
+//       {
+//   //       char[] chars = new char[str.length()];
+//   //       str.getChars(0, str.length(), chars, 0);
+//   //       
+//   //       return charsWidth(chars, 0, chars.length);
+//
+//          int result = 0;
+//
+//          for (int i = 0; i < str.length(); i++) {
+//             result += glyphWidths[str.charAt(i)];
+//          }
+//
+//          return result;
+//       }
     
     /**
      * Gets the standard height of a line of text in this font.
@@ -206,6 +227,7 @@ public class ImageFontStrategy implements FontStrategy {
      */
     public void drawChar(Graphics graphics, char character, int x, int y, int anchor)
     {
+       if ( character == 255 ) return;
        // Draw a character from a stored Image
        if ( glyphImages[character] != null )
        {
@@ -269,25 +291,37 @@ public class ImageFontStrategy implements FontStrategy {
        if ( ( anchor & Graphics.LEFT ) != 0 )
        {
           for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
-             drawChar( graphics, data[i], x, y, anchor );
+             if ( data[i] != 255 )
+             {
+               drawChar( graphics, data[i], x, y, anchor );
+             }
           }
        }
        else if ( ( anchor & Graphics.RIGHT) != 0 )
        {
           for (int i = offset+length-1; i >= offset; x-=glyphWidths[data[i]], --i) {
-             drawChar( graphics, data[i], x, y, anchor );
+             if ( data[i] != 255 )
+             {
+                drawChar( graphics, data[i], x, y, anchor );
+             }
           }
        }
        else if ( ( anchor & Graphics.HCENTER) != 0 )
        {
           int width = 0;
           for (int i = offset; i < length; i++) {
-             width += glyphWidths[data[i]];
+             if ( data[i] != 255 )
+             {
+                width += glyphWidths[data[i]];
+             }
           }
 
           x = x-(width/2);
           for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
-             drawChar( graphics, data[i], x, y, anchor );
+             if ( data[i] != 255 )
+             {
+                drawChar( graphics, data[i], x, y, anchor );
+             }
           }
        }
        else

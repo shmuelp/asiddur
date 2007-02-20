@@ -149,6 +149,17 @@ public class FastIntVector {
     }
 
     /**
+     * Returns a copy of the array
+     *
+     * @return a copy of the array
+     */
+    public int[] clone() {
+        int[] ret = new int[length];
+        System.arraycopy(data, 0, ret, 0, length);
+        return ret;
+    }
+    
+    /**
      * Sets all references to null.  Needed to ensure that memory is released 
      * back to system for PalmOS.  See post at: 
      * http://news.palmos.com/read/messages?id=204129

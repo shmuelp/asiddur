@@ -44,6 +44,11 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
      */
     private boolean convertToUTF = false;
     
+    /**
+     * Controls whether nikud is shown or whether it is stripped out
+     */
+    private boolean showNikud = false;
+    
     private int screenView = 0;
     private static final int SCREEN_VIEW_MAX = 6;
     private String reminders = null;
@@ -54,7 +59,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
     */
     public MidpMediator(ASiddurMidlet midlet) {
         this.midlet = midlet;
-        getTefillaReader().setConvertToUTF(convertToUTF);
+        getTefillaReader().setConvertToUTF(getConvertToUTF());
         Logger.setLog(this);
     }
 
@@ -80,7 +85,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                  // Intentional fall-through
                  
               case 1:   // Default (reversed)
-                 font = new MidpFontAdapterStrategy();
+                 font = new MidpFontAdapterStrategy(showNikud);
                  fontName = "Native";
                  break;
                  
@@ -101,13 +106,13 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
                   // Intentional fall-through
                   
               case 5:
-                 font = new MidpFontAdapterStrategy();
+                 font = new MidpFontAdapterStrategy(showNikud);
                  convertToUTF = true;
                  fontName = "Native UTF";
                  break;
            }
            
-           getTefillaReader().setConvertToUTF(convertToUTF);
+           getTefillaReader().setConvertToUTF(getConvertToUTF());
         
            if ( font == null || font.getFontName().compareTo(fontName)!=0 )
            {
@@ -115,7 +120,7 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
               // Only use ImageFontStrategy for non-native fonts
               if ( fontName.compareTo("Native") != 0 )
               {
-                 this.font = new ImageFontStrategy(fontName);
+                 this.font = new ImageFontStrategy(fontName, showNikud);
               }
            }
            this.reorder = reorder;
@@ -341,4 +346,12 @@ public class MidpMediator extends com.saraandshmuel.asiddur.common.ASiddurMediat
        
        return reminders;
     }
+
+   public boolean getConvertToUTF() {
+      return convertToUTF;
+   }
+
+   public boolean getShowNikud() {
+      return showNikud;
+   }
 }

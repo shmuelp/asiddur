@@ -103,7 +103,9 @@ public class TefillaReader {
             textNum == BRACHOT ) {
           strategy = new TefillaBufferReaderStrategy( textNum );
           strategy.setConvertToUTF(convertToUTF);
-       } else if ( textNum == DYNAMIC ) {
+       } else if ( textNum >= DYNAMIC ) {
+          // TODO: determine from textNum argument
+          binaryTefilla.setText( (short)(0) );
           strategy = binaryTefilla;
           strategy.setConvertToUTF(convertToUTF);
        }
