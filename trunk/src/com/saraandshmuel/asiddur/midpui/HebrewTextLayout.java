@@ -138,6 +138,7 @@ class HebrewTextLayout {
       int rowWidth = 0;
       int lastBreak = 0;
       int lastPos = 0;
+      int breakableWidth = 0;
       //Logger.log("About to enter loop\n");
       for (int c = 0; c < reader.getTextLength(); ++c) {
          char cur = reader.getTextChar(c);
@@ -158,12 +159,17 @@ class HebrewTextLayout {
             case ' ':
             case '-':
                lastBreak = c;
+               breakableWidth = rowWidth;
                
                // intentional fall-through
                
             default:
                
                int newWidth = font.charWidth(cur);
+               
+               if ( cur >= 0xc0 && cur <= 0xd8 && !mediator.getShowNikud() ) {
+                  break;
+               }
                
                // Does this row have room for this character?
                if ( rowWidth + newWidth < width) {
@@ -175,8 +181,7 @@ class HebrewTextLayout {
                      ++row;
                      maxCharLine = Math.max(maxCharLine, c-lastPos);
                      lastPos = c;
-                     //rowWidth = font.charsWidth( text, lastBreak, c-lastBreak );
-                     rowWidth = font.stringWidth( reader.getTextString(lastBreak, c-lastBreak ) );
+                     rowWidth -= breakableWidth;
                   } else {
                      rows.append(c-1);
                      ++row;

@@ -20,14 +20,18 @@ public class MidpFontAdapterStrategy implements FontStrategy {
    
    private Font font;
    
+   private boolean showNikud;
+   
    /** Creates a new instance of MidpFontAdapterStrategy */
-   public MidpFontAdapterStrategy( Font font ) {
+   public MidpFontAdapterStrategy( Font font, boolean showNikud ) {
       this.font = font;
+      this.showNikud = showNikud;
    }
 
    /** Creates a new instance of MidpFontAdapterStrategy */
-   public MidpFontAdapterStrategy() {
+   public MidpFontAdapterStrategy( boolean showNikud) {
       this.font = Font.getDefaultFont();
+      this.showNikud = showNikud;
    }
 
    public Font getFont() {
@@ -66,9 +70,9 @@ public class MidpFontAdapterStrategy implements FontStrategy {
       return font.getHeight();
    }
 
-   public int stringWidth(String str) {
-      return font.stringWidth(str);
-   }
+//   public int stringWidth(String str) {
+//      return font.stringWidth(str);
+//   }
 
    public String getFontName() {
       return "Native";
