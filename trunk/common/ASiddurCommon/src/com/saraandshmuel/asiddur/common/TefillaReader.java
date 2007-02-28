@@ -57,11 +57,6 @@ public class TefillaReader {
     
     //private char[] myText = new char[0];
         
-    /** 
-     * If true, nikkud will shown.  Otherwise, it will be stripped out
-     */
-    protected boolean showNikud = false;
-    
     /**
      * When set true, text is converted from CP-1255/ISO-8859-8 to UTF-8
      */

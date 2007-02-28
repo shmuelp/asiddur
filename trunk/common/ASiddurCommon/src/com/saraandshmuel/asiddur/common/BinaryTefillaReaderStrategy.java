@@ -31,12 +31,6 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
     */
    private static final String filename = "/res/tefillot.bin";
    
-   /**
-    * When set true, nikkud is included when text is read.  Otherwise, it is 
-    * stripped out.
-    */
-    protected boolean showNikud = false;
-    
     /**
      * When set true, text is converted from CP-1255/ISO-8859-8 to UTF-8
      */
@@ -473,11 +467,6 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
          for (int i = 0; i < temp.length; ++i) {
             char c = (char) ( temp[i] &  0x00ff);
             
-            if ( c >= 0xc0 && ( c < 0xce || c == 0xcf || c == 0xd1 || c == 0xd2)) {
-               if ( !showNikud ) {
-                  c = (char) -1;
-               }
-            }
             if ( convertToUTF && c >= 0xc0 && c <= 0xfa ) {
                 c += 0x4f0;
             }
@@ -532,13 +521,9 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
 //      // Text reading code from TefillaBufferReaderStrategy
 //      while ((c = inputStream.read()) != -1) {
 //         if ( convertToUTF && c >= 0xc0 && c <= 0xfa ) {
-//            if ( showNikud || c>= 0xd3 ) {
-//               c += 0x04F0;
-//            }
+//            c += 0x04F0;
 //         }
-//         if ( showNikud || c < 0xc0 || c >= 0xd3 ) {
-//             readData.append( (char) c );
-//         }
+//         readData.append( (char) c );
 //      }
       
       return length;
