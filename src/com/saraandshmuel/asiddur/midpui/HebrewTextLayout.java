@@ -167,10 +167,6 @@ class HebrewTextLayout {
                
                int newWidth = font.charWidth(cur);
                
-               if ( cur >= 0xc0 && cur <= 0xd8 && !mediator.getShowNikud() ) {
-                  break;
-               }
-               
                // Does this row have room for this character?
                if ( rowWidth + newWidth < width) {
                   rowWidth += newWidth;

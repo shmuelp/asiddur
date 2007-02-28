@@ -139,6 +139,11 @@ public class ImageFontStrategy implements FontStrategy {
          }
       }
       
+      Image emptyImage = null;
+      if ( !showNikud ) {
+         emptyImage = Image.createImage(1,1);
+      }
+      
       for (int i = 0; i < glyphImages.length; i++) {
          try
          {
@@ -152,11 +157,13 @@ public class ImageFontStrategy implements FontStrategy {
             glyphImages[i] = null;
             glyphWidths[i] = (byte) nativeFont.charWidth((char)i);
          }
+         // TODO: Handle UTF nikud
          if ( !showNikud ) {
             if ( ( i >= 0xc0 && i < 0xce ) || i == 0xcf || i == 0xd1 || i == 0xd2 || i == 0xff ) {
                glyphWidths[i] = 0;
                leftOffsets[i] = 0;
                rightOffsets[i] = 0;
+               glyphImages[i] = emptyImage;
             }
          }
 
@@ -170,10 +177,6 @@ public class ImageFontStrategy implements FontStrategy {
     */
    public int charWidth( char ch )
    {
-      if ( ch == 255 ) 
-      {
-         return 0;
-      }
       return glyphWidths[ch];
    }
    
@@ -227,7 +230,6 @@ public class ImageFontStrategy implements FontStrategy {
      */
     public void drawChar(Graphics graphics, char character, int x, int y, int anchor)
     {
-       if ( character == 255 ) return;
        // Draw a character from a stored Image
        if ( glyphImages[character] != null )
        {
@@ -291,37 +293,25 @@ public class ImageFontStrategy implements FontStrategy {
        if ( ( anchor & Graphics.LEFT ) != 0 )
        {
           for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
-             if ( data[i] != 255 )
-             {
-               drawChar( graphics, data[i], x, y, anchor );
-             }
+             drawChar( graphics, data[i], x, y, anchor );
           }
        }
        else if ( ( anchor & Graphics.RIGHT) != 0 )
        {
           for (int i = offset+length-1; i >= offset; x-=glyphWidths[data[i]], --i) {
-             if ( data[i] != 255 )
-             {
-                drawChar( graphics, data[i], x, y, anchor );
-             }
+             drawChar( graphics, data[i], x, y, anchor );
           }
        }
        else if ( ( anchor & Graphics.HCENTER) != 0 )
        {
           int width = 0;
           for (int i = offset; i < length; i++) {
-             if ( data[i] != 255 )
-             {
-                width += glyphWidths[data[i]];
-             }
+             width += glyphWidths[data[i]];
           }
 
           x = x-(width/2);
           for (int i = offset; i < length; x+=glyphWidths[data[i]], ++i) {
-             if ( data[i] != 255 )
-             {
-                drawChar( graphics, data[i], x, y, anchor );
-             }
+             drawChar( graphics, data[i], x, y, anchor );
           }
        }
        else
