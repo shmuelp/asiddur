@@ -185,8 +185,6 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                       blockSizes[0] = -1;
                       for (int i = 1; i < blockPositions.length; i++) {
                          blockPositions[i] = seekableInputStream.readInt();
-                         // Note: Assumes blocks will always be in order
-                         blockSizes[i] = (short) (blockPositions[i] - blockPositions[i-1]);
                          System.out.println("block " + i + " at position " + blockPositions[i]);
                       }
                       position += 3 + (4 * numBlocks);
@@ -218,6 +216,7 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
 
                       boolean innerDone = false;
                       byte temp;
+                      int beginPosition = position;
                       while (!innerDone) {
                          temp = seekableInputStream.readByte();
                          ++position;
@@ -291,6 +290,8 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                                break;
                          } // end inner parsing switch-case
                       }// end text block read loop
+                      blockSizes[blockID] = (short) (position - beginPosition-1);
+                      System.out.println("Block " + blockID + " is " + blockSizes[blockID] + " bytes long.");
                    }
                 } // End header processing loop
 
@@ -464,6 +465,7 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
          }
          
          seekableInputStream.read(temp);
+         // TODO: This won't quite work, since it may modify non-character data
          for (int i = 0; i < temp.length; ++i) {
             char c = (char) ( temp[i] &  0x00ff);
             
