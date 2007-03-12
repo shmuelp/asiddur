@@ -140,7 +140,8 @@ class HebrewTextLayout {
       int lastPos = 0;
       int breakableWidth = 0;
       //Logger.log("About to enter loop\n");
-      for (int c = 0; c < reader.getTextLength(); ++c) {
+      final int textLength = reader.getTextLength();
+      for (int c = 0; c < textLength; ++c) {
          char cur = reader.getTextChar(c);
          switch(cur) {
             case VT:
