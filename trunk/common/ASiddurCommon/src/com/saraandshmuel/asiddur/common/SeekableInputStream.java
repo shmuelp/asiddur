@@ -66,6 +66,8 @@ public class SeekableInputStream extends InputStream
    }
 
    public long skip(long n) throws IOException {
+//      System.out.println("SeekableInputStream.skip(" + n + ") - currently at " +
+//              currentPosition);
       if ( inputStream == null ) {
          throw new IOException("Underlying input stream is null!");
       }
@@ -76,6 +78,7 @@ public class SeekableInputStream extends InputStream
       while ( result < n && lastSkip != 0 ) {
          lastSkip = inputStream.skip(n-result);
          result += lastSkip;
+//         System.out.println("Skipped " + lastSkip);
       }
       
       // read in a loop to get any remaining bytes
@@ -88,6 +91,7 @@ public class SeekableInputStream extends InputStream
    }
 
    public void seek( long pos ) throws IOException {
+//      System.out.println("SeekableInputStream.seek(" + pos + ")");
       if ( inputStream == null ) {
          throw new IOException("Underlying input stream is null!");
       }
@@ -95,13 +99,13 @@ public class SeekableInputStream extends InputStream
          throw new IOException("Cannot seek a negative distance");
       }
       
-      if ( pos > currentPosition ) {
-         skip( pos - currentPosition );
-      } else if ( pos < currentPosition ) {
+//      if ( pos > currentPosition ) {
+//         skip( pos - currentPosition );
+//      } else if ( pos < currentPosition ) {
          inputStream = new DataInputStream( factory.createInputStream() );
          currentPosition = 0;
          skip( pos );
-      }
+//      }
    }
 
    public void mark(int readlimit) {

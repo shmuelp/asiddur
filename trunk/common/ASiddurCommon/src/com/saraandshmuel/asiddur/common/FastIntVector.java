@@ -94,6 +94,15 @@ public class FastIntVector {
     }
 
     /**
+     * Convenience method to retrieve the last value stored in the vector
+     *
+     * @return the value of the last element in the vector
+     */
+    public int getLastVal() {
+        return data[length-1];
+    }
+    
+    /**
      * Appends a value to the vector to the end of the vector.  The vector will 
      * be resized if needed.  While individual calls to this function may be 
      * O(n) in the length of the array, in the aggragate, it will perform in

@@ -96,20 +96,20 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
      */
     private SeekableInputStream seekableInputStream = null;
     
-//    /**
-//     * The stream from which to read the formatted tefilla data
-//     */
-//    private DataInputStream inputStream = null;
     
     /**
-     * Current tefilla data
-     *
-     * This should be replaced by a proper buffering scheme
+     * Variables filled in dynamically while reading text data
      */
-    char [] tefillaText = new char[0];
+    FastCharVector textVariables[];
+    
     
    /** Creates a new instance of BinaryTefillaReaderStrategy */
    public BinaryTefillaReaderStrategy() {
+        textVariables = new FastCharVector[2];
+        for (int i = 0; i < textVariables.length; ++i) {
+           textVariables[i] = new FastCharVector();
+        }
+        
         seekableInputStream = new SeekableInputStream( new InputStreamFactory() {
            public InputStream createInputStream() {
               InputStream result = null;
@@ -306,6 +306,13 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
 
                 System.out.println("Correctly parsed data, header was "
                                    + position + " bytes long");
+                if ( blockSizes.length != blockPositions.length ) {
+                   System.out.println("Problem - blockSizes.length != blockPositions.length");
+                }
+                System.out.println("Blk Num\tBlk Pos\tBlk Size");
+                for (int i = 0; i < blockPositions.length; ++i) {
+                   System.out.println("" + i + '\t' + blockPositions[i] + '\t' + blockSizes[i]);
+                }
 //             }
                 
         } catch (java.io.EOFException ex) {
@@ -329,14 +336,17 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
    public char getTextChar(int position) {
       int region = findRegion(position);
       short blockId = regionBlocks[region];
+//      System.out.println("BinaryTefillaReaderStrategy.getTextChar(" + position + 
+//              "), region=" + region + ", blockId=" + blockId);
       if ( blockText[blockId] == null ) {
          readBlock(blockId);
       }
       
       int offset = position;
       if ( region > 0 ) {
-         offset -= blockPositions[region-1];
+         offset -= regionLogical[region-1];
       }
+      offset += (regionPhysicalStart[region]-blockPositions[blockId]);
       
       char result = (char) blockText[blockId][offset];
       // The byte is unsigned; make sure it is now positive
@@ -370,8 +380,9 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
       
       int offset = begin;
       if ( region > 0 ) {
-         offset -= blockPositions[region-1];
+         offset -= regionLogical[region-1];
       }
+      offset += (regionPhysicalStart[region]-blockPositions[blockId]);
       
       for (int i = 0; i < count; ++i) {
          buffer[i] = (char) blockText[blockId][offset];
@@ -464,9 +475,17 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
             blockText[blockId] = new char[blockSizes[blockId]];
          }
          
-         seekableInputStream.read(temp);
+         int i=0;
+         while ( i < temp.length ) {
+            int result = seekableInputStream.read(temp, i, temp.length-i);
+            i += result;
+            if ( result == 0 ) {
+               // Break so as not to hit an infinite loop of reading nothing
+               break;
+            }
+         }
          // TODO: This won't quite work, since it may modify non-character data
-         for (int i = 0; i < temp.length; ++i) {
+         for (i = 0; i < temp.length; ++i) {
             char c = (char) ( temp[i] &  0x00ff);
             
             if ( convertToUTF && c >= 0xc0 && c <= 0xfa ) {
@@ -474,6 +493,14 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
             }
             
             blockText[blockId][i] = (char) ( c &  0x00ff );
+         }
+
+         // Sanity check for block end byte
+         byte endByte= seekableInputStream.readByte();
+         if ( endByte != TefillaConstants.TEXT_BLOCK_END ) {
+            throw new RuntimeException("Expected to read block end marker, " +
+                    "instead found " + endByte +
+                    ".  File is corrupt or being read incorrectly.");
          }
       } catch (IOException ex) {
          ex.printStackTrace();
@@ -490,35 +517,145 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
       FastIntVector regionEnd = new FastIntVector();
       FastIntVector logicalEnd = new FastIntVector();
       
-      totalLength = doComputeRegions( blockId, 
-                                      regionBlock, 
-                                      regionBegin, 
-                                      regionEnd, 
-                                      logicalEnd);
+      doComputeRegions( blockId, 
+                        regionBlock, 
+                        regionBegin, 
+                        regionEnd, 
+                        logicalEnd);
       
       regionPhysicalStart = regionBegin.clone();
       regionPhysicalEnd = regionEnd.clone();
       regionBlocks = regionBlock.clone();
       regionLogical = logicalEnd.clone();
+      
+      if ( regionLogical.length > 0 ) {
+         totalLength = regionLogical[regionLogical.length-1];
+      } else {
+         totalLength = 0;
+      }
+      
+      if ( regionBlocks.length != regionLogical.length ) {
+         System.out.println("regionBlocks.length != regionLogical.length");
+      }
+      if ( regionBlocks.length != regionPhysicalStart.length ) {
+         System.out.println("regionBlocks.length != regionPhysicalStart.length");
+      }
+      if ( regionBlocks.length != regionPhysicalEnd.length ) {
+         System.out.println("regionBlocks.length != regionPhysicalEnd.length");
+      }
+      System.out.println("Block\tLog End\tPhy Beg\tPhy End");
+      for (int i = 0; i < regionBlocks.length; ++i) {
+         System.out.println( "" + regionBlocks[i] + '\t'
+                                + regionLogical[i] + '\t'
+                                + regionPhysicalStart[i] + '\t'
+                                + regionPhysicalEnd[i] );
+      }
    }
    
-   private int doComputeRegions( short blockId, 
-                          FastShortVector regionBlock,
-                          FastIntVector regionBegin,
-                          FastIntVector regionEnd,
-                          FastIntVector logicalEnd ) {
-      int length = 0;
+   private void doComputeRegions( short blockId, 
+                                  FastShortVector regionBlock,
+                                  FastIntVector regionBegin,
+                                  FastIntVector regionEnd,
+                                  FastIntVector logicalEnd ) {
+//      System.out.println("BinaryTefillaReaderStrategy.doComputeRegions( " + blockId + ", ...)");
       
       if ( blockText[blockId] == null ) {
          readBlock(blockId);
       }
       
-      // TODO: Implement this
       regionBlock.append(blockId);
       regionBegin.append(blockPositions[blockId]);
-      regionEnd.append(blockPositions[blockId] + blockSizes[blockId]);
-      logicalEnd.append(blockSizes[blockId]);
-      length = blockSizes[blockId]-1;
+      
+      for ( int i=0; i < blockSizes[blockId]; ++i ) {
+          switch( blockText[blockId][i] ) {
+             case TefillaConstants.TEXT_BLOCK_END:
+                Logger.log( "Found unexpected text block end marker at position "
+                        + i + " of text block " + blockId );
+                // Break out of loop
+                i = blockSizes[blockId];
+                break;
+
+             case TefillaConstants.TEXT_GET:
+                byte var = (byte) blockText[blockId][++i];
+                // TODO: Implement this
+                break;
+
+             case TefillaConstants.TEXT_JUMP:
+                short offset = (short) ((byte) blockText[blockId][++i] * 256);
+                offset += (byte) blockText[blockId][++i];
+                regionEnd.append(blockPositions[blockId] + i);
+                //int lastLength = regionEnd.getLastVal() - regionBegin.getLastVal();
+                if ( logicalEnd.size()  > 0 ) {
+                   logicalEnd.append( logicalEnd.getLastVal() + i );
+                } else {
+                   logicalEnd.append( i );
+                }
+                i += offset;
+                regionBlock.append(blockId);
+                regionBegin.append(blockPositions[blockId] + i );
+                break;
+
+             case TefillaConstants.TEXT_INCLUDE:
+                short block = (short) ((byte) blockText[blockId][++i] * 256);
+                block += (byte) blockText[blockId][++i];
+                regionEnd.append(blockPositions[blockId] + i);
+                int lastLength2 = regionEnd.getLastVal() - regionBegin.getLastVal();
+                if ( logicalEnd.size() > 0 ) {
+                   logicalEnd.append( logicalEnd.getLastVal() + lastLength2 );
+                } else {
+                   logicalEnd.append( lastLength2 );
+                }
+                doComputeRegions(block, regionBlock, regionBegin, regionEnd, logicalEnd);
+                regionBlock.append(blockId);
+                regionBegin.append(blockPositions[blockId] + i + 1 );
+                break;
+
+             case TefillaConstants.TEXT_IF_DAY:
+             case TefillaConstants.TEXT_IF_FUNCTION:
+             case TefillaConstants.TEXT_IF_MONTH:
+             case TefillaConstants.TEXT_IF_VARIABLE:
+//                short jump = seekableInputStream.readShort();
+//                byte data = seekableInputStream.readByte();
+//                position += 3;
+//                System.out.print("Position " + position + ": ");
+//                System.out.println("Found if (" + temp + 
+//                                   ") with jump " + jump + 
+//                                   " and extra data " + data);
+                break;                                  
+
+             case TefillaConstants.TEXT_SET:
+                byte var2 = (byte) blockText[blockId][++i];
+                short size = (short) ((byte) blockText[blockId][++i] * 256);
+                size += (byte) blockText[blockId][++i];
+                // TODO: Implement this
+                break;
+
+             case TefillaConstants.TEXT_IF_OR:
+//                short jump2 = seekableInputStream.readShort();
+//                byte funcs = seekableInputStream.readByte();
+//                position += 3;
+//                System.out.print("Position " + position + ": ");
+//                System.out.println("Found if (OR) with jump " 
+//                                   + jump2 + " and " + funcs +
+//                                   " functions:");
+//                for (int i = 0; i < funcs; ++i) {
+//                   System.out.println("Function #" + i + 
+//                                      seekableInputStream.readByte());
+//                   ++position;
+//                }
+                break;
+          } // end inner parsing switch-case
+       }// end text block read loop
+      
+      regionEnd.append(blockPositions[blockId] + blockSizes[blockId] - 1);
+      int lastLength = regionEnd.getLastVal() - regionBegin.getLastVal();
+      if ( logicalEnd.size() > 0 ) {
+         logicalEnd.append( logicalEnd.getLastVal() + lastLength );
+      } else {
+         logicalEnd.append( lastLength );
+      }
+
+//      length = blockSizes[blockId]-1;
 
 //      // Text reading code from TefillaBufferReaderStrategy
 //      while ((c = inputStream.read()) != -1) {
@@ -528,7 +665,6 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
 //         readData.append( (char) c );
 //      }
       
-      return length;
    }
    
    /**
@@ -541,10 +677,15 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
    private int findRegion( int logicalPosition ) {
       if ( logicalPosition < 0 || 
            logicalPosition > regionLogical[regionLogical.length-1] ) {
-         throw new IllegalArgumentException("Position is out of range");
+         throw new IllegalArgumentException("Position " + logicalPosition + 
+                 " is out of range (max is " + 
+                 regionLogical[regionLogical.length-1] + ')');
       }
       
+//      System.out.print("findRegion(" + logicalPosition + ")=");
+      
       if ( logicalPosition < regionLogical[0] ) {
+//         System.out.println("0");
          return 0;
       }
       
@@ -555,11 +696,12 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
       while (low <= high) {
          mid=(low+high)/2;
          if ( logicalPosition == regionLogical[mid] ) {
+//            System.out.println(mid);
             return mid;
          } else if ( logicalPosition < regionLogical[mid] ) {
-            low = mid+1;
-         } else {
             high = mid-1;
+         } else {
+            low = mid+1;
          }
       }
       if ( low != high+1 ) {
@@ -569,9 +711,11 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
       // Still need to check which is the right value; it can be either one.
       // Remember that high is now less than low
       if ( logicalPosition < regionLogical[high]) {
+//         System.out.println(high);
          return high;
       }
       
+//      System.out.println(low);
       return low;
    }
 }

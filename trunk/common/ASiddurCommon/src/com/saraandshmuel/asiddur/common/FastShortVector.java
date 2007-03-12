@@ -114,6 +114,15 @@ public class FastShortVector {
     }
     
     /**
+     * Convenience method to retrieve the last value stored in the vector
+     *
+     * @return the value of the last element in the vector
+     */
+    public short getLastVal() {
+        return data[length-1];
+    }
+    
+    /**
      * Utility function to grow the internal array.  The array size is doubled
      * To provide an aggregate O(log n) time.
      */
