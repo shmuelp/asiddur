@@ -557,7 +557,7 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                                   FastIntVector regionBegin,
                                   FastIntVector regionEnd,
                                   FastIntVector logicalEnd ) {
-//      System.out.println("BinaryTefillaReaderStrategy.doComputeRegions( " + blockId + ", ...)");
+      System.out.println("BinaryTefillaReaderStrategy.doComputeRegions( " + blockId + ", ...)");
       
       if ( blockText[blockId] == null ) {
          readBlock(blockId);
@@ -579,49 +579,46 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                 byte var = (byte) blockText[blockId][++i];
                 // TODO: Implement this
                 endRegion( blockId,
-                           i-1,
+                           i-2,
                            logicalEnd,
                            regionBegin,
                            regionEnd);
-                regionBegin.append(blockPositions[blockId] + i);
+                regionBegin.append(blockPositions[blockId] + i + 1);
                 regionBlock.append(blockId);
                 break;
 
              case TefillaConstants.TEXT_JUMP:
-                short offset = (short) ((byte) blockText[blockId][++i] * 256);
-                offset += (byte) blockText[blockId][++i];
-                endRegion( blockId,
-                           i,
-                           logicalEnd,
-                           regionBegin,
-                           regionEnd);
-                i += offset;
-                regionBlock.append(blockId);
-                regionBegin.append(blockPositions[blockId] + i );
-                break;
-
-             case TefillaConstants.TEXT_INCLUDE:
-                short block = (short) ((byte) blockText[blockId][++i] * 256);
-                block += (byte) blockText[blockId][++i];
+                short offset = readShort( blockText[blockId], i + 1);
                 endRegion( blockId,
                            i-1,
                            logicalEnd,
                            regionBegin,
                            regionEnd);
+                i += ( 2 + offset );
+                regionBlock.append(blockId);
+                regionBegin.append(blockPositions[blockId] + i + 1);
+                break;
 
+             case TefillaConstants.TEXT_INCLUDE:
+                short block = readShort( blockText[blockId], i + 1);
+                endRegion( blockId,
+                           i-1,
+                           logicalEnd,
+                           regionBegin,
+                           regionEnd);
+                i+=2;
                 doComputeRegions(block, regionBlock, regionBegin, regionEnd, logicalEnd);
                 regionBlock.append(blockId);
-                regionBegin.append(blockPositions[blockId] + i + 1 );
+                regionBegin.append(blockPositions[blockId] + i + 1);
                 break;
 
              case TefillaConstants.TEXT_IF_DAY:
              case TefillaConstants.TEXT_IF_FUNCTION:
              case TefillaConstants.TEXT_IF_MONTH:
              case TefillaConstants.TEXT_IF_VARIABLE:
-                short jump = readShort( blockText[blockId], i );
+                short jump = readShort( blockText[blockId], i + 1 );
+                byte data = (byte) blockText[blockId][i+3];
                 i += 3;
-                byte data = (byte) blockText[blockId][i];
-                
                 endRegion( blockId,
                            i-4,
                            logicalEnd,
@@ -629,34 +626,37 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
                            regionEnd);
                 byte ifType = (byte) blockText[blockId][i-3];
                 if ( !checkCondition( ifType, data ) ) {
-                   i+=jump-1;
+                   i+=jump+1;
                 }
-                regionBegin.append(blockPositions[blockId] + i);
                 regionBlock.append(blockId);
-//                System.out.print("Position " + position + ": ");
-//                System.out.println("Found if (" + temp + 
-//                                   ") with jump " + jump + 
-//                                   " and extra data " + data);
+                regionBegin.append(blockPositions[blockId] + i + 1);
                 break;                                  
 
              case TefillaConstants.TEXT_SET:
-                byte var2 = (byte) blockText[blockId][++i];
-                short size = (short) ((byte) blockText[blockId][++i] * 256);
-                size += (byte) blockText[blockId][++i];
+                byte var2 = (byte) blockText[blockId][i + 1];
+                short size = readShort( blockText[blockId], i + 2);
                 // TODO: Implement this
                 endRegion( blockId,
-                           i-3,
+                           i-1,
                            logicalEnd,
                            regionBegin,
                            regionEnd);
-                i += size;
-                regionBegin.append(blockPositions[blockId] + i);
+                i += 3 + size;
+                regionBegin.append(blockPositions[blockId] + i + 1);
                 regionBlock.append(blockId);
                 break;
 
              case TefillaConstants.TEXT_IF_OR:
-//                short jump2 = seekableInputStream.readShort();
-//                byte funcs = seekableInputStream.readByte();
+                short jump2 = readShort( blockText[blockId], i + 1);
+                byte funcs = (byte) blockText[blockId][i + 3];
+                endRegion( blockId,
+                           i-4,
+                           logicalEnd,
+                           regionBegin,
+                           regionEnd);
+                i += jump2 - 2;
+                regionBlock.append(blockId);
+                regionBegin.append(blockPositions[blockId] + i + 1);
 //                position += 3;
 //                System.out.print("Position " + position + ": ");
 //                System.out.println("Found if (OR) with jump " 
@@ -755,12 +755,13 @@ public class BinaryTefillaReaderStrategy implements com.saraandshmuel.asiddur.co
    }
    
    private static short readShort( char[]text, int offset ) {
-      short result = (short) (text[offset] << 16 + text[offset+1]);
+      short result = (short) text[offset];
+      result = (short) ((result << 8) + text[offset+1]);
       
       return result;
    }
    
    private boolean checkCondition( byte conditionType, byte conditionData ) {
-      return true;
+      return false;
    }
 }
