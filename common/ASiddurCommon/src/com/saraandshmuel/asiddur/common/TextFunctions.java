@@ -399,8 +399,7 @@ public class TextFunctions {
            result.append("V'Sein Tal Umatar ");
         }
        
-        if ( ( month == 1 && day > 22 ) ||
-             ( month == 2 && day <= 7 ) ) {
+        if ( month == 1 && day > 15 ) {
               result.append("V'Sein B'racha ");
            }
 
