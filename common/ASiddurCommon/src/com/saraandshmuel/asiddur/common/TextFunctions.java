@@ -249,7 +249,7 @@ public class TextFunctions {
                 } else {
                     Calendar engCal= mediator.getEnglishCalendar();
                     int engYear = engCal.get(Calendar.YEAR) + 1;
-                    boolean engLeap = ( engYear % 4 == 0 && ( engYear % 100 != 0 || engYear % 1000 == 0 ) );
+                    boolean engLeap = ( engYear % 4 == 3 && ( engYear % 100 != 99 || engYear % 400 == 399 ) );
                     Calendar cutoff = Calendar.getInstance();
                     cutoff.set(Calendar.MONTH, 12);
                     cutoff.set(Calendar.DAY_OF_MONTH, engLeap ? 5 : 4 );
@@ -392,7 +392,7 @@ public class TextFunctions {
         int engYear = engCal.get(Calendar.YEAR) + 1;
         int engMonth = engCal.get(Calendar.MONTH);
         int engDay = engCal.get(Calendar.DAY_OF_MONTH);
-        boolean engLeap = ( engYear % 4 == 0 && ( engYear % 100 != 0 || engYear % 1000 == 0 ) );
+        boolean engLeap = ( engYear % 4 == 3 && ( engYear % 100 != 99 || engYear % 400 == 399 ) );
         if ( engMonth == Calendar.DECEMBER && 
              engDay <= 19 && 
              engDay >= (engLeap ? 5 : 4) ) {
