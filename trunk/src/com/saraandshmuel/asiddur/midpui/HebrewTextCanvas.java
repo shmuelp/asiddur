@@ -164,6 +164,41 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
 //         setStatusText(keyCode, false);
     }
     
+    /**
+     * Allows for scrolling by tapping/clicking the pointer
+     * Can be used by any device, but needed for Blackberry storm.
+     */
+    protected void pointerReleased( int x, int y ) {
+       int height = getHeight();
+       int width = getWidth();
+
+       // Scroll right/left with 10% of screen on either side
+       // Corners scroll right/left
+       if ( x < width / 10 ) {
+          navUp();
+          return;
+       }
+       
+       if ( x > ( width * 9 ) / 10 ) {
+          navDown();
+          return;
+       }
+       
+       // Scroll up/down with top/bottom 45% of screen
+       if ( y < ( height * 100 ) / 45 ) {
+          scrollUp();
+          return;
+       }
+       if ( y > ( height * 100 ) / 55 ) {
+          scrollDown();
+          return;
+       }
+
+       // Do nothing for middle 8% of area of screen (to help prevent ambiguous
+       // taps/clicks
+       return;
+    }
+    
 //   /**
 //    * Sets the source of the text
 //    * @param tefillaReader The text source
