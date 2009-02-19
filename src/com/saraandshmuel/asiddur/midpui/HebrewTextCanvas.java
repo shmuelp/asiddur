@@ -166,7 +166,7 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
     
     /**
      * Allows for scrolling by tapping/clicking the pointer
-     * Can be used by any device, but needed for Blackberry storm.
+     * Usable for any (touch-screen) device, but needed for Blackberry Storm.
      */
     protected void pointerReleased( int x, int y ) {
        int height = getHeight();
@@ -185,11 +185,11 @@ public class HebrewTextCanvas extends javax.microedition.lcdui.Canvas {
        }
        
        // Scroll up/down with top/bottom 45% of screen
-       if ( y < ( height * 100 ) / 45 ) {
+       if ( y < ( height * 45 ) / 100 ) {
           scrollUp();
           return;
        }
-       if ( y > ( height * 100 ) / 55 ) {
+       if ( y > ( height * 55 ) / 100 ) {
           scrollDown();
           return;
        }
